@@ -1,8 +1,25 @@
 import React from 'react'
-import './App.css'
-
-import SplitText from 'react-pose-text'
-import { useFromToPose, Window, Heading, Subtitle } from './ui-components'
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+} from 'reactstrap'
+import {
+  useFromToPose,
+  useFromToPoseInf,
+  Window,
+  Heading,
+  Subtitle,
+  LR,
+  RL,
+} from './ui-components'
+import oneF from './designs/5F.png'
 
 // const gestures = [
 //   { id: 1, name: 'OPEN' },
@@ -16,26 +33,40 @@ import { useFromToPose, Window, Heading, Subtitle } from './ui-components'
 //   { id: 9, name: 'BACK' },
 // ]
 
-const charPose = {
-  enter: {
-    scale: 1,
-  },
-  exit: {
-    scale: 0,
-  },
-}
-
 const App = () => {
   const windowPose = useFromToPose(1.5, { from: 'hidden', to: 'visible' })
-  const charPoses = useFromToPose(10, { from: 'exit', to: 'enter' })
+  const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
+  const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
   return (
     <Window pose={windowPose}>
       <Heading>
-        <SplitText charPoses={charPose} pose={charPoses}>
-          Hover
-        </SplitText>
+        Hover
         <Subtitle>something about "NAME"...</Subtitle>
       </Heading>
+      <Container>
+        <Row>
+          <Col>
+            <Card className="options">
+              <LR pose={L2R}>
+                <i className="far fa-hand-paper" />
+              </LR>
+              <CardBody>
+                <CardTitle>Guest</CardTitle>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col>
+            <Card className="options">
+              <RL pose={R2L}>
+                <i className="far fa-hand-paper" />
+              </RL>
+              <CardBody>
+                <CardTitle>LogIn/SignUp</CardTitle>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </Window>
   )
 }

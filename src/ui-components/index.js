@@ -17,9 +17,37 @@ const W = posed.div({
   },
 })
 
+const lr = posed.div({
+  left: {
+    x: '-100%',
+    opacity: 1,
+  },
+  right: {
+    x: '100%',
+    opacity: 0,
+  },
+})
+const rl = posed.div({
+  left: {
+    x: '-100%',
+    opacity: 0,
+  },
+  right: {
+    x: '100%',
+    opacity: 1,
+  },
+})
+
 // --------------------------------------------------------
 //      Styled Components (DO EXPORT)
 // --------------------------------------------------------
+
+export const LR = styled(lr)`
+  font-size: 2em;
+`
+export const RL = styled(rl)`
+  font-size: 2em;
+`
 
 export const Window = styled(W)`
   min-height: 90vh;
@@ -74,7 +102,12 @@ export const List = styled.ul`
     padding: 1em 1.5em;
     border-radius: 5px;
     background-color: #663dff;
-    background-image: linear-gradient(319deg, #663dff 0%, #aa00ff 37%, #cc4499 100%);
+    background-image: linear-gradient(
+      319deg,
+      #663dff 0%,
+      #aa00ff 37%,
+      #cc4499 100%
+    );
   }
 `
 
@@ -86,4 +119,11 @@ export const useFromToPose = (timeOut, { from, to }) => {
   const [windowPose, setWindowPose] = React.useState(from)
   React.useEffect(() => setWindowPose(to), [])
   return windowPose
+}
+
+export const useFromToPoseInf = ({ from, to }) => {
+  const [val, setval] = React.useState(from)
+  const si = () => setval(val === from ? to : from)
+  setTimeout(si, 1000)
+  return val
 }
