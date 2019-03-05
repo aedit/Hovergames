@@ -74,10 +74,18 @@ export const Heading = styled.h1`
   display: flex;
   flex-direction: column;
   text-align: center;
+  letter-spacing: 2px;
+  align-self: end;
 `
 
 export const Subtitle = styled.span`
-  font-size: 0.4em;
+  margin-top: 1em;
+  font-size: 0.2em;
+  font-weight: 100;
+  strong {
+    font-weight: 900;
+    text-transform: uppercase;
+  }
 `
 
 export const Saperation = styled.h3`
@@ -124,6 +132,9 @@ export const useFromToPose = (timeOut, { from, to }) => {
 export const useFromToPoseInf = ({ from, to }) => {
   const [val, setval] = React.useState(from)
   const si = () => setval(val === from ? to : from)
-  setTimeout(si, 1000)
+  React.useEffect(() => {
+    setTimeout(si, 1000)
+    return () => void clearTimeout(si)
+  })
   return val
 }
