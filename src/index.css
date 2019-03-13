@@ -47,12 +47,18 @@ code {
 
 .guest{
   position: absolute;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
+  grid-template-areas: 'heading'
+                        'contd'
+                       'footer' !important;
+  align-content: flex-start !important;
   text-align: center !important;
   z-index: 2;
   left: 5%;
   width: 50% !important;
+}
+
+.left{
+  top: 5vh;
+  left: auto;
+  right: 5%
 }

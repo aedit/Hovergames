@@ -8,7 +8,7 @@ import posed from 'react-pose'
 
 const W = posed.div({
   visible: {
-    x: '0%',
+    x:'0%',
     scale: 1,
     opacity: 1,
   },
@@ -16,8 +16,13 @@ const W = posed.div({
     scale: 0,
     opacity: 0,
   },
-  scaleDown: {
-    x: '50%',
+  scaleDownRight: {
+    x:'40%',
+    scale: 0.5,
+    opacity: 0.9
+  },
+  scaleDownLeft: {
+    x: '-40%',
     scale: 0.5,
     opacity: 0.9
   }
@@ -61,7 +66,6 @@ export const Window = styled(W)`
   max-width: 1100px;
   border-radius: 10px;
   color: white;
-  transform-origin: 20% 50%;
   box-shadow: 0 0 100px black;
   background-color: #000000;
   padding: 1em;
@@ -82,7 +86,6 @@ export const Heading = styled.h1`
   flex-direction: column;
   text-align: center;
   letter-spacing: 2px;
-  align-self: end;
 `
 export const Footer = styled.h6`
   font-size: 1rem;

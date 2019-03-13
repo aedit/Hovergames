@@ -18,6 +18,9 @@ import {
   Footer
 } from './ui-components'
 import GuestPane from './components/GuestPane'
+import UserPane from './components/UserPane'
+import {BrowserRouter} from 'react-router-dom'
+
 
 
 // const gestures = [
@@ -36,11 +39,11 @@ const App = () => {
   const windowPose = useFromToPose(1.5, { from: 'hidden', to: 'visible' })
   const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
   const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
-  const [isScaleDown, setIsScaleDown] = React.useState(false)
+  const [isScaleDown, setIsScaleDown] = React.useState('center')
   return (
-    <React.Fragment>
-      {isScaleDown && <GuestPane />}
-    <Window pose={!isScaleDown ? windowPose : 'scaleDown'}>
+    <BrowserRouter>
+      {isScaleDown==='right' && <GuestPane />}
+    <Window pose={isScaleDown ==='center' ? windowPose : isScaleDown==='right' ? 'scaleDownRight' : 'scaleDownLeft'}>
       <Heading>
         Hover Games
         <Subtitle>Experience the gaming world with a <strong>hover</strong> of your palm.</Subtitle>
@@ -48,7 +51,7 @@ const App = () => {
       <Container>
         <Row style={{alignItems: 'center', height: '100%'}}>
         <Col />
-          <Col onClick={() => setIsScaleDown(prev => !prev)}>
+          <Col onClick={() => setIsScaleDown(prev => prev ==='right' ? 'center' : 'right')}>
             <Card className="options">
               <LR pose={L2R}>
                 <i className="far fa-hand-paper" />
@@ -58,7 +61,7 @@ const App = () => {
               </CardBody>
             </Card>
           </Col>
-          <Col>
+          <Col onClick={() => setIsScaleDown(prev => prev ==='left' ? 'center' : 'left')}>          
             <Card className="options">
               <RL pose={R2L}>
                 <i className="far fa-hand-paper" />
@@ -75,7 +78,9 @@ const App = () => {
         Authors: <code>{'</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >'}</code > 
       </Footer>
     </Window>
-    </React.Fragment>
+    {isScaleDown==='left' && <UserPane />}
+
+    </BrowserRouter>
   )
 }
 
