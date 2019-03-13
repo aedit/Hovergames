@@ -8,16 +8,16 @@ import posed from 'react-pose'
 
 const W = posed.div({
   visible: {
-    x:'0%',
+    x: '0%',
     scale: 1,
-    opacity: 1,
+    opacity: 1
   },
   hidden: {
     scale: 0,
-    opacity: 0,
+    opacity: 0
   },
   scaleDownRight: {
-    x:'40%',
+    x: '40%',
     scale: 0.5,
     opacity: 0.9
   },
@@ -31,22 +31,53 @@ const W = posed.div({
 const lr = posed.div({
   left: {
     x: '-100%',
-    opacity: 1,
+    opacity: 1
   },
   right: {
     x: '100%',
-    opacity: 0,
-  },
+    opacity: 0
+  }
 })
 const rl = posed.div({
   left: {
     x: '-100%',
-    opacity: 0,
+    opacity: 0
   },
   right: {
     x: '100%',
-    opacity: 1,
+    opacity: 1
+  }
+})
+
+const ud = posed.div({
+  up: {
+    y: '-100%',
+    opacity: 1
   },
+  down: {
+    y: '100%',
+    opacity: 0
+  }
+})
+const du = posed.div({
+  up: {
+    y: '-100%',
+    opacity: 1
+  },
+  down: {
+    y: '100%',
+    opacity: 0
+  }
+})
+
+const prog = posed.div({
+  empty: {
+    scaleX: 0
+  },
+  full: {
+    scaleX: 1,
+    transition: { duration: 5000 }
+  }
 })
 
 // --------------------------------------------------------
@@ -58,6 +89,26 @@ export const LR = styled(lr)`
 `
 export const RL = styled(rl)`
   font-size: 2em;
+`
+
+export const UD = styled(ud)`
+  font-size: 2em;
+`
+export const DU = styled(du)`
+  font-size: 2em;
+`
+export const Progress = styled(prog)`
+  grid-area: progress;
+  width: 100%;
+  height: 10px;
+  padding: 1px;
+  & > div {
+    background: #0f0c29;
+    background: -webkit-linear-gradient(to left, #0f0c29, #302b63, #24243e);
+    background: linear-gradient(to left, #0f0c29, #302b63, #24243e);
+    height: 100%;
+    transform-origin: left;
+  }
 `
 
 export const Window = styled(W)`
@@ -142,7 +193,11 @@ export const List = styled.ul`
 
 export const useFromToPose = (timeOut, { from, to }) => {
   const [windowPose, setWindowPose] = React.useState(from)
-  React.useEffect(() => setWindowPose(to), [])
+  const si = () => setWindowPose(to)
+  React.useEffect(() => {
+    setTimeout(si, timeOut * 1000)
+    return () => void clearTimeout(si)
+  }, [])
   return windowPose
 }
 
