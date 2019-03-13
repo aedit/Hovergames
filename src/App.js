@@ -41,10 +41,12 @@ const App = () => {
     <Window pose={windowPose}>
       <Heading>
         Hover Games
-        <Subtitle>Experience the world with a <strong>hover</strong> of your palm.</Subtitle>
+        <Subtitle>
+          Experience the world with a <strong>hover</strong> of your palm.
+        </Subtitle>
       </Heading>
       <Container>
-        <Row style={{alignItems: 'center', height: '100%'}}>
+        <Row style={{ alignItems: 'center', height: '100%' }}>
           <Col>
             <Card className="options">
               <LR pose={L2R}>
