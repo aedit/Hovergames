@@ -19,7 +19,8 @@ import {
 } from './ui-components'
 import GuestPane from './components/GuestPane'
 import UserPane from './components/UserPane'
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import Guide from './components/Guide';
 
 
 
@@ -35,13 +36,14 @@ import {BrowserRouter} from 'react-router-dom'
 //   { id: 9, name: 'BACK' },
 // ]
 
-const App = () => {
+const Home = () => {
   const windowPose = useFromToPose(1.5, { from: 'hidden', to: 'visible' })
   const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
   const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
   const [isScaleDown, setIsScaleDown] = React.useState('center')
   return (
-    <BrowserRouter>
+    
+    <React.Fragment>
       {isScaleDown==='right' && <GuestPane />}
     <Window pose={isScaleDown ==='center' ? windowPose : isScaleDown==='right' ? 'scaleDownRight' : 'scaleDownLeft'}>
       <Heading>
@@ -79,9 +81,17 @@ const App = () => {
       </Footer>
     </Window>
     {isScaleDown==='left' && <UserPane />}
-
-    </BrowserRouter>
+    </React.Fragment>
   )
 }
+
+const App = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route exact path='/' component={Home} />
+      <Route path='/guide' component={Guide} />
+    </Switch>
+  </BrowserRouter>
+)
 
 export default App

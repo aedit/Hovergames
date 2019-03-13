@@ -1,7 +1,7 @@
 import React from 'react'
 import { Heading, Window, useFromToPose, Subtitle,LR,useFromToPoseInf } from '../../ui-components'
 import {CardBody, CardTitle,Card} from 'reactstrap'
-import {Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const randomString = (length = 5) => Math.random().toString(36).replace(/\W+/g, '').substr(0, length)
 
@@ -12,7 +12,7 @@ const GuestPane = React.memo(() => {
     localStorage.setItem('guestid', guestid)
 
     return (
-        <Window pose={guestPose} className='guest' onClick={() => <Redirect to='/guide' />}>
+        <Window pose={guestPose} className='guest'>
             <Heading>
                 Welcome Guest!
                 <Subtitle style={{fontSize:'0.35em'}}>
@@ -24,7 +24,7 @@ const GuestPane = React.memo(() => {
                 <i className="far fa-hand-paper" />
               </LR>
               <CardBody>
-                <CardTitle>Hover to continue</CardTitle>
+                <CardTitle><Link to='/guide'>Hover to continue</Link></CardTitle>
               </CardBody>
             </Card>
         </Window>
