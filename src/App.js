@@ -18,6 +18,7 @@ import {
   Subtitle,
   LR,
   RL,
+  Footer
 } from './ui-components'
 import oneF from './designs/5F.png'
 
@@ -37,15 +38,17 @@ const App = () => {
   const windowPose = useFromToPose(1.5, { from: 'hidden', to: 'visible' })
   const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
   const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
+  const [isScaleDown, setIsScaleDown] = React.useState(false)
   return (
-    <Window pose={windowPose}>
+    <React.Fragment>
+    <Window pose={!isScaleDown ? windowPose : 'scaleDown'}>
       <Heading>
         Hover Games
-        <Subtitle>Experience the world with a <strong>hover</strong> of your palm.</Subtitle>
+        <Subtitle>Experience the gaming world with a <strong>hover</strong> of your palm.</Subtitle>
       </Heading>
       <Container>
         <Row style={{alignItems: 'center', height: '100%'}}>
-          <Col>
+          <Col onClick={() => setIsScaleDown(prev => !prev)}>
             <Card className="options">
               <LR pose={L2R}>
                 <i className="far fa-hand-paper" />
@@ -61,13 +64,17 @@ const App = () => {
                 <i className="far fa-hand-paper" />
               </RL>
               <CardBody>
-                <CardTitle>LogIn/SignUp</CardTitle>
+                <CardTitle>Log-in/Sign-up</CardTitle>
               </CardBody>
             </Card>
           </Col>
         </Row>
       </Container>
+      <Footer>
+        Created by: Vaibhav Bhawalkar, Udit Sen, Vinay Yadav
+      </Footer>
     </Window>
+    </React.Fragment>
   )
 }
 

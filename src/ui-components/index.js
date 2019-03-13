@@ -8,6 +8,7 @@ import posed from 'react-pose'
 
 const W = posed.div({
   visible: {
+    x: '0%',
     scale: 1,
     opacity: 1,
   },
@@ -15,6 +16,11 @@ const W = posed.div({
     scale: 0,
     opacity: 0,
   },
+  scaleDown: {
+    x: '25%',
+    scale: 0.5,
+    opacity: 0.9
+  }
 })
 
 const lr = posed.div({
@@ -64,7 +70,8 @@ export const Window = styled(W)`
   grid-template-areas:
     'heading'
     'seperation'
-    'list';
+    'list'
+    'footer';
 `
 
 export const Heading = styled.h1`
@@ -76,6 +83,13 @@ export const Heading = styled.h1`
   text-align: center;
   letter-spacing: 2px;
   align-self: end;
+`
+export const Footer = styled.h6`
+  font-size: 1rem;
+  grid-area: footer;
+  text-align: center;
+  letter-spacing: 1px;
+  color: whitesmoke;
 `
 
 export const Subtitle = styled.span`
