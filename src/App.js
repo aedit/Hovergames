@@ -48,6 +48,7 @@ const Home = () => {
     <Window pose={isScaleDown ==='center' ? windowPose : isScaleDown==='right' ? 'scaleDownRight' : 'scaleDownLeft'}>
       <Heading>
         Hover Games
+
         <Subtitle>Experience the gaming world with a <strong>hover</strong> of your palm.</Subtitle>
       </Heading>
       <Container>
