@@ -17,7 +17,7 @@ const W = posed.div({
     opacity: 0,
   },
   scaleDown: {
-    x: '25%',
+    x: '50%',
     scale: 0.5,
     opacity: 0.9
   }

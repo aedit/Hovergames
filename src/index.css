@@ -7,6 +7,7 @@
 }
 
 body {
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -42,4 +43,16 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.guest{
+  position: absolute;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: center !important;
+  z-index: 2;
+  left: 5%;
+  width: 50% !important;
 }

@@ -4,11 +4,8 @@ import {
   Row,
   Col,
   Card,
-  CardImg,
-  CardText,
   CardBody,
   CardTitle,
-  CardSubtitle,
 } from 'reactstrap'
 import {
   useFromToPose,
@@ -20,7 +17,8 @@ import {
   RL,
   Footer
 } from './ui-components'
-import oneF from './designs/5F.png'
+import GuestPane from './components/GuestPane'
+
 
 // const gestures = [
 //   { id: 1, name: 'OPEN' },
@@ -41,6 +39,7 @@ const App = () => {
   const [isScaleDown, setIsScaleDown] = React.useState(false)
   return (
     <React.Fragment>
+      {isScaleDown && <GuestPane />}
     <Window pose={!isScaleDown ? windowPose : 'scaleDown'}>
       <Heading>
         Hover Games
@@ -48,6 +47,7 @@ const App = () => {
       </Heading>
       <Container>
         <Row style={{alignItems: 'center', height: '100%'}}>
+        <Col />
           <Col onClick={() => setIsScaleDown(prev => !prev)}>
             <Card className="options">
               <LR pose={L2R}>
@@ -68,10 +68,11 @@ const App = () => {
               </CardBody>
             </Card>
           </Col>
+          <Col />
         </Row>
       </Container>
       <Footer>
-        Created by: Vaibhav Bhawalkar, Udit Sen, Vinay Yadav
+        Authors: <code>{'</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >'}</code > 
       </Footer>
     </Window>
     </React.Fragment>
