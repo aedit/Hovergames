@@ -3,7 +3,11 @@ import posed from 'react-pose'
 import styled from 'styled-components'
 import { Window, useFromToPose, Heading } from '../../ui-components'
 
-const Dashboard = () => {}
+const Dashboard = () => (
+  <Window>
+    <Heading>Dashboard</Heading>
+  </Window>
+)
 
 export default Dashboard
 // const Sidebar = posed.div({
