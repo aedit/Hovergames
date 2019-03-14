@@ -9,7 +9,7 @@ import {
   Progress
 } from '../../ui-components'
 import { CardBody, CardTitle, Card } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 const randomString = (length = 5) =>
   Math.random()
@@ -25,8 +25,13 @@ const GuestPane = React.memo(() => {
     ? localStorage.getItem('guestid')
     : randomString()
   localStorage.setItem('guestid', guestid)
-
-  return (
+  const [redirect, setRedirect] = React.useState(false)
+  React.useEffect(() => {
+    if (progressPose === 'full') setTimeout(() => setRedirect(true), 7000)
+  }, [progressPose])
+  return redirect === true ? (
+    <Redirect to="/guide" />
+  ) : (
     <Window pose={guestPose} className="guest">
       <Heading>
         Welcome Guest!

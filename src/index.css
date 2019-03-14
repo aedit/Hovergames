@@ -58,8 +58,14 @@ code {
   width: 50% !important;
 }
 
-.left {
+.right {
   top: 5vh;
   left: auto;
   right: 5%;
+  grid-template-areas:
+    'heading'
+    'video'
+    'contd'
+    'progress' !important;
+  grid-template-rows: 1fr 1.5fr 1fr 20px;
 }
