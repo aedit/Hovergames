@@ -12,9 +12,10 @@ import {
 } from './ui-components'
 import GuestPane from './components/GuestPane'
 import UserPane from './components/UserPane'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
 import Guide from './components/Guide'
 import Dashboard from './components/Dashboard'
+import About from './components/About'
 
 // const gestures = [
 //   { id: 1, name: 'OPEN' },
@@ -87,7 +88,7 @@ const Home = () => {
           </Row>
         </Container>
         <Footer>
-          Authors:{' '}
+          <Link to="/about">Authors:</Link>{' '}
           <code>
             {'</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >'}
           </code>
@@ -104,6 +105,7 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route path="/guide" component={Guide} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/about" component={About} />
     </Switch>
   </BrowserRouter>
 )
