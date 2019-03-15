@@ -13,6 +13,7 @@ const W = posed.div({
     opacity: 1
   },
   hidden: {
+    x: '0%',
     scale: 0,
     opacity: 0
   },
@@ -52,11 +53,11 @@ const rl = posed.div({
 const ud = posed.div({
   up: {
     y: '-100%',
-    opacity: 1
+    opacity: 0
   },
   down: {
-    y: '100%',
-    opacity: 0
+    y: '0%',
+    opacity: 1
   }
 })
 const du = posed.div({
@@ -92,7 +93,22 @@ export const RL = styled(rl)`
 `
 
 export const UD = styled(ud)`
-  font-size: 2em;
+  min-height: 90vh;
+  width: 95vw;
+  max-width: 1100px;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 0 100px black;
+  background-color: #000000;
+  padding: 1em;
+  display: grid;
+  grid-template-rows: auto 15px 1fr 15px;
+  grid-template-areas:
+    'heading'
+    'padding'
+    'desc'
+    'footer';
+  justify-items: center;
 `
 export const DU = styled(du)`
   font-size: 2em;
@@ -156,7 +172,13 @@ export const Subtitle = styled.span`
   }
 `
 
-export const Saperation = styled.h3`
+export const Desc = styled.article`
+  width: 80%;
+  grid-area: desc;
+  text-align: justify;
+`
+
+export const Seperation = styled.h3`
   align-self: center;
   grid-area: seperation;
   text-align: center;

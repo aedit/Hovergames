@@ -1,13 +1,14 @@
 import React from 'react'
-import posed from 'react-pose'
-import styled from 'styled-components'
 import { Window, useFromToPose, Heading } from '../../ui-components'
 
-const Dashboard = () => (
-  <Window>
-    <Heading>Dashboard</Heading>
-  </Window>
-)
+const Dashboard = () => {
+  const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
+  return (
+    <Window pose={windowPose}>
+      <Heading>Dashboard</Heading>
+    </Window>
+  )
+}
 
 export default Dashboard
 // const Sidebar = posed.div({

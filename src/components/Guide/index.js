@@ -1,8 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Heading, Window, Progress, useFromToPose } from '../../ui-components'
+import {
+  Heading,
+  Window,
+  Progress,
+  useFromToPose,
+  Desc
+} from '../../ui-components'
 import { CardBody, CardTitle, Card } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
+
 const GuideWindow = styled(Window)`
   grid-template-areas:
     'heading'
@@ -25,11 +32,6 @@ const Instruction = styled.section`
   }
 `
 
-const Desc = styled.article`
-  width: 80%;
-  grid-area: desc;
-  text-align: justify;
-`
 const Guide = () => {
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
   const progressPose = useFromToPose(1, { from: 'empty', to: 'full' })
