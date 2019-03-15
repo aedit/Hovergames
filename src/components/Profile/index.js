@@ -9,10 +9,10 @@ const divStyle = {
   border: '4px dotted orangered'
 }
 
-const Profile = ({ name, image, description }) => {
+const Profile = ({ name, dp, description }) => {
   return (
     <div style={divStyle}>
-      <img src="" alt="" />
+      <img src={dp} alt="" />
       <Heading style={{ fontSize: '1.5rem' }}>
         <span className="code-block"> {name} </span>
         <Subtitle style={{ fontSize: '1rem' }}>{description}</Subtitle>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Desc, DU } from '../../ui-components'
+import { Heading, DU } from '../../ui-components'
 import Profile from '../Profile'
 
 export const useFromToPose = (timeOut, { from, to }) => {
@@ -36,9 +36,9 @@ const Authors = ({ informUp }) => {
           width: '90%'
         }}
       >
-        <Profile name={'Udit'} dp={'hello'} description={'hello'} />
-        <Profile name={'Vaibhav'} dp={'hello'} description={'hello'} />
-        <Profile name={'Vinay'} dp={'hello'} description={'hello'} />
+        <Profile name={'Udit'} dp={''} description={'hello'} />
+        <Profile name={'Vaibhav'} dp={''} description={'hello'} />
+        <Profile name={'Vinay'} dp={''} description={'hello'} />
       </div>
     </DU>
   )
