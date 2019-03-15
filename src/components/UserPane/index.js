@@ -9,11 +9,11 @@ import {
   useFromToPoseInf
 } from '../../ui-components'
 import { CardBody, CardTitle, Card } from 'reactstrap'
-import { Webcam } from 'react-webcam'
-import ErrorBoundary from '../../ErrorBoundary'
+// import { Webcam } from 'react-webcam'
+// import ErrorBoundary from '../../ErrorBoundary'
 import { Redirect } from 'react-router-dom'
 
-const Xyz = () => <Webcam />
+// const Xyz = () => <Webcam />
 
 const randomString = (length = 5) =>
   Math.random()
@@ -36,7 +36,14 @@ const UserPane = React.memo(() => {
   return redirect === true ? (
     <Redirect to="/dashboard" />
   ) : (
-    <Window pose={guestPose} className="guest right">
+    <Window
+      pose={guestPose}
+      style={{
+        clipPath:
+          'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
+      }}
+      className="guest right"
+    >
       <Heading>
         Welcome back
         <Subtitle style={{ fontSize: '0.35em' }}>

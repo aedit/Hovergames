@@ -32,7 +32,14 @@ const GuestPane = React.memo(() => {
   return redirect === true ? (
     <Redirect to="/guide" />
   ) : (
-    <Window pose={guestPose} className="guest">
+    <Window
+      style={{
+        clipPath:
+          'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
+      }}
+      pose={guestPose}
+      className="guest"
+    >
       <Heading>
         Welcome Guest!
         <Subtitle style={{ fontSize: '0.35em' }}>

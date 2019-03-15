@@ -69,3 +69,27 @@ code {
     'progress' !important;
   grid-template-rows: 1fr 1.5fr 1fr 20px;
 }
+.code-block {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-block::before,
+.code-block::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+}
+
+.code-block::before {
+  content: '</';
+  left: +40px;
+}
+
+.code-block::after {
+  content: '>';
+  right: +40px;
+}

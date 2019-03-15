@@ -1,12 +1,31 @@
 import React from 'react'
-import { Heading, Desc, useFromToPose, UD } from '../../ui-components'
-import { Link } from 'react-router-dom'
+import { Heading, Desc, UD } from '../../ui-components'
+// import { Link } from 'react-router-dom'
 
-const About = () => {
-  const upDownPose = useFromToPose(0.3, { from: 'up', to: 'down' })
+export const useFromToPose = (timeOut, { from, to }) => {
+  const [windowPose, setWindowPose] = React.useState(from)
+  const si = () => setWindowPose(to)
+  React.useEffect(() => {
+    setTimeout(si, timeOut * 1000)
+    return () => void clearTimeout(si)
+  }, [])
+  return [windowPose, setWindowPose]
+}
+
+const About = ({ informUp }) => {
+  const [upDownPose, setUpDown] = useFromToPose(0.3, { from: 'up', to: 'down' })
 
   return (
-    <UD pose={upDownPose}>
+    <UD
+      onClick={() => {
+        setUpDown('up')
+        informUp()
+      }}
+      pose={upDownPose}
+      style={{
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%)'
+      }}
+    >
       <Heading style={{ gridArea: 'heading' }}>About Page</Heading>
       <Desc>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
@@ -28,9 +47,6 @@ const About = () => {
         ducimus quae asperiores similique molestiae sint ab excepturi eum!
         Possimus?
       </Desc>
-      <Link style={{ gridArea: 'footer' }} to="/">
-        Back
-      </Link>
     </UD>
   )
 }
