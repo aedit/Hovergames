@@ -10,7 +10,7 @@ const Dashboard = () => {
       <div style={{ gridArea: 'list' }}>
         <Game />
         <Game />
-        <Game />
+        <Game /> 
       </div>
     </Window>
   )
