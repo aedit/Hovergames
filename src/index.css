@@ -58,8 +58,38 @@ code {
   width: 50% !important;
 }
 
-.left {
+.right {
   top: 5vh;
   left: auto;
   right: 5%;
+  grid-template-areas:
+    'heading'
+    'video'
+    'contd'
+    'progress' !important;
+  grid-template-rows: 1fr 1.5fr 1fr 20px;
+}
+.code-block {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-block::before,
+.code-block::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+}
+
+.code-block::before {
+  content: '</';
+  left: +40px;
+}
+
+.code-block::after {
+  content: '>';
+  right: +40px;
 }

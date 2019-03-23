@@ -9,20 +9,36 @@ import posed from 'react-pose'
 const W = posed.div({
   visible: {
     x: '0%',
+    y: '0',
     scale: 1,
     opacity: 1
   },
   hidden: {
+    x: '0%',
+    y: '0',
     scale: 0,
     opacity: 0
   },
-  scaleDownRight: {
+  right: {
     x: '40%',
+    y: '0',
     scale: 0.5,
     opacity: 0.9
   },
-  scaleDownLeft: {
+  left: {
     x: '-40%',
+    y: '0',
+    scale: 0.5,
+    opacity: 0.9
+  },
+  up: {
+    x: '0',
+    y: '-100%',
+    scale: 0.5,
+    opacity: 0.9
+  },
+  down: {
+    y: '100%',
     scale: 0.5,
     opacity: 0.9
   }
@@ -52,11 +68,11 @@ const rl = posed.div({
 const ud = posed.div({
   up: {
     y: '-100%',
-    opacity: 1
+    opacity: 0
   },
   down: {
-    y: '100%',
-    opacity: 0
+    y: '0%',
+    opacity: 1
   }
 })
 const du = posed.div({
@@ -91,11 +107,39 @@ export const RL = styled(rl)`
   font-size: 2em;
 `
 
+const uddu = `min-height: 90vh;
+width: 50vw;
+max-width: 1100px;
+color: white;
+box-shadow: 0 0 100px black;
+background-color: #000000;
+padding: 1em;
+display: grid;
+grid-template-rows: auto 15px 1fr;
+grid-template-areas:
+  'heading'
+  'padding'
+  'desc';
+justify-items: center;
+margin: 0 auto;
+position: relative;
+&::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 5px solid orangered;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%);
+}
+`
+
 export const UD = styled(ud)`
-  font-size: 2em;
+  ${uddu}
 `
 export const DU = styled(du)`
-  font-size: 2em;
+  ${uddu}
 `
 export const Progress = styled(prog)`
   grid-area: progress;
@@ -121,7 +165,7 @@ export const Window = styled(W)`
   background-color: #000000;
   padding: 1em;
   display: grid;
-  grid-template-rows: 2fr 320px;
+  grid-template-rows: 2fr 320px 20px 50px;
   grid-template-areas:
     'heading'
     'seperation'
@@ -156,7 +200,13 @@ export const Subtitle = styled.span`
   }
 `
 
-export const Saperation = styled.h3`
+export const Desc = styled.article`
+  width: 80%;
+  grid-area: desc;
+  text-align: justify;
+`
+
+export const Seperation = styled.h3`
   align-self: center;
   grid-area: seperation;
   text-align: center;

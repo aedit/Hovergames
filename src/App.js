@@ -15,6 +15,8 @@ import UserPane from './components/UserPane'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Guide from './components/Guide'
 import Dashboard from './components/Dashboard'
+import About from './components/About'
+import Authors from './components/Authors'
 
 // const gestures = [
 //   { id: 1, name: 'OPEN' },
@@ -36,20 +38,28 @@ const Home = () => {
   return (
     <React.Fragment>
       {isScaleDown === 'right' && <GuestPane />}
+      {isScaleDown === 'down' && (
+        <About informUp={() => setIsScaleDown('center')} />
+      )}
       <Window
-        pose={
-          isScaleDown === 'center'
-            ? windowPose
-            : isScaleDown === 'right'
-            ? 'scaleDownRight'
-            : 'scaleDownLeft'
-        }
+        style={{
+          clipPath:
+            'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
+        }}
+        pose={isScaleDown === 'center' ? windowPose : isScaleDown}
       >
         <Heading>
           Hover Games
           <Subtitle>
-            Experience the gaming world with a <strong>hover</strong> of your
-            palm.
+            Experience the gaming world with a{' '}
+            <span
+              onClick={() => {
+                setIsScaleDown(prev => (prev === 'down' ? 'center' : 'down'))
+              }}
+            >
+              <strong>hover</strong>
+            </span>{' '}
+            of your palm.
           </Subtitle>
         </Heading>
         <Container>
@@ -87,13 +97,20 @@ const Home = () => {
           </Row>
         </Container>
         <Footer>
-          Authors:{' '}
+          <span
+            onClick={() => {
+              setIsScaleDown(prev => (prev === 'up' ? 'center' : 'up'))
+            }}
+          >
+            Authors:
+          </span>{' '}
           <code>
             {'</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >'}
           </code>
         </Footer>
       </Window>
       {isScaleDown === 'left' && <UserPane />}
+      {isScaleDown === 'up' && <Authors informUp={() => setIsScaleDown('center')} />}
     </React.Fragment>
   )
 }
@@ -104,6 +121,7 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route path="/guide" component={Guide} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/about" component={About} />
     </Switch>
   </BrowserRouter>
 )
