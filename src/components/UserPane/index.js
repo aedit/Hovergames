@@ -8,12 +8,7 @@ import {
   Progress,
   useFromToPoseInf
 } from '../../ui-components'
-import { CardBody, CardTitle, Card } from 'reactstrap'
-// import { Webcam } from 'react-webcam'
-// import ErrorBoundary from '../../ErrorBoundary'
 import { Redirect } from 'react-router-dom'
-
-// const Xyz = () => <Webcam />
 
 const randomString = (length = 5) =>
   Math.random()
@@ -36,23 +31,13 @@ const UserPane = React.memo(() => {
   return redirect === true ? (
     <Redirect to="/dashboard" />
   ) : (
-    <Window
-      pose={guestPose}
-      style={{
-        clipPath:
-          'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
-      }}
-      className="guest right"
-    >
+    <Window pose={guestPose} className="guest right">
       <Heading>
         Welcome back
         <Subtitle style={{ fontSize: '0.35em' }}>
           Please wait while we recognize you!
         </Subtitle>
       </Heading>
-      {/* {<ErrorBoundary>
-        <Xyz style={{ gridArea: 'video' }} />
-      </ErrorBoundary>} */}
       <Heading style={{ gridArea: 'video', fontSize: '1.3rem' }}>
         Oops! Something Went Wrong!
         <br />
@@ -61,14 +46,12 @@ const UserPane = React.memo(() => {
         Logging you in as a guest!
       </Heading>
 
-      <Card className="options" style={{ gridArea: 'contd' }}>
+      <div className="options" style={{ gridArea: 'contd' }}>
         <RL pose={R2L}>
           <i className="far fa-hand-paper" />
         </RL>
-        <CardBody>
-          <CardTitle>Hover to continue</CardTitle>
-        </CardBody>
-      </Card>
+        <p>Hover to continue</p>
+      </div>
       <Progress pose={progressPose}>
         <div />
       </Progress>

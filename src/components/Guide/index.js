@@ -7,7 +7,6 @@ import {
   useFromToPose,
   Desc
 } from '../../ui-components'
-import { CardBody, CardTitle, Card } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
 
 const GuideWindow = styled(Window)`
@@ -54,52 +53,40 @@ const Guide = () => {
       </Desc>
       <Instruction>
         <article>
-          <Card className="options" style={{ gridArea: 'contd' }}>
+          <div className="options" style={{ gridArea: 'contd' }}>
             <i className="far fa-hand-paper" />
-            <CardBody>
-              <CardTitle>RIGHT</CardTitle>
-            </CardBody>
-          </Card>
+            XYZ
+          </div>
         </article>
         <article>
-          <Card className="options" style={{ gridArea: 'contd' }}>
+          <div className="options" style={{ gridArea: 'contd' }}>
             <i className="far fa-hand-paper" />
-            <CardBody>
-              <CardTitle>DOWN</CardTitle>
-            </CardBody>
-          </Card>
+            XYZ
+          </div>
         </article>
         <article>
-          <Card className="options" style={{ gridArea: 'contd' }}>
+          <div className="options" style={{ gridArea: 'contd' }}>
             <i className="far fa-hand-paper" />
-            <CardBody>
-              <CardTitle>UP</CardTitle>
-            </CardBody>
-          </Card>
+            XYZ
+          </div>
         </article>
         <article>
-          <Card className="options" style={{ gridArea: 'contd' }}>
+          <div className="options" style={{ gridArea: 'contd' }}>
             <i className="far fa-hand-paper" />
-            <CardBody>
-              <CardTitle>LEFT</CardTitle>
-            </CardBody>
-          </Card>
+            XYZ
+          </div>
         </article>
         <article>
-          <Card className="options" style={{ gridArea: 'contd' }}>
+          <div className="options" style={{ gridArea: 'contd' }}>
             <i className="far fa-hand-paper" />
-            <CardBody>
-              <CardTitle>OPEN</CardTitle>
-            </CardBody>
-          </Card>
+            XYZ
+          </div>
         </article>
         <article>
-          <Card className="options" style={{ gridArea: 'contd' }}>
+          <div className="options" style={{ gridArea: 'contd' }}>
             <i className="far fa-hand-paper" />
-            <CardBody>
-              <CardTitle>CLOSE</CardTitle>
-            </CardBody>
-          </Card>
+            XYZ
+          </div>
         </article>
       </Instruction>
       <Progress pose={progressPose}>

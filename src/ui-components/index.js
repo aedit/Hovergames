@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import posed from "react-pose";
+import React from 'react'
+import styled from 'styled-components'
+import posed from 'react-pose'
 
 // --------------------------------------------------------
 //      Posed Components (DO NOT EXPORT)
@@ -8,83 +8,83 @@ import posed from "react-pose";
 
 const W = posed.div({
   visible: {
-    x: "0%",
-    y: "0",
+    x: '0%',
+    y: '0',
     scale: 1,
     opacity: 1
   },
   hidden: {
-    x: "0%",
-    y: "0",
+    x: '0%',
+    y: '0',
     scale: 0,
     opacity: 0
   },
   right: {
-    x: "40%",
-    y: "0",
+    x: '40%',
+    y: '0',
     scale: 0.5,
     opacity: 0.9
   },
   left: {
-    x: "-40%",
-    y: "0",
+    x: '-40%',
+    y: '0',
     scale: 0.5,
     opacity: 0.9
   },
   up: {
-    x: "0",
-    y: "-100%",
+    x: '0',
+    y: '-100%',
     scale: 0.5,
     opacity: 0.9
   },
   down: {
-    y: "100%",
+    y: '100%',
     scale: 0.5,
     opacity: 0.9
   }
-});
+})
 
 const lr = posed.div({
   left: {
-    x: "-100%",
+    x: '-100%',
     opacity: 1
   },
   right: {
-    x: "100%",
+    x: '100%',
     opacity: 0
   }
-});
+})
 const rl = posed.div({
   left: {
-    x: "-100%",
+    x: '-100%',
     opacity: 0
   },
   right: {
-    x: "100%",
+    x: '100%',
     opacity: 1
   }
-});
+})
 
 const ud = posed.div({
   up: {
-    y: "-100%",
+    y: '-100%',
     opacity: 0
   },
   down: {
-    y: "0%",
+    y: '0%',
     opacity: 1
   }
-});
+})
 const du = posed.div({
   up: {
-    y: "-100%",
+    y: '-100%',
     opacity: 1
   },
   down: {
-    y: "100%",
+    y: '100%',
     opacity: 0
   }
-});
+})
 
 const prog = posed.div({
   empty: {
@@ -94,7 +94,7 @@ const prog = posed.div({
     scaleX: 1,
     transition: { duration: 5000 }
   }
-});
+})
 
 // --------------------------------------------------------
 //      Styled Components (DO EXPORT)
@@ -102,10 +102,10 @@ const prog = posed.div({
 
 export const LR = styled(lr)`
   font-size: 2em;
-`;
+`
 export const RL = styled(rl)`
   font-size: 2em;
-`;
+`
 
 const uddu = `min-height: 90vh;
 width: 50vw;
@@ -133,27 +133,25 @@ position: relative;
   border: 5px solid #6FFFE9;
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%);
 }
-`;
+`
 
 export const UD = styled(ud)`
   ${uddu}
-`;
+`
 export const DU = styled(du)`
   ${uddu}
-`;
+`
 export const Progress = styled(prog)`
   grid-area: progress;
   width: 100%;
   height: 10px;
   padding: 1px;
   & > div {
-    background: #0f0c29;
-    background: -webkit-linear-gradient(to left, #0f0c29, #302b63, #24243e);
-    background: linear-gradient(to left, #0f0c29, #302b63, #24243e);
+    background: #7afdd6;
     height: 100%;
     transform-origin: left;
   }
-`;
+`
 
 export const Window = styled(W)`
   min-height: 90vh;
@@ -165,13 +163,13 @@ export const Window = styled(W)`
   background-color: #0b132b;
   padding: 1em;
   display: grid;
-  grid-template-rows: 2fr 320px 20px 50px;
+  grid-template-rows: 2fr 20px 320px 50px;
   grid-template-areas:
-    "heading"
-    "seperation"
-    "list"
-    "footer";
-`;
+    'heading'
+    'seperation'
+    'list'
+    'footer';
+`
 
 export const Heading = styled.h1`
   font-size: 4rem;
@@ -182,14 +180,14 @@ export const Heading = styled.h1`
   text-align: center;
   letter-spacing: 2px;
   text-shadow: 0 0 13px #7afdd6;
-`;
+`
 export const Footer = styled.h6`
   font-size: 1rem;
   grid-area: footer;
   text-align: center;
   letter-spacing: 1px;
   color: whitesmoke;
-`;
+`
 
 export const Subtitle = styled.span`
   margin-top: 1em;
@@ -200,20 +198,20 @@ export const Subtitle = styled.span`
     font-weight: 900;
     text-transform: uppercase;
   }
-`;
+`
 
 export const Desc = styled.article`
   width: 80%;
   grid-area: desc;
   text-align: justify;
-`;
+`
 
 export const Seperation = styled.h3`
   align-self: center;
   grid-area: seperation;
   text-align: center;
   padding-bottom: 1rem;
-`;
+`
 
 export const List = styled.ul`
   overflow-y: scroll;
@@ -237,28 +235,28 @@ export const List = styled.ul`
       #cc4499 100%
     );
   }
-`;
+`
 
 // --------------------------------------------------------
 //      Custom Hooks for Posed Components (DO EXPORT)
 // --------------------------------------------------------
 
 export const useFromToPose = (timeOut, { from, to }) => {
-  const [windowPose, setWindowPose] = React.useState(from);
-  const si = () => setWindowPose(to);
+  const [windowPose, setWindowPose] = React.useState(from)
+  const si = () => setWindowPose(to)
   React.useEffect(() => {
-    setTimeout(si, timeOut * 1000);
-    return () => void clearTimeout(si);
-  }, []);
-  return windowPose;
-};
+    setTimeout(si, timeOut * 1000)
+    return () => void clearTimeout(si)
+  }, [])
+  return windowPose
+}
 
 export const useFromToPoseInf = ({ from, to }) => {
-  const [val, setval] = React.useState(from);
-  const si = () => setval(val === from ? to : from);
+  const [val, setval] = React.useState(from)
+  const si = () => setval(val === from ? to : from)
   React.useEffect(() => {
-    setTimeout(si, 1000);
-    return () => void clearTimeout(si);
-  });
-  return val;
-};
+    setTimeout(si, 1000)
+    return () => void clearTimeout(si)
+  })
+  return val
+}

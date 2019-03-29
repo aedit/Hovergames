@@ -17,18 +17,7 @@ import Guide from './components/Guide'
 import Dashboard from './components/Dashboard'
 import About from './components/About'
 import Authors from './components/Authors'
-
-// const gestures = [
-//   { id: 1, name: 'OPEN' },
-//   { id: 2, name: 'CLOSE' },
-//   { id: 3, name: 'MOVE' },
-//   { id: 4, name: 'DRAG' },
-//   { id: 5, name: 'CLICK' },
-//   { id: 6, name: 'HOLD' },
-//   { id: 7, name: 'SCROLL' },
-//   { id: 8, name: 'PULLDOWN' },
-//   { id: 9, name: 'BACK' },
-// ]
+import Play from './components/Play'
 
 const Home = () => {
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
@@ -110,7 +99,9 @@ const Home = () => {
         </Footer>
       </Window>
       {isScaleDown === 'left' && <UserPane />}
-      {isScaleDown === 'up' && <Authors informUp={() => setIsScaleDown('center')} />}
+      {isScaleDown === 'up' && (
+        <Authors informUp={() => setIsScaleDown('center')} />
+      )}
     </React.Fragment>
   )
 }
@@ -122,6 +113,9 @@ const App = () => (
       <Route path="/guide" component={Guide} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/about" component={About} />
+      <Route path="/Game1" component={Play} />
+      <Route path="/Game2" component={Play} />
+      <Route path="/Game3" component={Play} />
     </Switch>
   </BrowserRouter>
 )

@@ -8,7 +8,6 @@ import {
   useFromToPoseInf,
   Progress
 } from '../../ui-components'
-import { CardBody, CardTitle, Card } from 'reactstrap'
 import { Link, Redirect } from 'react-router-dom'
 
 const randomString = (length = 5) =>
@@ -32,30 +31,19 @@ const GuestPane = React.memo(() => {
   return redirect === true ? (
     <Redirect to="/guide" />
   ) : (
-    <Window
-      style={{
-        clipPath:
-          'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
-      }}
-      pose={guestPose}
-      className="guest"
-    >
+    <Window pose={guestPose} className="guest">
       <Heading>
         Welcome Guest!
         <Subtitle style={{ fontSize: '0.35em' }}>
           Your GuestID is <strong>{guestid}</strong>
         </Subtitle>
       </Heading>
-      <Card className="options" style={{ gridArea: 'contd' }}>
+      <div className="options" style={{ gridArea: 'contd' }}>
         <LR pose={L2R}>
           <i className="far fa-hand-paper" />
         </LR>
-        <CardBody>
-          <CardTitle>
-            <Link to="/guide">Hover to continue</Link>
-          </CardTitle>
-        </CardBody>
-      </Card>
+        <Link to="/guide">Hover to continue</Link>
+      </div>
       <Progress pose={progressPose}>
         <div />
       </Progress>
