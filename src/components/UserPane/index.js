@@ -5,56 +5,72 @@ import {
   useFromToPose,
   Subtitle,
   RL,
-  Progress,
   useFromToPoseInf
 } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
-const randomString = (length = 5) =>
-  Math.random()
-    .toString(36)
-    .replace(/\W+/g, '')
-    .substr(0, length)
+const Login = (userid, password, setRedirect) => {
+  axios
+    .post('http://localhost:5000/users/reglog', {
+      userid,
+      password
+    })
+    .then(res => {
+      if (!res.data.error) {
+        localStorage.setItem('token', res.data.token)
+        setRedirect(res.data.new ? 'guide' : 'dashboard')
+      }
+    })
+    .catch(() => {})
+}
 
 const UserPane = React.memo(() => {
+  const [userid, setUserid] = React.useState('')
+  const [password, setPassword] = React.useState('')
   const guestPose = useFromToPose(0.5, { from: 'hidden', to: 'visible' })
   const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
-  const progressPose = useFromToPose(1, { from: 'empty', to: 'full' })
-  const [redirect, setRedirect] = React.useState(false)
-  const guestid = localStorage.hasOwnProperty('guestid')
-    ? localStorage.getItem('guestid')
-    : randomString()
-  localStorage.setItem('guestid', guestid)
-  React.useEffect(() => {
-    if (progressPose === 'full') setTimeout(() => setRedirect(true), 7000)
-  }, [progressPose])
-  return redirect === true ? (
-    <Redirect to="/dashboard" />
+  const [redirect, setRedirect] = React.useState('no')
+
+  return redirect !== 'no' ? (
+    <Redirect to={`/${redirect}`} />
   ) : (
     <Window pose={guestPose} className="guest right">
       <Heading>
-        Welcome back
+        Welcome!
         <Subtitle style={{ fontSize: '0.35em' }}>
-          Please wait while we recognize you!
+          Please wait while we log you in!
         </Subtitle>
       </Heading>
-      <Heading style={{ gridArea: 'video', fontSize: '1.3rem' }}>
-        Oops! Something Went Wrong!
-        <br />
-        Your GuestID is <strong>{guestid}</strong>
-        <br />
-        Logging you in as a guest!
-      </Heading>
-
-      <div className="options" style={{ gridArea: 'contd' }}>
+      <form
+        className="loginform"
+        onSubmit={e => {
+          e.preventDefault()
+          Login(userid, password, setRedirect)
+        }}
+      >
+        <input
+          type="text"
+          name="userid"
+          placeholder="UserName"
+          value={userid}
+          onChange={e => setUserid(e.target.value)}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <input type="submit" value="login" />
+      </form>
+      <div className="options">
         <RL pose={R2L}>
           <i className="far fa-hand-paper" />
         </RL>
-        <p>Hover to continue</p>
+        <p>Hover to Login</p>
       </div>
-      <Progress pose={progressPose}>
-        <div />
-      </Progress>
     </Window>
   )
 })

@@ -9,12 +9,12 @@ import {
   Progress
 } from '../../ui-components'
 import { Link, Redirect } from 'react-router-dom'
-
-const randomString = (length = 5) =>
-  Math.random()
-    .toString(36)
-    .replace(/\W+/g, '')
-    .substr(0, length)
+import axios from 'axios'
+const randomString = async () => {
+  const data = await axios.get('http://localhost:5000/users/guest')
+  const res = await data
+  return res.data.guest_id
+}
 
 const GuestPane = React.memo(() => {
   const guestPose = useFromToPose(0.5, { from: 'hidden', to: 'visible' })
