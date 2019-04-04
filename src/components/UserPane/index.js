@@ -18,7 +18,7 @@ const Login = (userid, password, setRedirect) => {
     })
     .then(res => {
       if (!res.data.error) {
-        localStorage.setItem('token', res.data.token)
+        sessionStorage.setItem('token', res.data.token)
         setRedirect(res.data.new ? 'guide' : 'dashboard')
       }
     })
