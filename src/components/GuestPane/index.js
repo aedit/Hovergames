@@ -11,9 +11,12 @@ import {
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 const randomString = async () => {
-  const data = await axios.get('http://localhost:5000/users/guest')
-  const res = await data
-  return res.data.guest_id
+  await axios.get('http://localhost:5000/users/guest').then(res => {
+    if(!res.data.error) {
+      localStorage.setItem('guestid', res.data.guestid)
+    }
+  }).catch(()=> {})
+  return localStorage.getItem('guestid')
 }
 
 const GuestPane = React.memo(() => {
