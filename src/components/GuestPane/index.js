@@ -10,24 +10,26 @@ import {
 } from '../../ui-components'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
-const randomString = async () => {
-  await axios.get('http://localhost:5000/users/guest').then(res => {
-    if(!res.data.error) {
-      localStorage.setItem('guestid', res.data.guestid)
-    }
-  }).catch(()=> {})
-  return localStorage.getItem('guestid')
+const randomString = setGuestid => {
+  axios
+    .get('http://localhost:5000/users/guest')
+    .then(res => {
+      const guestid = res.data.guest_id.substr(0, 5)
+      sessionStorage.setItem('guestid', guestid)
+      setGuestid(guestid)
+    })
+    .catch(() => {})
 }
 
 const GuestPane = React.memo(() => {
   const guestPose = useFromToPose(0.5, { from: 'hidden', to: 'visible' })
   const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
   const progressPose = useFromToPose(1, { from: 'empty', to: 'full' })
-  const guestid = localStorage.hasOwnProperty('guestid')
-    ? localStorage.getItem('guestid')
-    : randomString()
-  localStorage.setItem('guestid', guestid)
+  const [guestid, setGuestid] = React.useState('')
   const [redirect, setRedirect] = React.useState(false)
+  React.useEffect(() => {
+    randomString(setGuestid)
+  }, [])
   React.useEffect(() => {
     if (progressPose === 'full') setTimeout(() => setRedirect(true), 7000)
   }, [progressPose])

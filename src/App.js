@@ -12,7 +12,7 @@ import {
 } from './ui-components'
 import GuestPane from './components/GuestPane'
 import UserPane from './components/UserPane'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Guide from './components/Guide'
 import Dashboard from './components/Dashboard'
 import About from './components/About'
@@ -24,7 +24,10 @@ const Home = () => {
   const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
   const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
   const [isScaleDown, setIsScaleDown] = React.useState('center')
-  return (
+  const isLoggedIn = sessionStorage.hasOwnProperty('token')
+  return isLoggedIn ? (
+    <Redirect to="/dashboard" />
+  ) : (
     <React.Fragment>
       {isScaleDown === 'right' && <GuestPane />}
       {isScaleDown === 'down' && (
