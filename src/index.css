@@ -22,6 +22,10 @@ body {
   background: linear-gradient(to right, #302b63, #24243e, #302b63);
 }
 
+#root {
+  min-width: 800px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

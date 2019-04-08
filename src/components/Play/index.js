@@ -1,7 +1,6 @@
-import React from 'react'
+import Pong from "./Pong";
+import Puzzle from "./Puzzle";
+import Breakout from "./Breakout";
+import Dodge from './Dodge'
 
-const Play = () => {
-  return <div>YO!</div>
-}
-
-export default Play
+export { Pong, Puzzle, Breakout, Dodge };

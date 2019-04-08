@@ -1,11 +1,20 @@
-import React from 'react'
-import { Window, useFromToPose, Heading, Subtitle } from '../../ui-components'
-import Game from '../Game'
+import React from "react";
+import { Redirect } from "react-router-dom";
+import { Window, useFromToPose, Heading, Subtitle } from "../../ui-components";
+import Game from "../Game";
+
+import Dodge from "../../designs/Dodge.png";
+import Breakout from "../../designs/Breakout.png";
 
 const Dashboard = () => {
-  const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
-  const [selectedGame, setSelectedGame] = React.useState(0)
-  return (
+  const windowPose = useFromToPose(0.3, { from: "hidden", to: "visible" });
+  const [selectedGame, setSelectedGame] = React.useState(0);
+  const isLoggedin =
+    sessionStorage.hasOwnProperty("token") ||
+    sessionStorage.hasOwnProperty("guestid");
+  return !isLoggedin ? (
+    <Redirect to="/" />
+  ) : (
     <Window pose={windowPose}>
       <Heading>
         Dashboard
@@ -13,38 +22,38 @@ const Dashboard = () => {
       </Heading>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          gridArea: 'list'
+          display: "flex",
+          justifyContent: "space-evenly",
+          gridArea: "list"
         }}
       >
         <Game
           key={1}
-          name="Game1"
+          name="Pong"
           selected={selectedGame === 0}
           changeSelect={() => setSelectedGame(0)}
-          color="red"
+          color="tomato"
           desc="Game is awesome! :P"
         />
         <Game
           key={2}
-          name="Game2"
+          name="Dodge"
           selected={selectedGame === 1}
           changeSelect={() => setSelectedGame(1)}
-          color="blue"
+          background={Dodge}
           desc="Game is awesome! :P"
         />
         <Game
           key={3}
-          name="Game3"
+          name="Breakout"
           selected={selectedGame === 2}
           changeSelect={() => setSelectedGame(2)}
-          color="green"
+          background={Breakout}
           desc="Game is awesome! :P"
         />
       </div>
     </Window>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
