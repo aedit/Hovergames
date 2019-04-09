@@ -1,40 +1,40 @@
-import React from 'react';
+import React from 'react'
 
 const style = () => {
-    return {
-        container: {
-            textAlign: 'center',
-            background: '#111',
-            color: 'whitesmoke'
-        },
-        info: {
-            display: 'flex',
-            flexFlow: 'row nowrap',
-            justifyContent: 'space-around'
-        }
-    };
-};
+  return {
+    container: {
+      textAlign: 'center',
+      background: '#111',
+      color: '#7afdd6'
+    },
+    info: {
+      display: 'flex',
+      flexFlow: 'row nowrap',
+      justifyContent: 'space-around'
+    }
+  }
+}
 
 const GameInfo = ({
-    timeElapsed,
-    playerScore,
-    highScore,
-    globalHighScore = 'Loading...'
+  timeElapsed,
+  playerScore,
+  highScore,
+  globalHighScore = 'Loading...'
 }) => {
-    const { container, info } = style();
-    return (
-        <div style={container}>
-            <h3>Use arrows to move.</h3>
-            <div style={info}>
-                <p>Time: {timeElapsed}</p>
-                <p>Score: {playerScore}</p>
-            </div>
-            <div style={info}>
-                <p>High Score: {highScore}</p>
-                <p>Global High Score: {globalHighScore}</p>
-            </div>
-        </div>
-    )
+  const { container, info } = style()
+  return (
+    <div style={container}>
+      <h3>Use arrows to move.</h3>
+      <div style={info}>
+        <p>Time: {timeElapsed}</p>
+        <p>Score: {playerScore}</p>
+      </div>
+      <div style={info}>
+        <p>High Score: {highScore}</p>
+        <p>Global High Score: {globalHighScore}</p>
+      </div>
+    </div>
+  )
 }
 
 // GameInfo.propTypes = {
@@ -44,4 +44,4 @@ const GameInfo = ({
 //     // globalHighScore: PropTypes.number
 // };
 
-export default GameInfo;
+export default GameInfo

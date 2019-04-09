@@ -1,17 +1,17 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import { Window, useFromToPose, Heading, Subtitle } from "../../ui-components";
-import Game from "../Game";
+import React from 'react'
+import { Redirect } from 'react-router-dom'
+import { Window, useFromToPose, Heading, Subtitle } from '../../ui-components'
+import Game from '../Game'
 
-import Dodge from "../../designs/Dodge.png";
-import Breakout from "../../designs/Breakout.png";
+import Dodge from '../../designs/Dodge.png'
+import Breakout from '../../designs/Breakout.png'
 
 const Dashboard = () => {
-  const windowPose = useFromToPose(0.3, { from: "hidden", to: "visible" });
-  const [selectedGame, setSelectedGame] = React.useState(0);
+  const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
+  const [selectedGame, setSelectedGame] = React.useState(0)
   const isLoggedin =
-    sessionStorage.hasOwnProperty("token") ||
-    sessionStorage.hasOwnProperty("guestid");
+    sessionStorage.hasOwnProperty('token') ||
+    sessionStorage.hasOwnProperty('guestid')
   return !isLoggedin ? (
     <Redirect to="/" />
   ) : (
@@ -22,9 +22,9 @@ const Dashboard = () => {
       </Heading>
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-evenly",
-          gridArea: "list"
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          gridArea: 'list'
         }}
       >
         <Game
@@ -41,7 +41,7 @@ const Dashboard = () => {
           selected={selectedGame === 1}
           changeSelect={() => setSelectedGame(1)}
           background={Dodge}
-          desc="Game is awesome! :P"
+          desc="Dodge the blocks!"
         />
         <Game
           key={3}
@@ -49,11 +49,11 @@ const Dashboard = () => {
           selected={selectedGame === 2}
           changeSelect={() => setSelectedGame(2)}
           background={Breakout}
-          desc="Game is awesome! :P"
+          desc="Break the blocks!"
         />
       </div>
     </Window>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
