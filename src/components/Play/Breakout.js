@@ -1,5 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import GameInfo from './Dodge/components/GameInfo'
 
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -323,28 +324,20 @@ class Breakout extends React.Component {
     ) : (
       <div
         style={{
-          width: '95vw',
-          maxWidth: '1100px',
-          height: '90vh',
-          background: '#0b132b',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'flex-end',
-          padding: '5px',
+          justifyContent: 'space-between',
+          width: '95vw',
+          maxWidth: '1100px',
+          margin: '0 auto',
+          background: '#0b132b',
+          padding: '1em',
           borderRadius: '10px',
-          boxShadow: '0 0 100px black'
+          boxShadow: '0 0 100px black',
+          height: '90vh'
         }}
       >
-        <div
-          style={{
-            background: '#111',
-            color: '#7afdd6',
-            margin: '14px 10px',
-            flex: '1'
-          }}
-        >
-          Hey
-        </div>
+        <GameInfo name="Breakout" playerScore="0" highScore="0" />
         <canvas
           ref="canvas"
           width={gameWidth}
