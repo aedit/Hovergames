@@ -317,6 +317,7 @@ export default class Game extends Component {
     return (
       <div style={this.style()}>
         <GameInfo
+          name="Dodge"
           playerScore={playerScore}
           timeElapsed={timeElapsed}
           highScore={highScore}

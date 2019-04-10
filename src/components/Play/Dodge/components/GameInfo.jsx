@@ -5,17 +5,19 @@ const style = () => {
     container: {
       textAlign: 'center',
       background: '#111',
-      color: '#7afdd6'
+      color: 'white'
     },
     info: {
       display: 'flex',
       flexFlow: 'row nowrap',
-      justifyContent: 'space-around'
+      justifyContent: 'space-around',
+      color: 'whitesmoke'
     }
   }
 }
 
 const GameInfo = ({
+  name,
   timeElapsed,
   playerScore,
   highScore,
@@ -24,7 +26,15 @@ const GameInfo = ({
   const { container, info } = style()
   return (
     <div style={container}>
-      <h3>Use arrows to move.</h3>
+      <h3
+        style={{
+          color: 'white',
+          padding: '0.1em',
+          textShadow: '0 0 10px #7afdd6'
+        }}
+      >
+        {name}
+      </h3>
       <div style={info}>
         <p>Time: {timeElapsed}</p>
         <p>Score: {playerScore}</p>

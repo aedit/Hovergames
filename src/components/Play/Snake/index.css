@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.grid {
+  background: black;
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  margin: 10px auto;
+  flex: 1;
+}
+
+.cell {
+  padding: 40% 0;
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
+}
+
+.apple {
+  background-color: crimson;
+}
+
+.snake-head {
+  background-color: darkslategray;
+}
+
+.snake-tail {
+  background-color: darkgray;
+}

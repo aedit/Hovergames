@@ -29,11 +29,10 @@ const Dashboard = () => {
       >
         <Game
           key={1}
-          name="Pong"
+          name="Snake"
           selected={selectedGame === 0}
           changeSelect={() => setSelectedGame(0)}
-          color="tomato"
-          desc="Game is awesome! :P"
+          desc="Eat the Blocks!"
         />
         <Game
           key={2}
@@ -41,7 +40,7 @@ const Dashboard = () => {
           selected={selectedGame === 1}
           changeSelect={() => setSelectedGame(1)}
           background={Dodge}
-          desc="Dodge the blocks!"
+          desc="Ditch the blocks!"
         />
         <Game
           key={3}

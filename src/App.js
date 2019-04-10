@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap";
+import React from 'react'
+import { Container, Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
 import {
   useFromToPose,
   useFromToPoseInf,
@@ -9,57 +9,57 @@ import {
   LR,
   RL,
   Footer
-} from "./ui-components";
-import GuestPane from "./components/GuestPane";
-import UserPane from "./components/UserPane";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import Guide from "./components/Guide";
-import Dashboard from "./components/Dashboard";
-import About from "./components/About";
-import Authors from "./components/Authors";
-import { Pong, Dodge, Breakout } from "./components/Play";
+} from './ui-components'
+import GuestPane from './components/GuestPane'
+import UserPane from './components/UserPane'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import Guide from './components/Guide'
+import Dashboard from './components/Dashboard'
+import About from './components/About'
+import Authors from './components/Authors'
+import { Snake, Dodge, Breakout } from './components/Play'
 
 const Home = () => {
-  const windowPose = useFromToPose(0.3, { from: "hidden", to: "visible" });
-  const L2R = useFromToPoseInf({ from: "left", to: "right" });
-  const R2L = useFromToPoseInf({ from: "right", to: "left" });
-  const [isScaleDown, setIsScaleDown] = React.useState("center");
-  const isLoggedIn = sessionStorage.hasOwnProperty("token");
+  const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
+  const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
+  const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
+  const [isScaleDown, setIsScaleDown] = React.useState('center')
+  const isLoggedIn = sessionStorage.hasOwnProperty('token')
   return isLoggedIn ? (
     <Redirect to="/dashboard" />
   ) : (
     <React.Fragment>
-      {isScaleDown === "right" && <GuestPane />}
-      {isScaleDown === "down" && (
-        <About informUp={() => setIsScaleDown("center")} />
+      {isScaleDown === 'right' && <GuestPane />}
+      {isScaleDown === 'down' && (
+        <About informUp={() => setIsScaleDown('center')} />
       )}
       <Window
         style={{
           clipPath:
-            "polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)"
+            'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
         }}
-        pose={isScaleDown === "center" ? windowPose : isScaleDown}
+        pose={isScaleDown === 'center' ? windowPose : isScaleDown}
       >
         <Heading>
           Hover Games
           <Subtitle>
-            Experience the gaming world with a{" "}
+            Experience the gaming world with a{' '}
             <span
               onClick={() => {
-                setIsScaleDown(prev => (prev === "down" ? "center" : "down"));
+                setIsScaleDown(prev => (prev === 'down' ? 'center' : 'down'))
               }}
             >
               <strong>hover</strong>
-            </span>{" "}
+            </span>{' '}
             of your palm.
           </Subtitle>
         </Heading>
         <Container>
-          <Row style={{ alignItems: "center", height: "100%" }}>
+          <Row style={{ alignItems: 'center', height: '100%' }}>
             <Col />
             <Col
               onClick={() =>
-                setIsScaleDown(prev => (prev === "right" ? "center" : "right"))
+                setIsScaleDown(prev => (prev === 'right' ? 'center' : 'right'))
               }
             >
               <Card className="options">
@@ -73,7 +73,7 @@ const Home = () => {
             </Col>
             <Col
               onClick={() =>
-                setIsScaleDown(prev => (prev === "left" ? "center" : "left"))
+                setIsScaleDown(prev => (prev === 'left' ? 'center' : 'left'))
               }
             >
               <Card className="options">
@@ -91,23 +91,23 @@ const Home = () => {
         <Footer>
           <span
             onClick={() => {
-              setIsScaleDown(prev => (prev === "up" ? "center" : "up"));
+              setIsScaleDown(prev => (prev === 'up' ? 'center' : 'up'))
             }}
           >
             Authors:
-          </span>{" "}
+          </span>{' '}
           <code>
-            {"</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >"}
+            {'</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >'}
           </code>
         </Footer>
       </Window>
-      {isScaleDown === "left" && <UserPane />}
-      {isScaleDown === "up" && (
-        <Authors informUp={() => setIsScaleDown("center")} />
+      {isScaleDown === 'left' && <UserPane />}
+      {isScaleDown === 'up' && (
+        <Authors informUp={() => setIsScaleDown('center')} />
       )}
     </React.Fragment>
-  );
-};
+  )
+}
 
 const App = () => (
   <BrowserRouter>
@@ -116,11 +116,11 @@ const App = () => (
       <Route path="/guide" component={Guide} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/about" component={About} />
-      <Route path="/pong" component={Pong} />
+      <Route path="/snake" component={Snake} />
       <Route path="/dodge" component={Dodge} />
       <Route path="/breakout" component={Breakout} />
     </Switch>
   </BrowserRouter>
-);
+)
 
-export default App;
+export default App
