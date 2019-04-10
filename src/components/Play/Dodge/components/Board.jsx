@@ -1,20 +1,18 @@
-import React from 'react';
+import React from 'react'
 
-const style = (dimension) => {
-    const dim = dimension + 'px';
-    return {
-        width: dim,
-        height: dim,
-        border: '1px solid black',
-        position: 'relative',
-        margin: '25px auto',
-        overflow: 'hidden',
-        background: 'white'
-    };
-};
+const style = dimension => {
+  const dim = dimension + 'px'
+  return {
+    width: dim,
+    height: dim,
+    border: '1px solid black',
+    position: 'relative',
+    margin: '25px auto',
+    overflow: 'hidden',
+    background: '#000'
+  }
+}
 
 export default ({ dimension, children }) => (
-    <div style={style(dimension)}>
-        {children}
-    </div>
+  <div style={style(dimension)}>{children}</div>
 )

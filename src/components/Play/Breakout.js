@@ -4,12 +4,12 @@ import { Redirect } from 'react-router-dom'
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 
-const gameWidth = 0.9 * w > 1000 ? 1000 : 0.9 * w,
+const gameWidth = 0.95 * w > 1000 ? 1000 : 0.95 * w,
   //   gameHeight =
   //     document.documentElement.clientHeight -
   //     document.documentElement.clientHeight * 0.2,
-  gameHeight = 0.6 * h,
-  colors = ['#7afd94', '#fd947a', '##fdd57a', '#d57afd', '#fd7ae2', '#7ae2fd']
+  gameHeight = 0.65 * h,
+  colors = ['#3c1611', '#751e1a', '##b22222', '#c54f43', '#e49689', '#fff']
 
 class Breakout extends React.Component {
   componentDidMount = () => {
@@ -25,14 +25,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 6,
         speedX: 0,
-        speedY: 6
+        speedY: 3
       },
       paddle1 = {
         w: 120,
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 6
+        speed: 10
       },
       bricks = [],
       bonuses = [],
@@ -145,14 +145,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 6,
         speedX: 0,
-        speedY: 6
+        speedY: 3
       }
       paddle1 = {
         w: 100,
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 6
+        speed: 10
       }
     }
 
@@ -161,7 +161,7 @@ class Breakout extends React.Component {
       ctx.fillStyle = '#000'
       ctx.fillRect(0, 0, Width, Height)
       // paddle
-      ctx.fillStyle = '#7afdd6'
+      ctx.fillStyle = 'darkgray'
       ctx.fillRect(paddle1.x, paddle1.y, paddle1.w, paddle1.h)
 
       if (ballOn === false) {
@@ -286,7 +286,7 @@ class Breakout extends React.Component {
         ) {
           ball.speedY = -ball.speedY
           let deltaX = ball.x - (paddle1.x + paddle1.w / 2)
-          ball.speedX = deltaX * 0.15
+          ball.speedX = deltaX * 0.06
         }
         // check ball hit wall left-right
         if (ball.x >= Width || ball.x <= 0) {
@@ -323,20 +323,34 @@ class Breakout extends React.Component {
     ) : (
       <div
         style={{
-          width: '1100px',
+          width: '95vw',
+          maxWidth: '1100px',
           height: '90vh',
           background: '#0b132b',
           display: 'flex',
-          justifyContent: 'center'
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          padding: '5px',
+          borderRadius: '10px',
+          boxShadow: '0 0 100px black'
         }}
       >
-        <div style={{ height: '40vh', background: 'white' }} />
+        <div
+          style={{
+            background: '#111',
+            color: '#7afdd6',
+            margin: '14px 10px',
+            flex: '1'
+          }}
+        >
+          Hey
+        </div>
         <canvas
           ref="canvas"
           width={gameWidth}
           height={gameHeight}
           id="gameCanvas"
-          style={{ borderRadius: '8px' }}
+          style={{ borderRadius: '8px', margin: '15px auto' }}
         />
       </div>
     )
