@@ -2,6 +2,10 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Window, useFromToPose, Heading, Subtitle } from '../../ui-components'
 import Game from '../Game'
+import { connect } from 'react-redux'
+import Dodge from '../../designs/Dodge.png'
+import Breakout from '../../designs/Breakout.png'
+import { startVideo, stop } from '../../tracker'
 
 import Dodge from '../../designs/Dodge.png'
 import Breakout from '../../designs/Breakout.png'
@@ -57,4 +61,11 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+const mapStateToProps = state => ({
+  ...state
+})
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Dashboard)

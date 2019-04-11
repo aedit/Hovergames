@@ -1,18 +1,20 @@
-import { createStore } from 'redux'
+import { createStore } from "redux";
 
-const reducer = (state = { gesture: '' }, action) => {
+const reducer = (state = { ready: false, gesture: "" }, action) => {
   switch (action.type) {
-    case 'up':
-      return { gesture: 'up' }
-    case 'down':
-      return { gesture: 'down' }
-    case 'right':
-      return { gesture: 'right' }
-    case 'left':
-      return { gesture: 'left' }
+    case "up":
+      return { ...state, gesture: "up" };
+    case "down":
+      return { ...state, gesture: "down" };
+    case "right":
+      return { ...state, gesture: "right" };
+    case "left":
+      return { ...state, gesture: "left" };
+    case "ready":
+      return { ...state, ready: true };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export let store = createStore(reducer)
+export let store = createStore(reducer);

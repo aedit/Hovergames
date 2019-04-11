@@ -1,5 +1,5 @@
-import React from 'react'
-import { Container, Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
+import React from "react";
+import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap";
 import {
   useFromToPose,
   useFromToPoseInf,
@@ -9,59 +9,64 @@ import {
   LR,
   RL,
   Footer
-} from './ui-components'
-import GuestPane from './components/GuestPane'
-import UserPane from './components/UserPane'
-import { Redirect } from 'react-router-dom'
-import Authors from './components/Authors'
-import { connect } from 'react-redux'
-import About from './components/About'
+} from "./ui-components";
+import GuestPane from "./components/GuestPane";
+import UserPane from "./components/UserPane";
+import { Redirect } from "react-router-dom";
+import Authors from "./components/Authors";
+import { connect } from "react-redux";
+import About from "./components/About";
+import { startVideo, stop } from "./tracker";
 
-const Home = ({ gesture }) => {
-  if (gesture !== '') console.log(gesture)
-  const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
-  const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
-  const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
+const Home = ({ ready, gesture }) => {
+  if (gesture !== "") console.log(gesture);
+  const windowPose = useFromToPose(0.3, { from: "hidden", to: "visible" });
+  const L2R = useFromToPoseInf({ from: "left", to: "right" });
+  const R2L = useFromToPoseInf({ from: "right", to: "left" });
   const [isScaleDown, setIsScaleDown] = React.useState(
-    gesture === '' ? 'center' : gesture
-  )
-  if (gesture !== isScaleDown) setIsScaleDown(gesture)
-  const isLoggedIn = sessionStorage.hasOwnProperty('token')
+    gesture === "" ? "center" : gesture
+  );
+  if (gesture !== isScaleDown) setIsScaleDown(gesture);
+  React.useEffect(() => {
+    if (ready) startVideo();
+  }, [ready]);
+  React.useEffect(() => () => void stop(), []);
+  const isLoggedIn = sessionStorage.hasOwnProperty("token");
   return isLoggedIn ? (
     <Redirect to="/dashboard" />
   ) : (
     <React.Fragment>
-      {isScaleDown === 'right' && <GuestPane />}
-      {isScaleDown === 'down' && (
-        <About informUp={() => setIsScaleDown('center')} />
+      {isScaleDown === "right" && <GuestPane />}
+      {isScaleDown === "down" && (
+        <About informUp={() => setIsScaleDown("center")} />
       )}
       <Window
         style={{
           clipPath:
-            'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
+            "polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)"
         }}
-        pose={isScaleDown === 'center' ? windowPose : isScaleDown}
+        pose={isScaleDown === "center" ? windowPose : isScaleDown}
       >
         <Heading>
           Hover Games
           <Subtitle>
-            Experience the gaming world with a{' '}
+            Experience the gaming world with a{" "}
             <span
               onClick={() => {
-                setIsScaleDown(prev => (prev === 'down' ? 'center' : 'down'))
+                setIsScaleDown(prev => (prev === "down" ? "center" : "down"));
               }}
             >
               <strong>hover</strong>
-            </span>{' '}
+            </span>{" "}
             of your palm.
           </Subtitle>
         </Heading>
         <Container>
-          <Row style={{ alignItems: 'center', height: '100%' }}>
+          <Row style={{ alignItems: "center", height: "100%" }}>
             <Col />
             <Col
               onClick={() =>
-                setIsScaleDown(prev => (prev === 'right' ? 'center' : 'right'))
+                setIsScaleDown(prev => (prev === "right" ? "center" : "right"))
               }
             >
               <Card className="options">
@@ -75,7 +80,7 @@ const Home = ({ gesture }) => {
             </Col>
             <Col
               onClick={() =>
-                setIsScaleDown(prev => (prev === 'left' ? 'center' : 'left'))
+                setIsScaleDown(prev => (prev === "left" ? "center" : "left"))
               }
             >
               <Card className="options">
@@ -93,31 +98,31 @@ const Home = ({ gesture }) => {
         <Footer>
           <span
             onClick={() => {
-              setIsScaleDown(prev => (prev === 'up' ? 'center' : 'up'))
+              setIsScaleDown(prev => (prev === "up" ? "center" : "up"));
             }}
           >
             Authors:
-          </span>{' '}
+          </span>{" "}
           <code>
-            {'</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >'}
+            {"</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >"}
           </code>
         </Footer>
       </Window>
-      {isScaleDown === 'left' && <UserPane />}
-      {isScaleDown === 'up' && (
-        <Authors informUp={() => setIsScaleDown('center')} />
+      {isScaleDown === "left" && <UserPane />}
+      {isScaleDown === "up" && (
+        <Authors informUp={() => setIsScaleDown("center")} />
       )}
     </React.Fragment>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => {
   return {
-    gesture: state.gesture
-  }
-}
+    ...state
+  };
+};
 
 export default connect(
   mapStateToProps,
   () => ({})
-)(Home)
+)(Home);
