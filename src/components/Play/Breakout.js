@@ -155,6 +155,7 @@ class Breakout extends React.Component {
             case colors[5]:
               newScore = this.state.score + 10
               break
+            default:
           }
           this.updateScore(newScore)
           bricks.splice(i, 1)

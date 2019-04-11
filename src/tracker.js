@@ -55,7 +55,7 @@ const getDirection = predictions => {
     distx = x - ox
     disty = y - oy
 
-    if (Math.abs(distx) > 10 || Math.abs(disty) > 10) {
+    if (Math.abs(distx) > 100 || Math.abs(disty) > 30) {
       gestRecorded = true
       direction =
         Math.abs(distx) > Math.abs(disty)
