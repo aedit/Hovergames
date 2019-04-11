@@ -1,17 +1,34 @@
-import React from 'react'
-import { Redirect } from 'react-router-dom'
-import { Window, useFromToPose, Heading, Subtitle } from '../../ui-components'
-import Game from '../Game'
+import React from "react";
+import { Redirect } from "react-router-dom";
+import { Window, useFromToPose, Heading, Subtitle } from "../../ui-components";
+import Game from "../Game";
+import { connect } from "react-redux";
+import Dodge from "../../designs/Dodge.png";
+import Breakout from "../../designs/Breakout.png";
+import { startVideo, stop } from "../../tracker";
 
-import Dodge from '../../designs/Dodge.png'
-import Breakout from '../../designs/Breakout.png'
-
-const Dashboard = () => {
-  const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
-  const [selectedGame, setSelectedGame] = React.useState(0)
+const Dashboard = ({ ready, gesture }) => {
+  const windowPose = useFromToPose(0.3, { from: "hidden", to: "visible" });
+  const [selectedGame, setSelectedGame] = React.useState(0);
+  React.useEffect(() => {
+    switch (gesture) {
+      case "left":
+        setSelectedGame(prev => (prev + 1) % 3);
+        break;
+      case "right":
+        setSelectedGame(prev => (prev - 1 > -1 ? prev - 1 : 3) % 3);
+        break;
+      default:
+        break;
+    }
+  }, [gesture]);
+  React.useEffect(() => {
+    if (ready) startVideo();
+  }, [ready]);
+  React.useEffect(() => () => void stop(), []);
   const isLoggedin =
-    sessionStorage.hasOwnProperty('token') ||
-    sessionStorage.hasOwnProperty('guestid')
+    sessionStorage.hasOwnProperty("token") ||
+    sessionStorage.hasOwnProperty("guestid");
   return !isLoggedin ? (
     <Redirect to="/" />
   ) : (
@@ -22,9 +39,9 @@ const Dashboard = () => {
       </Heading>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          gridArea: 'list'
+          display: "flex",
+          justifyContent: "space-evenly",
+          gridArea: "list"
         }}
       >
         <Game
@@ -52,7 +69,14 @@ const Dashboard = () => {
         />
       </div>
     </Window>
-  )
-}
+  );
+};
 
-export default Dashboard
+const mapStateToProps = state => ({
+  ...state
+});
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Dashboard);
