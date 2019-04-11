@@ -13,6 +13,13 @@ const gameWidth = 0.95 * w > 1000 ? 1000 : 0.95 * w,
   colors = ['#3c1611', '#751e1a', '##b22222', '#c54f43', '#e49689', '#fff']
 
 class Breakout extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { score: 0, highscore: 0 }
+  }
+  updateScore = newScore => {
+    this.setState({ score: newScore })
+  }
   componentDidMount = () => {
     this.update()
   }
@@ -24,7 +31,7 @@ class Breakout extends React.Component {
     let ball = {
         x: Width / 2 - 3,
         y: Height / 2 - 3,
-        radius: 6,
+        radius: 7,
         speedX: 0,
         speedY: 3
       },
@@ -33,7 +40,7 @@ class Breakout extends React.Component {
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 10
+        speed: 12
       },
       bricks = [],
       bonuses = [],
@@ -123,11 +130,33 @@ class Breakout extends React.Component {
       }
     }
     // if ball touch brick destroy
-    function destroyBrick() {
+    const destroyBrick = () => {
       for (let i = 0; i < bricks.length; i++) {
         if (checkCollision(ball, bricks[i])) {
           ball.speedY = -ball.speedY
           createBonus(bricks[i])
+          let newScore = 0
+          switch (bricks[i].color) {
+            case colors[0]:
+              newScore = this.state.score + 60
+              break
+            case colors[1]:
+              newScore = this.state.score + 50
+              break
+            case colors[2]:
+              newScore = this.state.score + 40
+              break
+            case colors[3]:
+              newScore = this.state.score + 30
+              break
+            case colors[4]:
+              newScore = this.state.score + 20
+              break
+            case colors[5]:
+              newScore = this.state.score + 10
+              break
+          }
+          this.updateScore(newScore)
           bricks.splice(i, 1)
         }
       }
@@ -144,7 +173,7 @@ class Breakout extends React.Component {
       ball = {
         x: Width / 2 - 3,
         y: Height / 2 - 3,
-        radius: 6,
+        radius: 8,
         speedX: 0,
         speedY: 3
       }
@@ -153,7 +182,7 @@ class Breakout extends React.Component {
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 10
+        speed: 12
       }
     }
 
@@ -337,7 +366,11 @@ class Breakout extends React.Component {
           height: '90vh'
         }}
       >
-        <GameInfo name="Breakout" playerScore="0" highScore="0" />
+        <GameInfo
+          name="Breakout"
+          playerScore={this.state.score}
+          highScore={this.state.highscore}
+        />
         <canvas
           ref="canvas"
           width={gameWidth}
