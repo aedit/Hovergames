@@ -5,6 +5,7 @@ import Game from '../Game'
 
 import Dodge from '../../designs/Dodge.png'
 import Breakout from '../../designs/Breakout.png'
+import Snake from '../../designs/Snake.png'
 
 const Dashboard = () => {
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
@@ -32,6 +33,7 @@ const Dashboard = () => {
           name="Snake"
           selected={selectedGame === 0}
           changeSelect={() => setSelectedGame(0)}
+          background={Snake}
           desc="Eat the Blocks!"
         />
         <Game
