@@ -12,7 +12,7 @@ import axios from 'axios'
 
 const Login = (userid, password, setRedirect) => {
   axios
-    .post('http://localhost:5000/users/reglog', {
+    .post('/users/reglog', {
       userid,
       password
     })

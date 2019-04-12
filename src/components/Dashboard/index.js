@@ -47,7 +47,7 @@ const Dashboard = ({ gesture, ready }) => {
       default:
         break
     }
-    console.log(gesture)
+    console.log(gesture, selectedGame)
   }, [gesture])
   React.useEffect(() => {
     if (ready) startVideo()

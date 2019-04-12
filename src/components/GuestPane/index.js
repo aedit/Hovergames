@@ -12,7 +12,7 @@ import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 const randomString = setGuestid => {
   axios
-    .get('http://localhost:5000/users/guest')
+    .get('/users/guest')
     .then(res => {
       const guestid = res.data.guest_id.substr(0, 5)
       sessionStorage.setItem('guestid', guestid)
