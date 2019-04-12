@@ -1,7 +1,5 @@
-import Snake from './Snake'
-import Puzzle from './Puzzle'
-import Breakout from './Breakout'
-import Dodge from './Dodge'
-import { connect } from 'react-redux'
+import Snake from "./Snake";
+import Breakout from "./Breakout";
+import Dodge from "./Dodge";
 
-export { Snake, Breakout, Dodge }
+export { Snake, Breakout, Dodge };
