@@ -1,6 +1,7 @@
 import React from 'react'
 import { Game } from './containers'
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const Dodge = () => {
   const isLoggedin =
@@ -13,4 +14,11 @@ const Dodge = () => {
   )
 }
 
-export default Dodge
+const mapStateToProps = state => ({
+  ...state
+})
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Dodge)

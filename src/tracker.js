@@ -15,9 +15,9 @@ let [distx, disty] = [null, null]
 let [ox, oy] = [0, 0]
 let gestRecorded = true
 
-let distOld = -1
-let dif = 0
-let gestureCount = 0
+// let distOld = -1
+// let dif = 0
+// let gestureCount = 0
 
 let model = null
 handTrack.load(modelParams).then(lmodel => {
@@ -28,12 +28,12 @@ handTrack.load(modelParams).then(lmodel => {
   store.dispatch({ type: 'ready' })
 })
 
-export const startVideo = () => {
+export const startVideo = (getPos = false) => {
   handTrack.startVideo(video).then(function(status) {
     console.log('video started', status)
     if (status) {
       console.log('Video started. Now tracking')
-      runDetection()
+      runDetection(getPos)
     } else {
       console.log('Please enable video')
     }
@@ -56,10 +56,10 @@ const getDirection = predictions => {
     distx = x - ox
     disty = y - oy
 
-    if (Math.abs(distx) > 100 || Math.abs(disty) > 40) {
+    if (Math.abs(distx) > 100 || Math.abs(disty) > 30) {
       gestRecorded = true
       direction =
-        Math.abs(distx) > Math.abs(disty)
+        Math.abs(distx) > Math.abs(disty) && Math.abs(distx) > 100
           ? distx > 0
             ? 'right'
             : 'left'
@@ -118,13 +118,24 @@ const getDirection = predictions => {
 //   }
 // };
 
-async function runDetection() {
+async function runDetection(getPos) {
   await model.detect(video).then(predictions => {
+    // if (!getPos) {
     let dir = ''
     if (predictions.length >= 1) {
       dir = getDirection(predictions)
     }
     if (dir !== '') store.dispatch({ type: dir })
+    // } else {
+    //   if (predictions.length >= 1) {
+    //     const p1x1 = parseInt(predictions[0].bbox[0])
+    //     const p1y1 = parseInt(predictions[0].bbox[1])
+    //     const p1x2 = parseInt(predictions[0].bbox[2])
+    //     const p1y2 = parseInt(predictions[0].bbox[3])
+    //     const [x, y] = [(p1x1 + p1x2) / 2, (p1y1 + p1y2) / 2]
+    //     store.dispatch({ type: 'pos', payload: { x, y } })
+    //   }
+    // }
     requestAnimationFrame(runDetection)
   })
 }

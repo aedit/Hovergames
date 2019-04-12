@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 import GameInfo from '../Dodge/components/GameInfo'
 import Grid from './Grid'
 import './index.css'
+import { connect } from 'react-redux'
 
 class Snake extends Component {
   constructor(props) {
@@ -59,4 +60,11 @@ class Snake extends Component {
   }
 }
 
-export default Snake
+const mapStateToProps = state => ({
+  ...state
+})
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Snake)

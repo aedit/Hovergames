@@ -3,17 +3,56 @@ import { Redirect } from 'react-router-dom'
 import { Window, useFromToPose, Heading, Subtitle } from '../../ui-components'
 import Game from '../Game'
 import { connect } from 'react-redux'
-import Dodge from '../../designs/Dodge.png'
-import Breakout from '../../designs/Breakout.png'
 import { startVideo, stop } from '../../tracker'
 
 import Dodge from '../../designs/Dodge.png'
 import Breakout from '../../designs/Breakout.png'
 import Snake from '../../designs/Snake.png'
 
-const Dashboard = () => {
+const Dashboard = ({ gesture, ready }) => {
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
   const [selectedGame, setSelectedGame] = React.useState(0)
+  React.useEffect(() => {
+    switch (gesture) {
+      case 'right':
+        setSelectedGame(prev => {
+          switch (prev) {
+            case 0:
+              return 1
+            case 1:
+              return 2
+            case 2:
+              return 0
+            default:
+              return 1
+          }
+        })
+
+        break
+      case 'left':
+        setSelectedGame(prev => {
+          switch (prev) {
+            case 0:
+              return 2
+            case 1:
+              return 0
+            case 2:
+              return 1
+            default:
+              return 1
+          }
+        })
+
+        break
+      default:
+        break
+    }
+    console.log(gesture)
+  }, [gesture])
+  React.useEffect(() => {
+    if (ready) startVideo()
+  }, [ready])
+  React.useEffect(() => () => void stop(), [])
   const isLoggedin =
     sessionStorage.hasOwnProperty('token') ||
     sessionStorage.hasOwnProperty('guestid')

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
+import { startVideo, stop } from '../../tracker'
+import { connect } from 'react-redux'
 
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -21,7 +23,11 @@ class Breakout extends React.Component {
     this.setState({ score: newScore })
   }
   componentDidMount = () => {
+    if (this.props.ready) startVideo(true)
     this.update()
+  }
+  componentWillUnmount() {
+    stop()
   }
   update = () => {
     const Width = gameWidth,
@@ -384,4 +390,11 @@ class Breakout extends React.Component {
   }
 }
 
-export default Breakout
+const mapStateToProps = state => ({
+  ...state
+})
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Breakout)
