@@ -1,6 +1,9 @@
 import React from 'react'
 import { Heading, DU } from '../../ui-components'
 import Profile from '../Profile'
+import udit from '../../udit.jpg'
+import vinay from '../../vinay.jpg'
+import vaibhav from '../../vaibhav.jpg'
 
 export const useFromToPose = (timeOut, { from, to }) => {
   const [windowPose, setWindowPose] = React.useState(from)
@@ -36,9 +39,9 @@ const Authors = ({ informUp }) => {
           width: '90%'
         }}
       >
-        <Profile name={'Udit'} dp={''} description={'hello'} />
-        <Profile name={'Vaibhav'} dp={''} description={'hello'} />
-        <Profile name={'Vinay'} dp={''} description={'hello'} />
+        <Profile name={'Udit'} dp={udit} description={'hello'} />
+        <Profile name={'Vaibhav'} dp={vaibhav} description={'hello'} />
+        <Profile name={'Vinay'} dp={vinay} description={'hello'} />
       </div>
     </DU>
   )
