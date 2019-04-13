@@ -138,11 +138,11 @@ const getDirection = predictions => {
   }
   // return direction
 }
-
-async function runDetection(getPos) {
+let sd = 0
+async function runDetection() {
   await model.detect(video).then(predictions => {
     let dir = ''
-    if (predictions.length === 0) {
+    if (predictions.length === 0 && ++sd % 6 === 0) {
       ;[distx, disty] = [ox - ex, oy - ey]
       //      const slope = Math.abs(disty) / Math.abs(distx)
       let [thresholdX, thresholdY] = [
@@ -174,8 +174,8 @@ async function runDetection(getPos) {
       }
     } else if (predictions.length > 0) {
       getDirection(predictions)
-      model.renderPredictions(predictions, canvas, context, video)
     }
+    model.renderPredictions(predictions, canvas, context, video)
     requestAnimationFrame(runDetection)
   })
 }
