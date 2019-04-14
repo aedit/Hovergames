@@ -32,8 +32,8 @@ const Home = ({ ready, gesture }) => {
       case 'rightleft':
       case 'updown':
       case 'downup':
-        setIsScaleDown('center')
-        console.log(n)
+        // setIsScaleDown('center')
+        // console.log(n)
         f = false
         break
       default:
@@ -41,8 +41,8 @@ const Home = ({ ready, gesture }) => {
     }
 
     if (f && gesture !== isScaleDown) {
-      setIsScaleDown(gesture === '' ? 'center' : gesture)
-      console.log(isScaleDown)
+        setIsScaleDown(gesture === '' ? 'center' : gesture)
+      // console.log(isScaleDown)
     }
   }, [gesture])
   React.useEffect(() => {

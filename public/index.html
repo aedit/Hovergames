@@ -43,10 +43,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <video style="display: none" id="vid"></video>
+    <video style="display: none; width: 640px; height: 480px" id="vid"></video>
     <canvas
-      style="position: fixed; width:600px; height:400px; top:50%;left:50%; transform: translate(-50%, -50%); z-index: 100"
+      style="position: fixed; width:640px; height:480px; top:50%;left:50%; transform: translate(-50%, -50%); z-index: 100"
       id="vidc"
     ></canvas>
+    <div style="width: calc(640px / 3); height: 480px; border: 1px solid red; top:50%;left:50%; transform: translate(-50%, -50%); z-index: 101;position: absolute"></div>
+    <div style="width: 640px; height: calc(480px / 3); border: 1px solid red; top:50%;left:50%; transform: translate(-50%, -50%); z-index: 101;position: absolute"></div>
   </body>
 </html>

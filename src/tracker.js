@@ -7,15 +7,18 @@ const context = canvas.getContext('2d')
 
 const modelParams = {
   flipHorizontal: true,
-  imageScaleFactor: 0.6,
+  imageScaleFactor: 0.7,
   maxNumBoxes: 3,
   iouThreshold: 0.5,
-  scoreThreshold: 0.7
+  scoreThreshold: 0.8
 }
 
 let [distx, disty] = [null, null]
 let [ox, oy] = [0, 0]
 let gestRecorded = true
+let oldRegion =''
+let h1OldRegion =''
+let h2OldRegion =''
 
 // let distOld = -1
 // let dif = 0
@@ -24,7 +27,7 @@ let gestRecorded = true
 let model = null
 handTrack.load(modelParams).then(lmodel => {
   // detect objects in the image.
-  console.log('Loaded Model!')
+  console.log('Loaded Model!', lmodel)
   model = lmodel
   // startVideo();
   store.dispatch({ type: 'ready' })
@@ -41,37 +44,124 @@ export const startVideo = (getPos = false) => {
     }
   })
 }
+/*
+const getDirection = predictions => {
+  let direction = ''
+  const p1x1 = parseInt(predictions[0].bbox[0])
+  const p1y1 = parseInt(predictions[0].bbox[1])
+  const p1x2 = parseInt(predictions[0].bbox[2])
+  const p1y2 = parseInt(predictions[0].bbox[3])
+  const [x, y] = [(p1x1 + p1x2) / 2, (p1y1 + p1y2) / 2] //center points for the hand
 
-// const getDirection = predictions => {
-//   let direction = ''
-//   const p1x1 = parseInt(predictions[0].bbox[0])
-//   const p1y1 = parseInt(predictions[0].bbox[1])
-//   const p1x2 = parseInt(predictions[0].bbox[2])
-//   const p1y2 = parseInt(predictions[0].bbox[3])
-//   const [x, y] = [(p1x1 + p1x2) / 2, (p1y1 + p1y2) / 2] //center points for the hand
+  if (gestRecorded) {
+    ox = x
+    oy = y
+    gestRecorded = false
+  } else {
+    distx = x - ox
+    disty = y - oy
 
-//   if (gestRecorded) {
-//     ox = x
-//     oy = y
-//     gestRecorded = false
-//   } else {
-//     distx = x - ox
-//     disty = y - oy
+    if (Math.abs(distx) > 80 || Math.abs(disty) > 40) {
+      direction =
+        Math.abs(distx) > Math.abs(disty)
+          ? distx > 0 && Math.abs(distx) > 80
+            ? 'right'
+            : 'left'
+          : disty > 0 && Math.abs(disty) > 40
+          ? 'down'
+          : 'up'
+      if (direction !== ''){ 
+        gestRecorded = true
+        ;[distx, disty] = [null, null]
+        ;[ox, oy] = [0, 0]
+      }
+    }
+  }
+  return direction
+}
 
-//     if (Math.abs(distx) > 80 || Math.abs(disty) > 40) {
-//       direction =
-//         Math.abs(distx) > Math.abs(disty)
-//           ? distx > 0 && Math.abs(distx) > 80
-//             ? 'right'
-//             : 'left'
-//           : disty > 0 && Math.abs(disty) > 40
-//           ? 'down'
-//           : 'up'
-//       if (direction !== '') gestRecorded = true
-//     }
-//   }
-//   return direction
-// }
+*/
+const X= 640 , Y = 480
+
+const getGrid = (a, A) => {
+  if(a < A/3) return 0
+  if(a <= 2*A/3) return 1
+  return 2
+}
+
+const getRegion = (x, y) => {
+  const col = getGrid(x, X)
+  const row = getGrid(y, Y)
+  let region =''
+  if(row === 0 && col ===1) region = 'up'
+  else if(row === 1 && col ===1) region = 'center'
+  else if(row === 1 && col ===0) region = 'left'
+  else if(row === 1 && col ===2) region = 'right'
+  else if(row === 2 && col ===1) region = 'down'
+  else if(row === col){
+    const S = Y/X
+    const slope = (Y-3*y) / (X-3*x)
+    if (slope > S) region = row === 0 ? 'up' : 'down'
+    else region = row === 2 ? 'right' : 'left' 
+  } else {
+    const S = -Y/X
+    const slope = -y / (X-x)
+    if(slope > S) region = row === 0 ? 'up' : 'down'
+    else region = row === 2 ? 'left' : 'right'
+  }
+  return region
+}
+
+const opcodeDirection = predictions => {
+  //start opcode calculation
+  let direction = ''
+  const x1 = parseInt(predictions[0].bbox[0])
+  const W = parseInt(predictions[0].bbox[2])
+  const y1 = parseInt(predictions[0].bbox[1])
+  const H = parseInt(predictions[0].bbox[3])
+  // correct center formula
+  const [x, y] = [x1 + (W / 2), y1 + (H / 2)]
+  
+  const region = getRegion(x, y)
+  
+  if(region === 'center' ) oldRegion = 'center'
+  if(oldRegion === 'center' && region !== 'center'){
+    oldRegion = region
+    direction = region
+    store.dispatch({type: direction})
+  } else {
+    direction = ''
+  }
+
+  console.table(region)
+}
+
+const opcodeOpenClose = predictions => {
+  let movement = ''
+  //start opcode calculation for hand 1
+  const x1 = parseInt(predictions[0].bbox[0])
+  const W1 = parseInt(predictions[0].bbox[2])
+  const y1 = parseInt(predictions[0].bbox[1])
+  const H1 = parseInt(predictions[0].bbox[3])
+  // correct center formula
+  const [a,b] = [x1 + (W1 / 2), y1 + (H1 / 2)]
+  const h1Region = getRegion(a, b)
+  //start opcode calculation for hand 2
+  const x2 = parseInt(predictions[1].bbox[0])
+  const W2 = parseInt(predictions[1].bbox[2])
+  const y2 = parseInt(predictions[1].bbox[1])
+  const H2 = parseInt(predictions[1].bbox[3])
+  // correct center formula
+  const [c,d] = [x2 + (W2 / 2), y2 + (H2 / 2)]
+  const h2Region = getRegion(c, d)
+  let inCenter = h1Region === 'center' && h2Region === 'center'
+
+  if(inCenter) {
+    h1OldRegion = 'center'
+    h2OldRegion = 'center'
+  }
+}
+
 
 // const getOpenClose = predictions => {
 //   //start and end points for both hands are assigned here
@@ -120,65 +210,17 @@ export const startVideo = (getPos = false) => {
 //   }
 // };
 
-let [ex, ey] = [0, 0]
-
-const getDirection = predictions => {
-  // let direction = ''
-  const p1x1 = parseInt(predictions[0].bbox[0])
-  const p1y1 = parseInt(predictions[0].bbox[1])
-  const p1x2 = parseInt(predictions[0].bbox[2])
-  const p1y2 = parseInt(predictions[0].bbox[3])
-  const [x, y] = [(p1x1 + p1x2) / 2, (p1y1 + p1y2) / 2] //center points for the hand
-
-  if (gestRecorded) {
-    ;[ox, oy] = [x, y]
-    gestRecorded = false
-  } else {
-    ;[ex, ey] = [x, y]
-  }
-  // return direction
-}
-let sd = 0
 async function runDetection() {
   await model.detect(video).then(predictions => {
-    let dir = ''
-    if (predictions.length === 0 && ++sd % 6 === 0) {
-      ;[distx, disty] = [ox - ex, oy - ey]
-      //      const slope = Math.abs(disty) / Math.abs(distx)
-      let [thresholdX, thresholdY] = [
-        Math.abs(distx) - 100,
-        Math.abs(disty) - 200 / 3
-      ]
-
-      if (thresholdX > 0 && thresholdY <= 0) {
-        //register horizontal
-        dir = distx > 0 ? 'right' : 'left'
-      } else if (thresholdY > 0 && thresholdX <= 0) {
-        //register vertical
-        dir = disty > 0 ? 'down' : 'up'
-      } else if (thresholdX > 0 && thresholdY > 0) {
-        //assert direction according to factor increase
-        dir =
-          Math.abs(disty) / Math.abs(distx) > 2 / 3
-            ? disty > 0
-              ? 'down'
-              : 'up'
-            : distx > 0
-            ? 'right'
-            : 'left'
-      }
-
-      if (dir !== '') {
-        gestRecorded = true
-        store.dispatch({ type: dir })
-      }
-    } else if (predictions.length > 0) {
-      getDirection(predictions)
+    if (predictions.length > 0) {
+      opcodeDirection(predictions)
     }
     model.renderPredictions(predictions, canvas, context, video)
     requestAnimationFrame(runDetection)
   })
 }
+
+
 
 export function stop() {
   handTrack.stopVideo()

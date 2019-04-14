@@ -22,7 +22,7 @@ const Dashboard = ({ gesture, ready }) => {
             case 1:
               return 2
             case 2:
-              return 0
+              return 2
             default:
               return 1
           }
@@ -33,7 +33,7 @@ const Dashboard = ({ gesture, ready }) => {
         setSelectedGame(prev => {
           switch (prev) {
             case 0:
-              return 2
+              return 0
             case 1:
               return 0
             case 2:
@@ -47,7 +47,7 @@ const Dashboard = ({ gesture, ready }) => {
       default:
         break
     }
-    console.log(gesture, selectedGame)
+    // console.log(gesture, selectedGame)
   }, [gesture])
   React.useEffect(() => {
     if (ready) startVideo()
