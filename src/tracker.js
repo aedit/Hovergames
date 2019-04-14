@@ -16,9 +16,9 @@ const modelParams = {
 let [distx, disty] = [null, null]
 let [ox, oy] = [0, 0]
 let gestRecorded = true
-let oldRegion =''
-let h1OldRegion =''
-let h2OldRegion =''
+let oldRegion = ''
+let h1OldRegion = ''
+let h2OldRegion = ''
 
 // let distOld = -1
 // let dif = 0
@@ -81,32 +81,33 @@ const getDirection = predictions => {
 }
 
 */
-const X= 640 , Y = 480
+const X = 640,
+  Y = 480
 
 const getGrid = (a, A) => {
-  if(a < A/3) return 0
-  if(a <= 2*A/3) return 1
+  if (a < A / 3) return 0
+  if (a <= (2 * A) / 3) return 1
   return 2
 }
 
 const getRegion = (x, y) => {
   const col = getGrid(x, X)
   const row = getGrid(y, Y)
-  let region =''
-  if(row === 0 && col ===1) region = 'up'
-  else if(row === 1 && col ===1) region = 'center'
-  else if(row === 1 && col ===0) region = 'left'
-  else if(row === 1 && col ===2) region = 'right'
-  else if(row === 2 && col ===1) region = 'down'
-  else if(row === col){
-    const S = Y/X
-    const slope = (Y-3*y) / (X-3*x)
+  let region = ''
+  if (row === 0 && col === 1) region = 'up'
+  else if (row === 1 && col === 1) region = 'center'
+  else if (row === 1 && col === 0) region = 'left'
+  else if (row === 1 && col === 2) region = 'right'
+  else if (row === 2 && col === 1) region = 'down'
+  else if (row === col) {
+    const S = Y / X
+    const slope = (Y - 3 * y) / (X - 3 * x)
     if (slope > S) region = row === 0 ? 'up' : 'down'
-    else region = row === 2 ? 'right' : 'left' 
+    else region = row === 2 ? 'right' : 'left'
   } else {
-    const S = -Y/X
-    const slope = -y / (X-x)
-    if(slope > S) region = row === 0 ? 'up' : 'down'
+    const S = -Y / X
+    const slope = -y / (X - x)
+    if (slope > S) region = row === 0 ? 'up' : 'down'
     else region = row === 2 ? 'left' : 'right'
   }
   return region
@@ -120,21 +121,23 @@ const opcodeDirection = predictions => {
   const y1 = parseInt(predictions[0].bbox[1])
   const H = parseInt(predictions[0].bbox[3])
   // correct center formula
-  const [x, y] = [x1 + (W / 2), y1 + (H / 2)]
-  
+  const [x, y] = [x1 + W / 2, y1 + H / 2]
+
   const region = getRegion(x, y)
-  
-  if(region === 'center' ) oldRegion = 'center'
-  if(oldRegion === 'center' && region !== 'center'){
+
+  if (region === 'center') oldRegion = 'center'
+  if (oldRegion === 'center' && region !== 'center') {
     oldRegion = region
     direction = region
-    store.dispatch({type: direction})
+    store.dispatch({ type: direction })
   } else {
     direction = ''
   }
 
   console.table(region)
 }
+
+let oldInCenter = null
 
 const opcodeOpenClose = predictions => {
   let movement = ''
@@ -144,7 +147,7 @@ const opcodeOpenClose = predictions => {
   const y1 = parseInt(predictions[0].bbox[1])
   const H1 = parseInt(predictions[0].bbox[3])
   // correct center formula
-  const [a,b] = [x1 + (W1 / 2), y1 + (H1 / 2)]
+  const [a, b] = [x1 + W1 / 2, y1 + H1 / 2]
   const h1Region = getRegion(a, b)
   //start opcode calculation for hand 2
   const x2 = parseInt(predictions[1].bbox[0])
@@ -152,16 +155,15 @@ const opcodeOpenClose = predictions => {
   const y2 = parseInt(predictions[1].bbox[1])
   const H2 = parseInt(predictions[1].bbox[3])
   // correct center formula
-  const [c,d] = [x2 + (W2 / 2), y2 + (H2 / 2)]
+  const [c, d] = [x2 + W2 / 2, y2 + H2 / 2]
   const h2Region = getRegion(c, d)
-  let inCenter = h1Region === 'center' && h2Region === 'center'
 
-  if(inCenter) {
-    h1OldRegion = 'center'
-    h2OldRegion = 'center'
-  }
+  let inCenter = [h1Region, h2Region].every(e => e === 'center')
+  if (oldInCenter === null) oldInCenter = inCenter
+  else if (inCenter && !oldInCenter) movement = 'close'
+  else if (!inCenter && oldInCenter) movement = 'open'
+  store.dispatch({ type: movement })
 }
-
 
 // const getOpenClose = predictions => {
 //   //start and end points for both hands are assigned here
@@ -212,15 +214,15 @@ const opcodeOpenClose = predictions => {
 
 async function runDetection() {
   await model.detect(video).then(predictions => {
-    if (predictions.length > 0) {
+    if (predictions.length === 1) {
       opcodeDirection(predictions)
+    } else if (predictions.length >= 2) {
+      opcodeOpenClose(predictions)
     }
     model.renderPredictions(predictions, canvas, context, video)
     requestAnimationFrame(runDetection)
   })
 }
-
-
 
 export function stop() {
   handTrack.stopVideo()
