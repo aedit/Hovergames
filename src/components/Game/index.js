@@ -1,12 +1,8 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
 import { Heading, Subtitle } from '../../ui-components'
 
 const Game = ({ name, selected, changeSelect, color, desc, background }) => {
-  const [redirect, setredirect] = React.useState(false)
-  return redirect ? (
-    <Redirect to={`/${name}`} />
-  ) : (
+  return (
     <div
       style={{
         border: selected ? '2px solid #7afdd6' : 'none',
@@ -14,7 +10,7 @@ const Game = ({ name, selected, changeSelect, color, desc, background }) => {
         height: '75%',
         alignSelf: 'center',
         transform: selected ? 'scale(1.4)' : 'scale(1)',
-        transition: 'transform 300ms ease',
+        transition: 'transform 150ms ease',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -29,7 +25,7 @@ const Game = ({ name, selected, changeSelect, color, desc, background }) => {
           height: '100%',
           zIndex: -1
         }}/>
-      <Heading style={{ fontSize: '2rem' }} onClick={() => setredirect(true)}>
+      <Heading style={{ fontSize: '2rem' }}>
 
         {name}
         <Subtitle style={{ fontSize: '1rem' }}>{desc}</Subtitle>

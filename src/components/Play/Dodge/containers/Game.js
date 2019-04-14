@@ -28,7 +28,7 @@ const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
     playerScore: 0,
     highScore,
     timeElapsed: 0,
-    enemySpeed: 5,
+    enemySpeed: 10,
     enemyIndex: 0,
     activeEnemies: 1,
     baseScore: 10

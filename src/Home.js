@@ -17,6 +17,7 @@ import Authors from './components/Authors'
 import { connect } from 'react-redux'
 import About from './components/About'
 import { startVideo, stop } from './tracker'
+import {store } from './store'
 
 const Home = ({ ready, gesture }) => {
   // if (gesture !== '') console.log(gesture)
@@ -32,9 +33,19 @@ const Home = ({ ready, gesture }) => {
       case 'rightleft':
       case 'updown':
       case 'downup':
-        // setIsScaleDown('center')
-        // console.log(n)
+        
+        store.dispatch({type: 'reset'})
         f = false
+        break
+      case 'upleft':
+      case 'upright':
+      case 'downright':
+      case 'downleft':
+      case 'leftup':
+      case 'leftdown':
+      case 'rightup':
+      case 'rightdown':
+        f=false
         break
       default:
         break
@@ -42,8 +53,9 @@ const Home = ({ ready, gesture }) => {
 
     if (f && gesture !== isScaleDown) {
         setIsScaleDown(gesture === '' ? 'center' : gesture)
-      // console.log(isScaleDown)
+      
     }
+    
   }, [gesture])
   React.useEffect(() => {
     if (ready) startVideo()

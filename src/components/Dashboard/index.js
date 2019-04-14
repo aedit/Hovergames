@@ -1,63 +1,73 @@
-import React from 'react'
-import { Redirect } from 'react-router-dom'
-import { Window, useFromToPose, Heading, Subtitle } from '../../ui-components'
-import Game from '../Game'
-import { connect } from 'react-redux'
-import { startVideo, stop } from '../../tracker'
+import React from "react";
+import { Redirect } from "react-router-dom";
+import { Window, useFromToPose, Heading, Subtitle } from "../../ui-components";
+import Game from "../Game";
+import { connect } from "react-redux";
+import { startVideo, stop } from "../../tracker";
+import { store } from "../../store";
+import Dodge from "../../designs/Dodge.png";
+import Breakout from "../../designs/Breakout.png";
+import Snake from "../../designs/Snake.png";
 
-import Dodge from '../../designs/Dodge.png'
-import Breakout from '../../designs/Breakout.png'
-import Snake from '../../designs/Snake.png'
+const games = ["snakes", "dodge", "breakout"];
 
 const Dashboard = ({ gesture, ready }) => {
-  const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
-  const [selectedGame, setSelectedGame] = React.useState(0)
+  const windowPose = useFromToPose(0.3, { from: "hidden", to: "visible" });
+  const [selectedGame, setSelectedGame] = React.useState(0);
+  const [redirect, setRedirect] = React.useState(false);
   React.useEffect(() => {
     switch (gesture) {
-      case 'right':
+      case "open":
+        setRedirect(true);
+        break;
+      case "right":
         setSelectedGame(prev => {
           switch (prev) {
             case 0:
-              return 1
+              return 1;
             case 1:
-              return 2
+              return 2;
             case 2:
-              return 2
+              return 0;
             default:
-              return 1
+              return 1;
           }
-        })
+        });
 
-        break
-      case 'left':
+        break;
+      case "left":
         setSelectedGame(prev => {
           switch (prev) {
             case 0:
-              return 0
+              return 2;
             case 1:
-              return 0
+              return 0;
             case 2:
-              return 1
+              return 1;
             default:
-              return 1
+              return 1;
           }
-        })
+        });
 
-        break
+        break;
       default:
-        break
+        break;
     }
+    console.log("gesture", gesture);
     // console.log(gesture, selectedGame)
-  }, [gesture])
+    return () => void store.dispatch({ type: "reset" });
+  }, [gesture]);
   React.useEffect(() => {
-    if (ready) startVideo()
-  }, [ready])
-  React.useEffect(() => () => void stop(), [])
+    if (ready) startVideo();
+  }, [ready]);
+  React.useEffect(() => () => void stop(), []);
   const isLoggedin =
-    sessionStorage.hasOwnProperty('token') ||
-    sessionStorage.hasOwnProperty('guestid')
+    sessionStorage.hasOwnProperty("token") ||
+    sessionStorage.hasOwnProperty("guestid");
   return !isLoggedin ? (
     <Redirect to="/" />
+  ) : redirect ? (
+    <Redirect to={`/${games[selectedGame]}`} />
   ) : (
     <Window pose={windowPose}>
       <Heading>
@@ -66,9 +76,9 @@ const Dashboard = ({ gesture, ready }) => {
       </Heading>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          gridArea: 'list'
+          display: "flex",
+          justifyContent: "space-evenly",
+          gridArea: "list"
         }}
       >
         <Game
@@ -97,14 +107,14 @@ const Dashboard = ({ gesture, ready }) => {
         />
       </div>
     </Window>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => ({
   ...state
-})
+});
 
 export default connect(
   mapStateToProps,
   () => {}
-)(Dashboard)
+)(Dashboard);

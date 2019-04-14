@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /Documentation/Video
+/Documentation
 /.pnp
 .pnp.js
 
