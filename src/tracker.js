@@ -2,8 +2,8 @@ import * as handTrack from 'handtrackjs'
 import { store } from './store'
 
 const video = document.getElementById('vid')
-// const canvas = document.getElementById('vidc')
-// const context = canvas.getContext('2d')
+const canvas = document.getElementById('vidc')
+const context = canvas.getContext('2d')
 
 const modelParams = {
   flipHorizontal: true,
@@ -14,7 +14,6 @@ const modelParams = {
 }
 
 let oldRegion = ''
-
 
 let model = null
 handTrack.load(modelParams).then(lmodel => {
@@ -41,8 +40,8 @@ const X = 640,
   Y = 480
 
 const getGrid = (a, A) => {
-  if (a < A *0.3) return 0
-  if (a <= (0.7 * A)) return 1
+  if (a < A * 0.3) return 0
+  if (a <= 0.7 * A) return 1
   return 2
 }
 
@@ -85,13 +84,11 @@ const opcodeDirection = predictions => {
   if (oldRegion === 'center' && region !== 'center') {
     oldRegion = region
     direction = region
-    store.dispatch({ type: direction, payload: {x, y} })
+    store.dispatch({ type: direction, payload: { x, y } })
     console.table(region)
   } else {
     direction = ''
   }
-
-  
 }
 
 let oldInCenter = null
@@ -117,16 +114,14 @@ const opcodeOpenClose = predictions => {
 
   let inCenter = [h1Region, h2Region].every(e => e === 'center')
   if (oldInCenter === null) oldInCenter = inCenter
-  else if (inCenter && !oldInCenter){
+  else if (inCenter && !oldInCenter) {
     movement = 'close'
-    oldInCenter=null
-  }
-  else if (!inCenter && oldInCenter){
+    oldInCenter = null
+  } else if (!inCenter && oldInCenter) {
     movement = 'open'
-    oldInCenter=null
+    oldInCenter = null
   }
   store.dispatch({ type: movement })
-  
 }
 
 async function runDetection() {
@@ -135,9 +130,8 @@ async function runDetection() {
       opcodeDirection(predictions)
     } else if (predictions.length >= 2) {
       opcodeOpenClose(predictions)
-      
     }
-    // model.renderPredictions(predictions, canvas, context, video)
+    model.renderPredictions(predictions, canvas, context, video)
     requestAnimationFrame(runDetection)
   })
 }

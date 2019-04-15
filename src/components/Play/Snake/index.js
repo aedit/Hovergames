@@ -60,11 +60,4 @@ class Snake extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state
-})
-
-export default connect(
-  mapStateToProps,
-  () => {}
-)(Snake)
+export default Snake

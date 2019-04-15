@@ -1,5 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import GameOver from './GameOver'
+import { store } from '../../../store'
+import { startVideo, stop } from '../../../tracker'
 
 class Grid extends React.Component {
   constructor(props) {
@@ -19,7 +22,7 @@ class Grid extends React.Component {
 
     this.state = {
       grid,
-      gameState: 'start',
+      gameState: 'stop',
       apple: {
         x: Math.floor(Math.random() * (rows - 1)),
         y: Math.floor(Math.random() * (cols - 1))
@@ -146,28 +149,28 @@ class Grid extends React.Component {
     return res
   }
 
-  keyListener = ({ key }) => {
+  snakeMove = () => {
     let move = this.state.snake.move
-    switch (key) {
-      case 'ArrowRight':
+    switch (this.props.gesture) {
+      case 'right':
         move = {
           x: 0,
           y: 1
         }
         break
-      case 'ArrowLeft':
+      case 'left':
         move = {
           x: 0,
           y: -1
         }
         break
-      case 'ArrowUp':
+      case 'up':
         move = {
           x: -1,
           y: 0
         }
         break
-      case 'ArrowDown':
+      case 'down':
         move = {
           x: 1,
           y: 0
@@ -185,6 +188,50 @@ class Grid extends React.Component {
     }))
   }
 
+  // keyListener = ({ key }) => {
+  //   let move = this.state.snake.move
+  //   switch (key) {
+  //     case 'ArrowRight':
+  //       move = {
+  //         x: 0,
+  //         y: 1
+  //       }
+  //       break
+  //     case 'ArrowLeft':
+  //       move = {
+  //         x: 0,
+  //         y: -1
+  //       }
+  //       break
+  //     case 'ArrowUp':
+  //       move = {
+  //         x: -1,
+  //         y: 0
+  //       }
+  //       break
+  //     case 'ArrowDown':
+  //       move = {
+  //         x: 1,
+  //         y: 0
+  //       }
+  //       break
+  //     default:
+  //       break
+  //   }
+  //   this.setState(ps => ({
+  //     ...ps,
+  //     snake: {
+  //       ...ps.snake,
+  //       move
+  //     }
+  //   }))
+  // }
+
+  componentDidUpdate = prevProp => {
+    if (prevProp.gesture === this.props.gesture)
+      store.dispatch({ type: 'reset' })
+  }
+
   componentDidMount = () => {
     const { snake } = this.state
     let interval = setInterval(() => {
@@ -193,19 +240,29 @@ class Grid extends React.Component {
     this.setState({
       interval
     })
-    document.addEventListener('keydown', this.keyListener)
+    if (this.props.ready) startVideo()
   }
 
   componentWillUnmount = () => {
     if (this.state.interval) {
       clearTimeout(this.state.interval)
     }
-    document.removeEventListener('keydown', this.keyListener)
+    stop()
   }
 
   render = () => {
     const { grid, apple, snake } = this.state
-    if (this.state.gameState === 'over')
+    if (this.state.gameState === 'stop')
+      return (
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: `repeat(${this.props.cols}, 1fr)`,
+            gridTemplateRows: `repeat(${this.props.rows}, 1fr)`
+          }}
+        />
+      )
+    else if (this.state.gameState === 'over')
       return <GameOver score={this.state.score} />
     else
       return (
@@ -233,5 +290,11 @@ class Grid extends React.Component {
       )
   }
 }
+const mapStateToProps = state => ({
+  ...state
+})
 
-export default Grid
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Grid)

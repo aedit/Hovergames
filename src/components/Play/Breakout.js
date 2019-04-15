@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
 import { connect } from 'react-redux'
+import { store } from '../../store'
 
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -17,7 +18,7 @@ const gameWidth = 0.95 * w > 1000 ? 1000 : 0.95 * w,
 class Breakout extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { score: 0, highscore: 0, x: this.props.x , y: this.props.y }
+    this.state = { score: 0, highscore: 0, x: this.props.x, y: this.props.y }
   }
   updateScore = newScore => {
     this.setState({ score: newScore })
@@ -27,7 +28,7 @@ class Breakout extends React.Component {
     this.update()
   }
   componentDidUpdate() {
-    if(this.props.ready) startVideo()
+    if (this.props.ready) startVideo()
   }
   componentWillUnmount() {
     stop()
@@ -57,27 +58,6 @@ class Breakout extends React.Component {
       color,
       gameOver = 0 // 1 you lost - 2 you win
 
-    // function KeyListener() {
-    //   this.pressedKeys = []
-    //   this.keydown = function(e) {
-    //     this.pressedKeys[e.keyCode] = true
-    //   }
-    //   this.keyup = function(e) {
-    //     this.pressedKeys[e.keyCode] = false
-    //   }
-    //   document.addEventListener('keydown', this.keydown.bind(this))
-    //   document.addEventListener('keyup', this.keyup.bind(this))
-    // }
-    // KeyListener.prototype.isPressed = function(key) {
-    //   return this.pressedKeys[key] ? true : false
-    // }
-    // KeyListener.prototype.addKeyPressListener = function(keyCode, callback) {
-    //   document.addEventListener('keypress', function(e) {
-    //     if (e.keyCode === keyCode) callback(e)
-    //   })
-    // }
-    // let keys = new KeyListener()
-    // create bonus block
     function createBonus(brick) {
       let chance = Math.floor(Math.random() * (10 - 1 + 1) + 1)
       if (chance === 1) {
@@ -295,19 +275,23 @@ class Breakout extends React.Component {
         }
       }
       // paddle movement
-      if ( this.props.gesture === 'left' && paddle1.x > 0) {
+      if (this.props.gesture === 'left' && paddle1.x > 0) {
         // LEFT
         paddle1.x -= paddle1.speed
-      } else if ( this.props.gesture === 'right' &&
+        store.dispatch({ type: 'reset' })
+      } else if (
+        this.props.gesture === 'right' &&
         paddle1.x + paddle1.w < Width
       ) {
         // RIGHT
         paddle1.x += paddle1.speed
+        store.dispatch({ type: 'reset' })
       }
       // start ball on space key
       if (this.props.gesture === 'open' && ballOn === false) {
         ballOn = true
         gameOver = 0
+        store.dispatch({ type: 'reset' })
       }
       // ball movement
       if (ballOn === true) {
