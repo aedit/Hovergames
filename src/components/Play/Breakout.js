@@ -278,20 +278,20 @@ class Breakout extends React.Component {
       if (this.props.gesture === 'left' && paddle1.x > 0) {
         // LEFT
         paddle1.x -= paddle1.speed
-        store.dispatch({ type: 'reset' })
+        // store.dispatch({ type: 'reset' })
       } else if (
         this.props.gesture === 'right' &&
         paddle1.x + paddle1.w < Width
       ) {
         // RIGHT
         paddle1.x += paddle1.speed
-        store.dispatch({ type: 'reset' })
+        // store.dispatch({ type: 'reset' })
       }
       // start ball on space key
       if (this.props.gesture === 'open' && ballOn === false) {
         ballOn = true
         gameOver = 0
-        store.dispatch({ type: 'reset' })
+        // store.dispatch({ type: 'reset' })
       }
       // ball movement
       if (ballOn === true) {

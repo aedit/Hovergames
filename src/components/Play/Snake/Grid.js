@@ -1,8 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import GameOver from './GameOver'
-import { store } from '../../../store'
-import { startVideo, stop } from '../../../tracker'
 
 class Grid extends React.Component {
   constructor(props) {
@@ -188,50 +185,6 @@ class Grid extends React.Component {
     }))
   }
 
-  // keyListener = ({ key }) => {
-  //   let move = this.state.snake.move
-  //   switch (key) {
-  //     case 'ArrowRight':
-  //       move = {
-  //         x: 0,
-  //         y: 1
-  //       }
-  //       break
-  //     case 'ArrowLeft':
-  //       move = {
-  //         x: 0,
-  //         y: -1
-  //       }
-  //       break
-  //     case 'ArrowUp':
-  //       move = {
-  //         x: -1,
-  //         y: 0
-  //       }
-  //       break
-  //     case 'ArrowDown':
-  //       move = {
-  //         x: 1,
-  //         y: 0
-  //       }
-  //       break
-  //     default:
-  //       break
-  //   }
-  //   this.setState(ps => ({
-  //     ...ps,
-  //     snake: {
-  //       ...ps.snake,
-  //       move
-  //     }
-  //   }))
-  // }
-
-  componentDidUpdate = prevProp => {
-    if (prevProp.gesture === this.props.gesture)
-      store.dispatch({ type: 'reset' })
-  }
-
   componentDidMount = () => {
     const { snake } = this.state
     let interval = setInterval(() => {
@@ -240,14 +193,12 @@ class Grid extends React.Component {
     this.setState({
       interval
     })
-    if (this.props.ready) startVideo()
   }
 
   componentWillUnmount = () => {
     if (this.state.interval) {
       clearTimeout(this.state.interval)
     }
-    stop()
   }
 
   render = () => {
@@ -290,11 +241,5 @@ class Grid extends React.Component {
       )
   }
 }
-const mapStateToProps = state => ({
-  ...state
-})
 
-export default connect(
-  mapStateToProps,
-  () => {}
-)(Grid)
+export default Grid

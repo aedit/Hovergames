@@ -2,13 +2,9 @@ import React, { Component } from 'react'
 import { GameInfo, Board, Player, Enemy, DebugState } from '../components'
 import { UP, DOWN, LEFT, RIGHT } from '../helpers/constants'
 import { pluck } from '../helpers/utils'
-
-/*
-    Since my api key is not publicly available,
-    cloned versions will lack the ability to post
-    new high scores.
-*/
-// import url from 'api';
+import { connect } from 'react-redux'
+import { store } from '../../../../store'
+import { startVideo, stop } from '../../../../tracker'
 
 const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
   const half = Math.floor(boardSize / 2) * playerSize
@@ -35,7 +31,7 @@ const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
   }
 }
 
-export default class Game extends Component {
+class Game extends Component {
   constructor(props) {
     super(props)
     // const half = Math.floor(props.boardSize / 2) * props.playerSize;
@@ -95,7 +91,27 @@ export default class Game extends Component {
     return newEnemy
   }
 
-  handlePlayerMovement = dirObj => {
+  handlePlayerMovement = () => {
+    const { gesture } = this.props
+    let dirObj
+    switch (gesture) {
+      case 'left':
+        dirObj = { top: 0, left: -1, dir: LEFT }
+        break
+      case 'up':
+        dirObj = { top: -1, left: 0, dir: UP }
+        break
+      case 'right':
+        dirObj = { top: 0, left: 1, dir: RIGHT }
+        break
+      case 'down':
+        dirObj = { top: 1, left: 0, dir: DOWN }
+        break
+      default:
+        dirObj = { top: 0, left: 0, dir: '' }
+        break
+    }
+
     const { top, left } = this.state.positions.player
     const { player, maxDim } = this.state.size
 
@@ -356,14 +372,35 @@ export default class Game extends Component {
     )
   }
 
+  componentDidUpdate = prevProp => {
+    if (prevProp.gesture === this.props.gesture)
+      store.dispatch({ type: 'reset' })
+  }
+
   componentDidMount() {
-    this.startGame()
-    this.fetchGlobalHighScore()
+    if (this.props.ready) {
+      startVideo()
+      this.startGame()
+      this.fetchGlobalHighScore()
+    }
   }
 
   componentWillUnmount() {
+    stop()
     clearInterval(this.state.gameInterval)
     clearInterval(this.state.enemyInterval)
     clearInterval(this.state.timeInterval)
   }
 }
+
+const mapStateToProps = (state, props) => {
+  return {
+    ...state,
+    ...props
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Game)

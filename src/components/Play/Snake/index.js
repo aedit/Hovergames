@@ -4,6 +4,8 @@ import GameInfo from '../Dodge/components/GameInfo'
 import Grid from './Grid'
 import './index.css'
 import { connect } from 'react-redux'
+import { store } from '../../../store'
+import { startVideo, stop } from '../../../tracker'
 
 class Snake extends Component {
   constructor(props) {
@@ -13,6 +15,19 @@ class Snake extends Component {
       score: 0
     }
   }
+  componentDidUpdate = prevProp => {
+    if (prevProp.gesture === this.props.gesture)
+      store.dispatch({ type: 'reset' })
+  }
+
+  componentDidMount = () => {
+    if (this.props.ready) startVideo()
+  }
+
+  componentWillUnmount = () => {
+    stop()
+  }
+
   updateScore = inc => {
     this.setState(prevState => ({
       score: prevState.score + inc,
@@ -22,6 +37,7 @@ class Snake extends Component {
           : prevState.highScore
     }))
   }
+
   render() {
     const isLoggedin =
       sessionStorage.hasOwnProperty('token') ||
@@ -45,6 +61,7 @@ class Snake extends Component {
         }}
       >
         <GameInfo
+          gesture={this.props.gesture}
           name="Snake"
           playerScore={this.state.score}
           highScore={this.state.highScore}
@@ -60,4 +77,11 @@ class Snake extends Component {
   }
 }
 
-export default Snake
+const mapStateToProps = state => ({
+  ...state
+})
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Snake)

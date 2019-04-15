@@ -9,7 +9,7 @@ import Dodge from '../../designs/Dodge.png'
 import Breakout from '../../designs/Breakout.png'
 import Snake from '../../designs/Snake.png'
 
-const games = ['snake', 'dodge', 'breakout']
+const games = ['Snake', 'Dodge', 'breakout']
 
 const Dashboard = ({ gesture, ready }) => {
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
