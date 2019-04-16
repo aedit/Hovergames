@@ -36,6 +36,14 @@ const Home = ({ ready, gesture }) => {
         store.dispatch({ type: 'reset' })
         f = false
         break
+      case 'upleft':
+      case 'upright':
+      case 'downright':
+      case 'downleft':
+      case 'leftup':
+      case 'leftdown':
+      case 'rightup':
+      case 'rightdown':
       case 'upstop':
       case 'downstop':
       case 'leftstop':
@@ -60,9 +68,7 @@ const Home = ({ ready, gesture }) => {
   ) : (
     <React.Fragment>
       {isScaleDown === 'right' && <GuestPane />}
-      {isScaleDown === 'down' && (
-        <About informUp={() => setIsScaleDown('center')} />
-      )}
+      {isScaleDown === 'down' && <About />}
       <Window
         style={{
           clipPath:
@@ -73,25 +79,14 @@ const Home = ({ ready, gesture }) => {
         <Heading>
           Hover Games
           <Subtitle>
-            Experience the gaming world with a{' '}
-            <span
-              onClick={() => {
-                setIsScaleDown(prev => (prev === 'down' ? 'center' : 'down'))
-              }}
-            >
-              <strong>hover</strong>
-            </span>{' '}
-            of your palm.
+            Experience the gaming world with a <strong>hover</strong> of your
+            palm.
           </Subtitle>
         </Heading>
         <Container>
           <Row style={{ alignItems: 'center', height: '100%' }}>
             <Col />
-            <Col
-              onClick={() =>
-                setIsScaleDown(prev => (prev === 'right' ? 'center' : 'right'))
-              }
-            >
+            <Col>
               <Card className="options">
                 <LR pose={L2R}>
                   <i className="far fa-hand-paper" />
@@ -101,11 +96,7 @@ const Home = ({ ready, gesture }) => {
                 </CardBody>
               </Card>
             </Col>
-            <Col
-              onClick={() =>
-                setIsScaleDown(prev => (prev === 'left' ? 'center' : 'left'))
-              }
-            >
+            <Col>
               <Card className="options">
                 <RL pose={R2L}>
                   <i className="far fa-hand-paper" />
@@ -119,22 +110,14 @@ const Home = ({ ready, gesture }) => {
           </Row>
         </Container>
         <Footer>
-          <span
-            onClick={() => {
-              setIsScaleDown(prev => (prev === 'up' ? 'center' : 'up'))
-            }}
-          >
-            Authors:
-          </span>{' '}
+          <strong>Authors:</strong>{' '}
           <code>
             {'</ Vaibhav Bhawalkar >, </ Udit Sen >, </ Vinay Yadav >'}
           </code>
         </Footer>
       </Window>
       {isScaleDown === 'left' && <UserPane />}
-      {isScaleDown === 'up' && (
-        <Authors informUp={() => setIsScaleDown('center')} />
-      )}
+      {isScaleDown === 'up' && <Authors />}
     </React.Fragment>
   )
 }

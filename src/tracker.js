@@ -90,11 +90,11 @@ const opcodeDirection = predictions => {
     oldRegion = region
     direction = region
     store.dispatch({ type: direction, payload: { x, y } })
-    console.table(region)
+    // console.table(region)
   } else {
     direction = ''
   }
-  console.table(region, direction)
+  // console.table(region, direction)
 }
 
 let oldInCenter = null
