@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
 import { connect } from 'react-redux'
-import { store } from '../../store'
+// import { store } from '../../store'
 
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -18,7 +18,13 @@ const gameWidth = 0.95 * w > 1000 ? 1000 : 0.95 * w,
 class Breakout extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { score: 0, highscore: 0, x: this.props.x, y: this.props.y }
+    this.state = {
+      count: 0,
+      score: 0,
+      highscore: 0,
+      x: this.props.x,
+      y: this.props.y
+    }
   }
   updateScore = newScore => {
     this.setState({ score: newScore })
@@ -28,10 +34,13 @@ class Breakout extends React.Component {
     this.update()
   }
   componentDidUpdate() {
-    if (this.props.ready) startVideo()
+    if (this.state.count === 0 && this.props.ready) {
+      this.setState({ count: 1 })
+      startVideo()
+    }
   }
   componentWillUnmount() {
-    stop()
+    if (this.props.gesture === 'close') stop()
   }
   update = () => {
     const Width = gameWidth,
@@ -43,14 +52,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 7,
         speedX: 0,
-        speedY: 8
+        speedY: 4
       },
       paddle1 = {
         w: 120,
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 12
+        speed: 5
       },
       bricks = [],
       bonuses = [],
@@ -165,14 +174,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 8,
         speedX: 0,
-        speedY: 8
+        speedY: 4
       }
       paddle1 = {
         w: 100,
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 12
+        speed: 5
       }
     }
 
@@ -274,6 +283,12 @@ class Breakout extends React.Component {
           bonuses.splice(i, 1)
         }
       }
+      // start ball on space key
+      if (this.props.gesture === 'open' && ballOn === false) {
+        ballOn = true
+        gameOver = 0
+        //store.dispatch({ type: 'reset' })
+      }
       // paddle movement
       if (this.props.gesture === 'left' && paddle1.x > 0) {
         // LEFT
@@ -287,12 +302,7 @@ class Breakout extends React.Component {
         paddle1.x += paddle1.speed
         // store.dispatch({ type: 'reset' })
       }
-      // start ball on space key
-      if (this.props.gesture === 'open' && ballOn === false) {
-        ballOn = true
-        gameOver = 0
-        // store.dispatch({ type: 'reset' })
-      }
+
       // ball movement
       if (ballOn === true) {
         ball.x += ball.speedX

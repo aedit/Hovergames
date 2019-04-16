@@ -80,8 +80,13 @@ const opcodeDirection = predictions => {
 
   const region = getRegion(x, y)
 
-  if (region === 'center') oldRegion = 'center'
-  if (oldRegion === 'center' && region !== 'center') {
+  if (region === 'center') {
+    oldRegion = 'center'
+    if (direction !== 'center') {
+      direction = 'stop'
+      store.dispatch({ type: direction })
+    }
+  } else if (oldRegion === 'center') {
     oldRegion = region
     direction = region
     store.dispatch({ type: direction, payload: { x, y } })
@@ -89,6 +94,7 @@ const opcodeDirection = predictions => {
   } else {
     direction = ''
   }
+  console.table(region, direction)
 }
 
 let oldInCenter = null
@@ -113,6 +119,7 @@ const opcodeOpenClose = predictions => {
   const h2Region = getRegion(c, d)
 
   let inCenter = [h1Region, h2Region].every(e => e === 'center')
+  //inCenter = inCenter ? inCenter : (h1Region === 'left' && h2Region === 'right') || (h2Region === 'left' && h1Region === 'right')
   if (oldInCenter === null) oldInCenter = inCenter
   else if (inCenter && !oldInCenter) {
     movement = 'close'
@@ -131,6 +138,7 @@ async function runDetection() {
     } else if (predictions.length >= 2) {
       opcodeOpenClose(predictions)
     }
+
     model.renderPredictions(predictions, canvas, context, video)
     requestAnimationFrame(runDetection)
   })

@@ -50,6 +50,7 @@ const UserPane = React.memo(() => {
         }}
       >
         <input
+          autoFocus
           type="text"
           name="userid"
           placeholder="UserName"

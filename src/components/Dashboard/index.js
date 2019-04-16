@@ -13,7 +13,7 @@ const games = ['Snake', 'Dodge', 'breakout']
 
 const Dashboard = ({ gesture, ready }) => {
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
-  const [selectedGame, setSelectedGame] = React.useState(0)
+  const [selectedGame, setSelectedGame] = React.useState(1)
   const [redirect, setRedirect] = React.useState(false)
   React.useEffect(() => {
     switch (gesture) {

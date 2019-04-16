@@ -36,14 +36,10 @@ const Home = ({ ready, gesture }) => {
         store.dispatch({ type: 'reset' })
         f = false
         break
-      case 'upleft':
-      case 'upright':
-      case 'downright':
-      case 'downleft':
-      case 'leftup':
-      case 'leftdown':
-      case 'rightup':
-      case 'rightdown':
+      case 'upstop':
+      case 'downstop':
+      case 'leftstop':
+      case 'rightstop':
         f = false
         break
       default:
