@@ -11,7 +11,7 @@ import {
   Footer
 } from './ui-components'
 import GuestPane from './components/GuestPane'
-import UserPane from './components/UserPane'
+import LoginPane from './components/LoginPane'
 import { Redirect } from 'react-router-dom'
 import Authors from './components/Authors'
 import { connect } from 'react-redux'
@@ -116,7 +116,7 @@ const Home = ({ ready, gesture }) => {
           </code>
         </Footer>
       </Window>
-      {isScaleDown === 'left' && <UserPane />}
+      {isScaleDown === 'left' && <LoginPane />}
       {isScaleDown === 'up' && <Authors />}
     </React.Fragment>
   )

@@ -25,7 +25,7 @@ const Login = (userid, password, setRedirect) => {
     .catch(() => {})
 }
 
-const UserPane = React.memo(() => {
+const LoginPane = React.memo(() => {
   const [userid, setUserid] = React.useState('')
   const [password, setPassword] = React.useState('')
   const guestPose = useFromToPose(0.5, { from: 'hidden', to: 'visible' })
@@ -76,4 +76,4 @@ const UserPane = React.memo(() => {
   )
 })
 
-export default UserPane
+export default LoginPane
