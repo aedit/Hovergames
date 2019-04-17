@@ -8,8 +8,8 @@ import { connect } from 'react-redux'
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 
-var ballspeed = 5
-var paddlespeed = 1
+var ballspeed = 6
+var paddlespeed = 3
 
 const gameWidth = 0.95 * w > 1000 ? 1000 : 0.95 * w,
   //   gameHeight =
@@ -293,9 +293,8 @@ class Breakout extends React.Component {
         //store.dispatch({ type: 'reset' })
       }
 
-      if (this.props.gesture === 'stop') {
-        console.log(this.props.gesture, paddle1.x, paddle1.speed)
-      }
+      console.log(this.props.gesture, paddle1.x, paddle1.speed)
+
       // paddle movement
 
       if (this.props.gesture === 'left' && paddle1.x > 0) {

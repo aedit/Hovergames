@@ -5,19 +5,15 @@ const reducer = (state = { ready: false, gesture: '' }, action) => {
     case 'reset':
       return { ...state, gesture: '' }
     case 'up':
-      return { ...state, gesture: 'up', ...action.payload }
+      return { ...state, gesture: 'up' }
     case 'down':
-      return { ...state, gesture: 'down', ...action.payload }
+      return { ...state, gesture: 'down' }
     case 'right':
-      return { ...state, gesture: 'right', ...action.payload }
+      return { ...state, gesture: 'right' }
     case 'left':
-      return { ...state, gesture: 'left', ...action.payload }
-    case 'center':
-      return { ...state, gesture: 'stop' }
+      return { ...state, gesture: 'left' }
     case 'ready':
       return { ...state, ready: true }
-    case 'pos':
-      return { ...state, ...action.payload }
     case 'open':
       return { ...state, gesture: 'open' }
     case 'close':
