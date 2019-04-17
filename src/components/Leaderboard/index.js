@@ -1,6 +1,6 @@
 import React from 'react'
 import { Heading, Desc, UD } from '../../ui-components'
-// import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 export const useFromToPose = (timeOut, { from, to }) => {
   const [windowPose, setWindowPose] = React.useState(from)
@@ -14,8 +14,12 @@ export const useFromToPose = (timeOut, { from, to }) => {
 
 const Leaderboard = ({ informUp }) => {
   const [upDownPose, setUpDown] = useFromToPose(0.3, { from: 'up', to: 'down' })
-
-  return (
+  const isLoggedin =
+    sessionStorage.hasOwnProperty('token') ||
+    sessionStorage.hasOwnProperty('guestid')
+  return !isLoggedin ? (
+    <Redirect to="/" />
+  ) : (
     <UD
       onClick={() => {
         setUpDown('up')
@@ -23,11 +27,10 @@ const Leaderboard = ({ informUp }) => {
       }}
       pose={upDownPose}
       style={{
-        width: '80vw',
-        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%)'
+        width: '80vw'
       }}
     >
-      <Heading style={{ gridArea: 'heading' }}>About Page</Heading>
+      <Heading style={{ gridArea: 'heading' }}>Leaderboard</Heading>
       <Desc>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis
         aperiam repellendus facere saepe aliquam quidem, nulla voluptas suscipit

@@ -11,7 +11,7 @@ import Snake from '../../designs/Snake.png'
 import Leaderboard from '../Leaderboard'
 
 const games = ['Snake', 'Dodge', 'breakout']
-var gameBoxMove = true
+var dashboardCenter = true
 
 const Dashboard = ({ gesture, ready }) => {
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
@@ -21,10 +21,16 @@ const Dashboard = ({ gesture, ready }) => {
   React.useEffect(() => {
     switch (gesture) {
       case 'open':
-        setRedirect(true)
+        if (dashboardCenter) setRedirect(true)
+        break
+      case 'close':
+        if (dashboardCenter) {
+          sessionStorage.clear()
+          break
+        }
         break
       case 'right':
-        if (gameBoxMove)
+        if (dashboardCenter)
           setSelectedGame(prev => {
             switch (prev) {
               case 0:
@@ -40,7 +46,7 @@ const Dashboard = ({ gesture, ready }) => {
 
         break
       case 'left':
-        if (gameBoxMove)
+        if (dashboardCenter)
           setSelectedGame(prev => {
             switch (prev) {
               case 0:
@@ -56,11 +62,11 @@ const Dashboard = ({ gesture, ready }) => {
         break
       case 'down':
         setIsScaleDown('down')
-        gameBoxMove = false
+        dashboardCenter = false
         break
       case 'up':
         setIsScaleDown('center')
-        gameBoxMove = true
+        dashboardCenter = true
         break
       default:
         break
