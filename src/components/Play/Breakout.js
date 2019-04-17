@@ -8,6 +8,9 @@ import { connect } from 'react-redux'
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 
+var ballspeed = 5
+var paddlespeed = 1
+
 const gameWidth = 0.95 * w > 1000 ? 1000 : 0.95 * w,
   //   gameHeight =
   //     document.documentElement.clientHeight -
@@ -52,14 +55,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 7,
         speedX: 0,
-        speedY: 4
+        speedY: ballspeed
       },
       paddle1 = {
         w: 120,
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 5
+        speed: paddlespeed
       },
       bricks = [],
       bonuses = [],
@@ -174,14 +177,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 8,
         speedX: 0,
-        speedY: 4
+        speedY: ballspeed
       }
       paddle1 = {
         w: 100,
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
-        speed: 5
+        speed: paddlespeed
       }
     }
 
@@ -289,7 +292,12 @@ class Breakout extends React.Component {
         gameOver = 0
         //store.dispatch({ type: 'reset' })
       }
+
+      if (this.props.gesture === 'stop') {
+        console.log(this.props.gesture, paddle1.x, paddle1.speed)
+      }
       // paddle movement
+
       if (this.props.gesture === 'left' && paddle1.x > 0) {
         // LEFT
         paddle1.x -= paddle1.speed
@@ -321,6 +329,7 @@ class Breakout extends React.Component {
           let deltaX = ball.x - (paddle1.x + paddle1.w / 2)
           ball.speedX = deltaX * 0.06
         }
+
         // check ball hit wall left-right
         if (ball.x >= Width || ball.x <= 0) {
           ball.speedX = -ball.speedX

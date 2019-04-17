@@ -94,7 +94,7 @@ const opcodeDirection = predictions => {
   } else {
     direction = ''
   }
-  // console.table(region, direction)
+  // console.table(direction)
 }
 
 let oldInCenter = null
