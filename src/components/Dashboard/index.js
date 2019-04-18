@@ -71,11 +71,12 @@ const Dashboard = ({ gesture, ready }) => {
       default:
         break
     }
-    console.log('gesture', gesture, selectedGame)
+
     return () => void store.dispatch({ type: 'reset' })
   }, [gesture])
   React.useEffect(() => {
     if (ready) startVideo()
+    store.dispatch({ type: 'reset' })
   }, [ready])
   React.useEffect(() => () => void stop(), [])
   const isLoggedin =

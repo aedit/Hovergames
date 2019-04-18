@@ -8,8 +8,9 @@ import {
   useFromToPoseInf,
   Progress
 } from '../../ui-components'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+
 const randomString = setGuestid => {
   axios
     .get('/users/guest')
@@ -24,15 +25,20 @@ const randomString = setGuestid => {
 const GuestPane = React.memo(() => {
   const guestPose = useFromToPose(0.5, { from: 'hidden', to: 'visible' })
   const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
-  const progressPose = useFromToPose(1, { from: 'empty', to: 'full' })
+  const [progressPose, setProgress] = React.useState('empty')
   const [guestid, setGuestid] = React.useState('')
   const [redirect, setRedirect] = React.useState(false)
   React.useEffect(() => {
     randomString(setGuestid)
   }, [])
   React.useEffect(() => {
-    if (progressPose === 'full') setTimeout(() => setRedirect(true), 7000)
-  }, [progressPose])
+    if (progressPose === 'empty' && guestid) {
+      setProgress('full')
+    }
+    if (progressPose === 'full') {
+      setTimeout(() => setRedirect(true), 5000)
+    }
+  })
   return redirect === true ? (
     <Redirect to="/guide" />
   ) : (
@@ -47,7 +53,7 @@ const GuestPane = React.memo(() => {
         <LR pose={L2R}>
           <i className="far fa-hand-paper" />
         </LR>
-        <Link to="/guide">Hover to continue</Link>
+        <p>Hover to continue</p>
       </div>
       <Progress pose={progressPose}>
         <div />
