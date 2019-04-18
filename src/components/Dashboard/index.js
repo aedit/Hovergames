@@ -10,7 +10,7 @@ import Breakout from '../../designs/Breakout.png'
 import Snake from '../../designs/Snake.png'
 import Leaderboard from '../Leaderboard'
 
-const games = ['Snake', 'Dodge', 'breakout']
+const games = ['Snake', 'Pong', 'breakout']
 var dashboardCenter = true
 
 const Dashboard = ({ gesture, ready }) => {
@@ -111,7 +111,7 @@ const Dashboard = ({ gesture, ready }) => {
           />
           <Game
             key={2}
-            name="Dodge"
+            name="Pong"
             selected={selectedGame === 1}
             changeSelect={() => setSelectedGame(1)}
             background={Dodge}
