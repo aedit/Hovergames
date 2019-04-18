@@ -188,7 +188,7 @@ class Breakout extends React.Component {
       }
     }
 
-    function draw() {
+    const draw = () => {
       ctx.clearRect(0, 0, Width, Height)
       ctx.fillStyle = '#000'
       ctx.fillRect(0, 0, Width, Height)
@@ -215,11 +215,25 @@ class Breakout extends React.Component {
           ctx.fillText('YOU LOST!', Width / 2, Height / 2 - 90)
           ctx.font = '36px Roboto Mono'
           ctx.fillText('Keep trying!', Width / 2, Height / 2 - 50)
+          let highscore =
+            this.state.highscore < this.state.score
+              ? this.state.score
+              : this.state.highscore
+          this.setState(ps => {
+            return { score: 0, highscore }
+          })
         } else if (gameOver === 2) {
           ctx.font = '52px Roboto Mono'
           ctx.fillText('YOU WON!', Width / 2, Height / 2 - 90)
           ctx.font = '36px Roboto Mono'
           ctx.fillText('Congratulations!', Width / 2, Height / 2 - 50)
+          let highscore =
+            this.state.highscore < this.state.score
+              ? this.state.score
+              : this.state.highscore
+          this.setState(ps => {
+            return { score: 0, highscore }
+          })
         }
       }
       // ball

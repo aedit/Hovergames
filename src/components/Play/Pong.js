@@ -1,8 +1,10 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
+import { startVideo, stop } from '../../tracker'
+import { connect } from 'react-redux'
 
-var DIRECTION = {
+const DIRECTION = {
   IDLE: 0,
   UP: 1,
   DOWN: 2,
@@ -10,35 +12,36 @@ var DIRECTION = {
   RIGHT: 4
 }
 
-var rounds = [5, 5, 3, 3, 2]
-var colors = ['#3c1611', '#751e1a', '##b22222', '#c54f43', '#e49689']
+let paddlespeed = 6
+let paddleheight = 150
 
-var Game = {
-  initialize: function(canvasRef) {
+let rounds = [5, 5, 3, 3, 2]
+let colors = ['#000', '#3c1611', '#751e1a', '#b22222', '#c54f43']
+
+class Game {
+  initialize = canvasRef => {
     this.canvas = canvasRef
-    this.context = this.canvas.getContext('2d')
-
+    this.context = canvasRef.getContext('2d')
     this.canvas.width = 1400
     this.canvas.height = 1000
 
     this.canvas.style.width = this.canvas.width / 2 + 'px'
     this.canvas.style.height = this.canvas.height / 2 + 'px'
 
-    this.player = Paddle.new.call(this, 'left')
-    this.paddle = Paddle.new.call(this, 'right')
-    this.ball = Ball.new.call(this)
+    this.player = new Paddle(canvasRef).new('left')
+    this.paddle = new Paddle(canvasRef).new('right')
+    this.ball = new Ball(canvasRef).new()
 
-    this.paddle.speed = 8
+    this.paddle.speed = paddlespeed
     this.running = this.over = false
     this.turn = this.paddle
     this.timer = this.round = 0
-    this.color = '#2c3e50'
+    this.color = '#000'
 
     pong.menu()
-    pong.listen()
-  },
+  }
 
-  endGameMenu: function(text) {
+  endGameMenu = text => {
     // Change the canvas font size and color
     pong.context.font = '50px Courier New'
     pong.context.fillStyle = this.color
@@ -52,7 +55,7 @@ var Game = {
     )
 
     // Change the canvas color;
-    pong.context.fillStyle = '#ffffff'
+    pong.context.fillStyle = 'darkgray'
 
     // Draw the end game menu text ('Game Over' and 'Winner')
     pong.context.fillText(
@@ -61,13 +64,13 @@ var Game = {
       pong.canvas.height / 2 + 15
     )
 
-    setTimeout(function() {
-      pong = Object.assign({}, Game)
-      pong.initialize()
+    setTimeout(() => {
+      pong = new Game()
+      pong.initialize(this.canvas)
     }, 3000)
-  },
+  }
 
-  menu: function() {
+  menu = () => {
     // Draw all the pong objects in their current state
     pong.draw()
 
@@ -84,7 +87,7 @@ var Game = {
     )
 
     // Change the canvas color;
-    this.context.fillStyle = '#ffffff'
+    this.context.fillStyle = 'darkgray'
 
     // Draw the 'press any key to begin' text
     this.context.fillText(
@@ -92,15 +95,15 @@ var Game = {
       this.canvas.width / 2,
       this.canvas.height / 2 + 15
     )
-  },
+  }
 
   // Update all objects (move the player, paddle, ball, increment the score, etc.)
-  update: function() {
+  update = () => {
     if (!this.over) {
       // If the ball collides with the bound limits - correct the x and y coords.
-      if (this.ball.x <= 0) pong._resetTurn.call(this, this.paddle, this.player)
+      if (this.ball.x <= 0) pong._resetTurn(this.paddle, this.player)
       if (this.ball.x >= this.canvas.width - this.ball.width)
-        pong._resetTurn.call(this, this.player, this.paddle)
+        pong._resetTurn(this.player, this.paddle)
       if (this.ball.y <= 0) this.ball.moveY = DIRECTION.DOWN
       if (this.ball.y >= this.canvas.height - this.ball.height)
         this.ball.moveY = DIRECTION.UP
@@ -112,7 +115,7 @@ var Game = {
 
       // On new serve (start of each turn) move the ball to the correct side
       // and randomize the direction to add some challenge.
-      if (pong._turnDelayIsOver.call(this) && this.turn) {
+      if (pong._turnDelayIsOver() && this.turn) {
         this.ball.moveX =
           this.turn === this.player ? DIRECTION.LEFT : DIRECTION.RIGHT
         this.ball.moveY = [DIRECTION.UP, DIRECTION.DOWN][
@@ -210,10 +213,10 @@ var Game = {
         pong.endGameMenu('Game Over!')
       }, 1000)
     }
-  },
+  }
 
   // Draw the objects to the canvas element
-  draw: function() {
+  draw = () => {
     // Clear the Canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
@@ -224,7 +227,7 @@ var Game = {
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
     // Set the fill style to white (For the paddles and the ball)
-    this.context.fillStyle = '#ffffff'
+    this.context.fillStyle = 'darkgray'
 
     // Draw the Player
     this.context.fillRect(
@@ -243,7 +246,7 @@ var Game = {
     )
 
     // Draw the Ball
-    if (pong._turnDelayIsOver.call(this)) {
+    if (pong._turnDelayIsOver()) {
       this.context.fillRect(
         this.ball.x,
         this.ball.y,
@@ -258,11 +261,11 @@ var Game = {
     this.context.moveTo(this.canvas.width / 2, this.canvas.height - 140)
     this.context.lineTo(this.canvas.width / 2, 140)
     this.context.lineWidth = 10
-    this.context.strokeStyle = '#ffffff'
+    this.context.strokeStyle = 'darkgray'
     this.context.stroke()
 
     // Set the default canvas font and align it to the center
-    this.context.font = '100px Courier New'
+    this.context.font = '75px Courier New'
     this.context.textAlign = 'center'
 
     // Draw the players score (left)
@@ -298,66 +301,45 @@ var Game = {
       this.canvas.width / 2,
       100
     )
-  },
+  }
 
-  loop: function() {
+  loop = () => {
     pong.update()
     pong.draw()
-
     // If the game is not over, draw the next frame.
     if (!pong.over) requestAnimationFrame(pong.loop)
-  },
-
-  listen: function() {
-    document.addEventListener('keydown', function(key) {
-      // Handle the 'Press any key to begin' function and start the game.
-      if (pong.running === false) {
-        pong.running = true
-        window.requestAnimationFrame(pong.loop)
-      }
-
-      // Handle up arrow and w key events
-      if (key.keyCode === 38 || key.keyCode === 87)
-        pong.player.move = DIRECTION.UP
-
-      // Handle down arrow and s key events
-      if (key.keyCode === 40 || key.keyCode === 83)
-        pong.player.move = DIRECTION.DOWN
-    })
-
-    // Stop the player from moving when there are no keys being pressed.
-    document.addEventListener('keyup', function(key) {
-      pong.player.move = DIRECTION.IDLE
-    })
-  },
+  }
 
   // Reset the ball location, the player turns and set a delay before the next round begins.
-  _resetTurn: function(victor, loser) {
-    this.ball = Ball.new.call(this, this.ball.speed)
+  _resetTurn = (victor, loser) => {
+    this.ball = new Ball(this.canvas).new(this.ball.speed)
     this.turn = loser
     this.timer = new Date().getTime()
 
     victor.score++
     // beep2.play()
-  },
+  }
 
   // Wait for a delay to have passed after each turn.
-  _turnDelayIsOver: function() {
+  _turnDelayIsOver = () => {
     return new Date().getTime() - this.timer >= 1000
-  },
+  }
 
   // Select a random color as the background of each level/round.
-  _generateRoundColor: function() {
-    var newColor = colors[Math.floor(Math.random() * colors.length)]
+  _generateRoundColor = () => {
+    let newColor = colors[Math.floor(Math.random() * colors.length)]
     if (newColor === this.color) return pong._generateRoundColor()
     return newColor
   }
 }
 
-var pong = Object.assign({}, Game)
+let pong = new Game()
 
-var Ball = {
-  new: function(incrementedSpeed) {
+class Ball {
+  constructor(canvas) {
+    this.canvas = canvas
+  }
+  new = incrementedSpeed => {
     return {
       width: 18,
       height: 18,
@@ -365,17 +347,20 @@ var Ball = {
       y: this.canvas.height / 2 - 9,
       moveX: DIRECTION.IDLE,
       moveY: DIRECTION.IDLE,
-      speed: incrementedSpeed || 9
+      speed: incrementedSpeed || 8
     }
   }
 }
 
 // The paddle object (The two lines that move up and down)
-var Paddle = {
-  new: function(side) {
+class Paddle {
+  constructor(canvas) {
+    this.canvas = canvas
+  }
+  new = side => {
     return {
       width: 18,
-      height: 70,
+      height: paddleheight,
       x: side === 'left' ? 150 : this.canvas.width - 150,
       y: this.canvas.height / 2 - 35,
       score: 0,
@@ -385,11 +370,38 @@ var Paddle = {
   }
 }
 
-const Pong = () => {
+const Pong = ({ gesture, ready }) => {
   const canvas = React.useRef()
+
+  const gestureListener = () => {
+    // Handle the 'Press any key to begin'  and start the game.
+    if (gesture === 'open' && pong.running === false) {
+      pong.running = true
+      window.requestAnimationFrame(pong.loop)
+    }
+
+    // Handle up arrow and w key events
+    if (gesture === 'up') pong.player.move = DIRECTION.UP
+
+    // Handle down arrow and s key events
+    if (gesture === 'down') pong.player.move = DIRECTION.DOWN
+
+    // Stop the player from moving when there are no keys being pressed.
+    if (gesture === 'left' || gesture === 'right')
+      pong.player.move = DIRECTION.IDLE
+  }
+
+  React.useEffect(gestureListener, [gesture])
+
   React.useEffect(() => {
-    pong.initialize(canvas.current)
-  }, [])
+    if (ready) {
+      startVideo()
+    }
+    pong.initialize(canvas.current, gestureListener)
+  }, [ready])
+
+  React.useEffect(() => () => void stop(), [])
+
   const isLoggedin =
     sessionStorage.hasOwnProperty('token') ||
     sessionStorage.hasOwnProperty('guestid')
@@ -401,6 +413,7 @@ const Pong = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
+
         width: '95vw',
         maxWidth: '1100px',
         margin: '0 auto',
@@ -412,13 +425,22 @@ const Pong = () => {
       }}
     >
       <GameInfo
-        name="pong"
+        name="Pong"
         // playerScore={this.state.score}
         // highScore={this.state.highscore}
       />
-      <canvas ref={canvas} />
+      <canvas style={{ alignSelf: 'center' }} ref={canvas} />
     </div>
   )
 }
 
-export default Pong
+const mapStateToProps = state => {
+  return {
+    ...state
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Pong)
