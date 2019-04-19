@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
@@ -18,10 +18,9 @@ let colors = ['#751e1a', '##b22222', '#c54f43', '#e49689', '#fff']
 let paddlespeed = 6
 let paddleheight = 150
 let ballspeed = 8
-let paddlecolor = colors[4]
+let paddlecolor = colors[0]
 
-let score = 0
-let highscore = 0
+let gamescore = 0
 
 class Game {
   initialize = canvasRef => {
@@ -328,9 +327,9 @@ class Game {
 
     victor.score++
     if (victor.x === 150) {
-      score += this.round * 10
+      gamescore += this.round * 10
     } else {
-      score -= this.round * 5
+      gamescore -= this.round * 5
     }
     // beep2.play()
   }
@@ -388,7 +387,8 @@ class Paddle {
 const Pong = ({ gesture, ready }) => {
   const canvas = React.useRef()
 
-  highscore = highscore < score ? score : highscore
+  let [score, setScore] = useState(0)
+  let [highscore, sethighscore] = useState(0)
 
   const gestureListener = () => {
     // Handle the 'Press any key to begin'  and start the game.
@@ -418,6 +418,11 @@ const Pong = ({ gesture, ready }) => {
   }, [ready])
 
   React.useEffect(() => () => void stop(), [])
+
+  React.useEffect(() => {
+    setScore(gamescore)
+    sethighscore(highscore > score ? highscore : score)
+  }, [gamescore])
 
   const isLoggedin =
     sessionStorage.hasOwnProperty('token') ||

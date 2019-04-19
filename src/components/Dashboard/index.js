@@ -5,12 +5,13 @@ import Game from '../Game'
 import { connect } from 'react-redux'
 import { startVideo, stop } from '../../tracker'
 import { store } from '../../store'
-import Dodge from '../../designs/Dodge.png'
+// import Dodge from '../../designs/Dodge.png'
+import Pong from '../../designs/Pong.png'
 import Breakout from '../../designs/Breakout.png'
 import Snake from '../../designs/Snake.png'
 import Leaderboard from '../Leaderboard'
 
-const games = ['Snake', 'Pong', 'breakout']
+const games = ['Snake', 'Pong', 'Breakout']
 var dashboardCenter = true
 
 const Dashboard = ({ gesture, ready }) => {
@@ -114,8 +115,8 @@ const Dashboard = ({ gesture, ready }) => {
             name="Pong"
             selected={selectedGame === 1}
             changeSelect={() => setSelectedGame(1)}
-            background={Dodge}
-            desc="Ditch the blocks!"
+            background={Pong}
+            desc="Defeat the block!"
           />
           <Game
             key={3}
