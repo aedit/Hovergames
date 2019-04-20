@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { GameInfo, Board, Player, Enemy, DebugState } from '../components'
 import { UP, DOWN, LEFT, RIGHT } from '../helpers/constants'
 import { pluck } from '../helpers/utils'
@@ -10,6 +11,7 @@ const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
   const half = Math.floor(boardSize / 2) * playerSize
   return {
     count: 0,
+    closeDetected: false,
     size: {
       board: boardSize,
       player: playerSize,
@@ -108,11 +110,17 @@ class Game extends Component {
       case 'down':
         dirObj = { top: 1, left: 0, dir: DOWN }
         break
+      case 'close':
+        dirObj = { top: 0, left: 0, dir: '' }
+        this.setState({ closeDetected: true })
+        break
       default:
         dirObj = { top: 0, left: 0, dir: '' }
         break
     }
-    if (dirObj.dir !== '') store.dispatch({ type: 'reset' })
+    if (dirObj.dir !== '') {
+      store.dispatch({ type: 'reset' })
+    }
     const { top, left } = this.state.positions.player
     const { player, maxDim } = this.state.size
 
@@ -332,7 +340,9 @@ class Game extends Component {
       globalHighScore
     } = this.state
 
-    return (
+    return this.state.closeDetected ? (
+      <Redirect to="/Dashboard" />
+    ) : (
       <div style={this.style()}>
         <GameInfo
           name="Dodge"
@@ -391,9 +401,11 @@ class Game extends Component {
 
   componentWillUnmount() {
     stop()
+    window.cancelAnimationFrame(this.handlePlayerMovement)
     clearInterval(this.state.gameInterval)
     clearInterval(this.state.enemyInterval)
     clearInterval(this.state.timeInterval)
+    store.dispatch({ type: 'reset' })
   }
 }
 

@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom'
 import GameInfo from '../Dodge/components/GameInfo'
 import Grid from './Grid'
 import './index.css'
-import { connect } from 'react-redux'
 import { store } from '../../../store'
 import { startVideo, stop } from '../../../tracker'
 

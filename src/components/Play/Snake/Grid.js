@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { startVideo, stop } from '../../../tracker'
 import { store } from '../../../store'
+import { Redirect } from 'react-router-dom'
 
 const getDefState = (rows, cols) => {
   let grid = []
@@ -17,6 +18,7 @@ const getDefState = (rows, cols) => {
   }
   return {
     grid,
+    closeDetected: false,
     gameState: 'stop',
     apple: {
       x: Math.floor(Math.random() * (rows - 1)),
@@ -192,6 +194,9 @@ class Grid extends React.Component {
           y: 0
         }
         break
+      case 'close':
+        this.setState({ closeDetected: true })
+        break
       default:
         break
     }
@@ -238,44 +243,38 @@ class Grid extends React.Component {
       clearTimeout(this.state.interval)
     }
     stop()
+    store.dispatch({ type: 'reset' })
+    window.cancelAnimationFrame(this.snakeMove)
   }
 
   render = () => {
     const { grid, apple, snake } = this.state
-    if (this.state.gameState === 'stop')
-      return (
-        <div
-          className="grid"
-          style={{
-            gridTemplateColumns: `repeat(${this.props.cols}, 1fr)`,
-            gridTemplateRows: `repeat(${this.props.rows}, 1fr)`
-          }}
-        />
-      )
-    else
-      return (
-        <div
-          className="grid"
-          style={{
-            gridTemplateColumns: `repeat(${this.props.cols}, 1fr)`,
-            gridTemplateRows: `repeat(${this.props.rows}, 1fr)`
-          }}
-        >
-          {grid.map((cells, i) =>
-            cells.map((_, j) => {
-              let type = 'cell'
-              if (this.isSnakeHead(i, j, snake.head)) {
-                type += ' snake-head'
-              } else if (this.isSnakeTail(i, j, snake.tails)) {
-                type += ' snake-tail'
-              } else if (this.isApple(i, j, apple)) {
-                type += ' apple'
-              }
-              return <span key={i + j * j} className={type} />
-            })
-          )}
-        </div>
-      )
+
+    return this.state.closeDetected ? (
+      <Redirect to="/Dashboard" />
+    ) : (
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: `repeat(${this.props.cols}, 1fr)`,
+          gridTemplateRows: `repeat(${this.props.rows}, 1fr)`
+        }}
+      >
+        {grid.map((cells, i) =>
+          cells.map((_, j) => {
+            let type = 'cell'
+            if (this.isSnakeHead(i, j, snake.head)) {
+              type += ' snake-head'
+            } else if (this.isSnakeTail(i, j, snake.tails)) {
+              type += ' snake-tail'
+            } else if (this.isApple(i, j, apple)) {
+              type += ' apple'
+            }
+            return <span key={i + j * j} className={type} />
+          })
+        )}
+      </div>
+    )
   }
 }
 const mapStateToProps = (state, prop) => ({ ...state, ...prop })
