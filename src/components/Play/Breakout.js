@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
 
-var ballspeed = 5
+var ballspeed = 8
 var paddlespeed = 4
 
 const gameWidth = 0.95 * w > 1000 ? 1000 : 0.95 * w,
@@ -177,7 +177,7 @@ class Breakout extends React.Component {
         speedY: ballspeed
       }
       paddle1 = {
-        w: 100,
+        w: 104,
         h: 10,
         x: Width / 2 - 100 / 2, // 100 is paddle.w
         y: Height - 10,
@@ -307,10 +307,10 @@ class Breakout extends React.Component {
       }
 
       if (ballOn) {
-        let newX = (this.props.x * gameWidth) / 640
+        let newX = (this.props.x * gameWidth) / 640 - paddle1.w / 2
         console.table(gameWidth, newX, this.props.x)
         paddle1.x =
-          newX > 0 && newX + paddle1.w / 2 < gameWidth ? newX : paddle1.x
+          newX > -5 && newX + paddle1.w / 2 < gameWidth ? newX : paddle1.x
         // console.log(this.props.gesture, paddle1.x)
       }
 

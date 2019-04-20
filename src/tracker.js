@@ -82,14 +82,14 @@ const opcodeDirection = predictions => {
 
   if (region === 'center') {
     oldRegion = 'center'
-    store.dispatch({ type: 'pos', payload: { x, y } })
   } else if (oldRegion === 'center') {
     oldRegion = region
     direction = region
-    store.dispatch({ type: direction, payload: { x, y } })
+    store.dispatch({ type: direction })
   } else {
     direction = ''
   }
+  store.dispatch({ type: 'pos', payload: { x, y } })
 }
 
 let oldInCenter = null
