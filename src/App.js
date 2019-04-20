@@ -1,14 +1,14 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Guide from "./components/Guide";
-import Dashboard from "./components/Dashboard";
-import About from "./components/About";
-import { Snake, Pong, Breakout } from "./components/Play";
-import "./tracker";
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Guide from './components/Guide'
+import Dashboard from './components/Dashboard'
+import About from './components/About'
+import { Snake, Pong, Breakout, Dodge } from './components/Play'
+import './tracker'
 // import { stop } from './tracker'
-import { Provider } from "react-redux";
-import { store } from "./store";
-import Home from "./Home";
+import { Provider } from 'react-redux'
+import { store } from './store'
+import Home from './Home'
 
 const App = () => (
   <Provider store={store}>
@@ -21,9 +21,10 @@ const App = () => (
         <Route path="/snake" component={() => <Snake />} />
         <Route path="/Pong" component={() => <Pong />} />
         <Route path="/breakout" component={() => <Breakout />} />
+        <Route path="/Dodge" component={() => <Dodge />} />
       </Switch>
     </BrowserRouter>
   </Provider>
-);
+)
 
-export default App;
+export default App

@@ -1,55 +1,60 @@
 import React from 'react'
-import GameOver from './GameOver'
+import { connect } from 'react-redux'
+import { startVideo, stop } from '../../../tracker'
+import { store } from '../../../store'
+
+const getDefState = (rows, cols) => {
+  let grid = []
+  for (let i = 0; i < rows; i++) {
+    let cells = []
+    for (let j = 0; j < cols; j++) {
+      cells.push({
+        x: i,
+        y: j
+      })
+    }
+    grid.push(cells)
+  }
+  return {
+    grid,
+    gameState: 'stop',
+    apple: {
+      x: Math.floor(Math.random() * (rows - 1)),
+      y: Math.floor(Math.random() * (cols - 1))
+    },
+    snake: {
+      head: {
+        x: 5,
+        y: 5
+      },
+      tails: [
+        {
+          x: 4,
+          y: 5
+        },
+        {
+          x: 3,
+          y: 5
+        },
+        {
+          x: 2,
+          y: 5
+        }
+      ],
+      move: {
+        dir: 'right',
+        x: 1,
+        y: 0
+      },
+      velocity: 800
+    }
+  }
+}
 
 class Grid extends React.Component {
   constructor(props) {
     super(props)
-    const { rows, cols } = props
-    let grid = []
-    for (let i = 0; i < rows; i++) {
-      let cells = []
-      for (let j = 0; j < cols; j++) {
-        cells.push({
-          x: i,
-          y: j
-        })
-      }
-      grid.push(cells)
-    }
-
-    this.state = {
-      grid,
-      gameState: 'stop',
-      apple: {
-        x: Math.floor(Math.random() * (rows - 1)),
-        y: Math.floor(Math.random() * (cols - 1))
-      },
-      snake: {
-        head: {
-          x: 5,
-          y: 5
-        },
-        tails: [
-          {
-            x: 4,
-            y: 5
-          },
-          {
-            x: 3,
-            y: 5
-          },
-          {
-            x: 2,
-            y: 5
-          }
-        ],
-        move: {
-          x: 1,
-          y: 0
-        },
-        velocity: 500
-      }
-    }
+    this.state = getDefState(props.rows, props.cols)
   }
 
   ateApple = (apple, { head }) => {
@@ -85,8 +90,8 @@ class Grid extends React.Component {
         return {
           ...prevState,
           apple: {
-            x: Math.floor(Math.random() * (grid.length - 1)),
-            y: Math.floor(Math.random() * (grid[0].length - 1))
+            x: Math.floor(Math.random() * (grid.length - 3)) + 2,
+            y: Math.floor(Math.random() * (grid[0].length - 3)) + 2
           },
           snake: {
             ...snake,
@@ -95,12 +100,14 @@ class Grid extends React.Component {
         }
       })
     } else if (this.collideWithWall(snake, grid)) {
-      if (this.state.interval) {
-        clearInterval(this.state.interval)
-      }
+      // if (this.state.interval) {
+      //   clearInterval(this.state.interval)
+      // }
       this.setState({
-        gameState: 'over'
+        ...getDefState(this.props.rows, this.props.cols),
+        gameState: 'start'
       })
+      store.dispatch({ type: 'reset' })
     }
     let { head, tails, move } = this.state.snake
     let newTails = []
@@ -148,27 +155,39 @@ class Grid extends React.Component {
 
   snakeMove = () => {
     let move = this.state.snake.move
-    switch (this.props.gesture) {
+    switch (this.props.gesture + move.dir) {
       case 'right':
+      case 'rightup':
+      case 'rightdown':
         move = {
+          dir: 'right',
           x: 0,
           y: 1
         }
         break
       case 'left':
+      case 'leftup':
+      case 'leftdown':
         move = {
+          dir: 'left',
           x: 0,
           y: -1
         }
         break
       case 'up':
+      case 'upleft':
+      case 'upright':
         move = {
+          dir: 'up',
           x: -1,
           y: 0
         }
         break
       case 'down':
+      case 'downleft':
+      case 'downright':
         move = {
+          dir: 'down',
           x: 1,
           y: 0
         }
@@ -176,6 +195,7 @@ class Grid extends React.Component {
       default:
         break
     }
+    // console.log(this.props.gesture, move)
     this.setState(ps => ({
       ...ps,
       snake: {
@@ -183,22 +203,41 @@ class Grid extends React.Component {
         move
       }
     }))
+    window.requestAnimationFrame(this.snakeMove)
+  }
+
+  xyz = prevProp => {
+    // console.log('xyz')
+    if (!prevProp.ready && this.props.ready) {
+      const { snake } = this.state
+      let interval = setInterval(() => {
+        this.gameLoop()
+      }, snake.velocity / 2)
+      this.setState({
+        interval
+      })
+      startVideo()
+      this.setState({
+        gameState: 'start'
+      })
+      this.snakeMove()
+      console.log(true)
+    }
+  }
+
+  componentDidUpdate = prevProp => {
+    this.xyz(prevProp)
   }
 
   componentDidMount = () => {
-    const { snake } = this.state
-    let interval = setInterval(() => {
-      this.gameLoop()
-    }, snake.velocity / 2)
-    this.setState({
-      interval
-    })
+    this.xyz({ ready: false })
   }
 
   componentWillUnmount = () => {
     if (this.state.interval) {
       clearTimeout(this.state.interval)
     }
+    stop()
   }
 
   render = () => {
@@ -213,8 +252,6 @@ class Grid extends React.Component {
           }}
         />
       )
-    else if (this.state.gameState === 'over')
-      return <GameOver score={this.state.score} />
     else
       return (
         <div
@@ -225,7 +262,7 @@ class Grid extends React.Component {
           }}
         >
           {grid.map((cells, i) =>
-            cells.map((cell, j) => {
+            cells.map((_, j) => {
               let type = 'cell'
               if (this.isSnakeHead(i, j, snake.head)) {
                 type += ' snake-head'
@@ -241,5 +278,9 @@ class Grid extends React.Component {
       )
   }
 }
+const mapStateToProps = (state, prop) => ({ ...state, ...prop })
 
-export default Grid
+export default connect(
+  mapStateToProps,
+  () => {}
+)(Grid)

@@ -61,7 +61,6 @@ class Snake extends Component {
         }}
       >
         <GameInfo
-          gesture={this.props.gesture}
           name="Snake"
           playerScore={this.state.score}
           highScore={this.state.highScore}
@@ -77,11 +76,4 @@ class Snake extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state
-})
-
-export default connect(
-  mapStateToProps,
-  () => {}
-)(Snake)
+export default Snake

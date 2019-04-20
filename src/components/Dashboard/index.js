@@ -5,13 +5,13 @@ import Game from '../Game'
 import { connect } from 'react-redux'
 import { startVideo, stop } from '../../tracker'
 import { store } from '../../store'
-// import Dodge from '../../designs/Dodge.png'
+import Dodge from '../../designs/Dodge.png'
 import Pong from '../../designs/Pong.png'
 import Breakout from '../../designs/Breakout.png'
 import Snake from '../../designs/Snake.png'
 import Leaderboard from '../Leaderboard'
 
-const games = ['Snake', 'Pong', 'Breakout']
+const games = ['Snake', 'Pong', 'Breakout', 'Dodge']
 var dashboardCenter = true
 
 const Dashboard = ({ gesture, ready }) => {
@@ -39,6 +39,8 @@ const Dashboard = ({ gesture, ready }) => {
               case 1:
                 return 2
               case 2:
+                return 3
+              case 3:
                 return 0
               default:
                 return 1
@@ -51,21 +53,23 @@ const Dashboard = ({ gesture, ready }) => {
           setSelectedGame(prev => {
             switch (prev) {
               case 0:
-                return 2
+                return 3
               case 1:
-                return 0
+                return 2
               case 2:
+                return 0
+              case 3:
                 return 1
               default:
                 return 1
             }
           })
         break
-      case 'down':
+      case 'up':
         setIsScaleDown('down')
         dashboardCenter = false
         break
-      case 'up':
+      case 'down':
         setIsScaleDown('center')
         dashboardCenter = true
         break
@@ -106,7 +110,6 @@ const Dashboard = ({ gesture, ready }) => {
             key={1}
             name="Snake"
             selected={selectedGame === 0}
-            changeSelect={() => setSelectedGame(0)}
             background={Snake}
             desc="Eat the Blocks!"
           />
@@ -114,17 +117,22 @@ const Dashboard = ({ gesture, ready }) => {
             key={2}
             name="Pong"
             selected={selectedGame === 1}
-            changeSelect={() => setSelectedGame(1)}
             background={Pong}
-            desc="Defeat the block!"
+            desc="Defeat the Block!"
           />
           <Game
             key={3}
             name="Breakout"
             selected={selectedGame === 2}
-            changeSelect={() => setSelectedGame(2)}
             background={Breakout}
             desc="Break the blocks!"
+          />
+          <Game
+            key={4}
+            name="Dodge"
+            selected={selectedGame === 3}
+            background={Dodge}
+            desc="Ditch the blocks!"
           />
         </div>
       </Window>

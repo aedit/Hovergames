@@ -3,8 +3,8 @@ import { GameInfo, Board, Player, Enemy, DebugState } from '../components'
 import { UP, DOWN, LEFT, RIGHT } from '../helpers/constants'
 import { pluck } from '../helpers/utils'
 import { connect } from 'react-redux'
-// import { store } from '../../../../store'
 import { startVideo, stop } from '../../../../tracker'
+import { store } from '../../../../store'
 
 const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
   const half = Math.floor(boardSize / 2) * playerSize
@@ -25,7 +25,7 @@ const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
     playerScore: 0,
     highScore,
     timeElapsed: 0,
-    enemySpeed: 10,
+    enemySpeed: 5,
     enemyIndex: 0,
     activeEnemies: 1,
     baseScore: 10
@@ -112,7 +112,7 @@ class Game extends Component {
         dirObj = { top: 0, left: 0, dir: '' }
         break
     }
-
+    if (dirObj.dir !== '') store.dispatch({ type: 'reset' })
     const { top, left } = this.state.positions.player
     const { player, maxDim } = this.state.size
 
@@ -143,6 +143,7 @@ class Game extends Component {
         }
       }
     })
+    window.requestAnimationFrame(this.handlePlayerMovement)
   }
 
   handlePlayerCollision = () => {
@@ -370,13 +371,12 @@ class Game extends Component {
   }
 
   componentDidUpdate = prevProp => {
-    this.handlePlayerMovement()
-
-    if (this.state.count === 0 && this.props.ready) {
-      this.setState({ count: 1 })
+    if (!prevProp.ready && this.props.ready) {
       startVideo()
+      console.log('ready')
       this.startGame()
       this.fetchGlobalHighScore()
+      this.handlePlayerMovement()
     }
   }
 
@@ -385,6 +385,7 @@ class Game extends Component {
       startVideo()
       this.startGame()
       this.fetchGlobalHighScore()
+      this.handlePlayerMovement()
     }
   }
 
