@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
@@ -12,11 +12,15 @@ const DIRECTION = {
   RIGHT: 4
 }
 
+let rounds = [5, 5, 3, 3, 2]
+let colors = ['#751e1a', '##b22222', '#c54f43', '#e49689', '#fff']
+
 let paddlespeed = 6
 let paddleheight = 150
+let ballspeed = 8
+let paddlecolor = colors[0]
 
-let rounds = [5, 5, 3, 3, 2]
-let colors = ['#000', '#3c1611', '#751e1a', '#b22222', '#c54f43']
+let gamescore = 0
 
 class Game {
   initialize = canvasRef => {
@@ -55,7 +59,7 @@ class Game {
     )
 
     // Change the canvas color;
-    pong.context.fillStyle = 'darkgray'
+    pong.context.fillStyle = 'white'
 
     // Draw the end game menu text ('Game Over' and 'Winner')
     pong.context.fillText(
@@ -87,11 +91,11 @@ class Game {
     )
 
     // Change the canvas color;
-    this.context.fillStyle = 'darkgray'
+    this.context.fillStyle = 'white'
 
     // Draw the 'press any key to begin' text
     this.context.fillText(
-      'Press any key to begin',
+      'Gesture Open to begin',
       this.canvas.width / 2,
       this.canvas.height / 2 + 15
     )
@@ -191,12 +195,12 @@ class Game {
       // there are not.
       if (!rounds[this.round + 1]) {
         this.over = true
-        setTimeout(function() {
+        setTimeout(() => {
           pong.endGameMenu('Winner!')
         }, 1000)
       } else {
         // If there is another round, reset all the values and increment the round number.
-        this.color = this._generateRoundColor()
+        paddlecolor = this._generateRoundColor()
         this.player.score = this.paddle.score = 0
         this.player.speed += 0.5
         this.paddle.speed += 1
@@ -227,7 +231,7 @@ class Game {
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
     // Set the fill style to white (For the paddles and the ball)
-    this.context.fillStyle = 'darkgray'
+    this.context.fillStyle = paddlecolor
 
     // Draw the Player
     this.context.fillRect(
@@ -247,12 +251,15 @@ class Game {
 
     // Draw the Ball
     if (pong._turnDelayIsOver()) {
-      this.context.fillRect(
-        this.ball.x,
-        this.ball.y,
-        this.ball.width,
-        this.ball.height
-      )
+      // this.context.fillRect(
+      //   this.ball.x,
+      //   this.ball.y,
+      //   this.ball.width,
+      //   this.ball.height
+      // )
+      this.context.beginPath()
+      this.context.arc(this.ball.x, this.ball.y, 15, 0, 2 * Math.PI)
+      this.context.fill()
     }
 
     // Draw the net (Line in the middle)
@@ -264,6 +271,8 @@ class Game {
     this.context.strokeStyle = 'darkgray'
     this.context.stroke()
 
+    //Set the color for the score and round text
+    this.context.fillStyle = 'white'
     // Set the default canvas font and align it to the center
     this.context.font = '75px Courier New'
     this.context.textAlign = 'center'
@@ -317,6 +326,11 @@ class Game {
     this.timer = new Date().getTime()
 
     victor.score++
+    if (victor.x === 150) {
+      gamescore += this.round * 10
+    } else {
+      gamescore -= this.round * 5
+    }
     // beep2.play()
   }
 
@@ -328,7 +342,7 @@ class Game {
   // Select a random color as the background of each level/round.
   _generateRoundColor = () => {
     let newColor = colors[Math.floor(Math.random() * colors.length)]
-    if (newColor === this.color) return pong._generateRoundColor()
+    if (newColor === paddlecolor) return pong._generateRoundColor()
     return newColor
   }
 }
@@ -347,7 +361,7 @@ class Ball {
       y: this.canvas.height / 2 - 9,
       moveX: DIRECTION.IDLE,
       moveY: DIRECTION.IDLE,
-      speed: incrementedSpeed || 8
+      speed: incrementedSpeed || ballspeed
     }
   }
 }
@@ -372,6 +386,9 @@ class Paddle {
 
 const Pong = ({ gesture, ready }) => {
   const canvas = React.useRef()
+
+  let [score, setScore] = useState(0)
+  let [highscore, sethighscore] = useState(0)
 
   const gestureListener = () => {
     // Handle the 'Press any key to begin'  and start the game.
@@ -402,6 +419,11 @@ const Pong = ({ gesture, ready }) => {
 
   React.useEffect(() => () => void stop(), [])
 
+  React.useEffect(() => {
+    setScore(gamescore)
+    sethighscore(highscore > score ? highscore : score)
+  }, [gamescore])
+
   const isLoggedin =
     sessionStorage.hasOwnProperty('token') ||
     sessionStorage.hasOwnProperty('guestid')
@@ -424,11 +446,7 @@ const Pong = ({ gesture, ready }) => {
         height: '90vh'
       }}
     >
-      <GameInfo
-        name="Pong"
-        // playerScore={this.state.score}
-        // highScore={this.state.highscore}
-      />
+      <GameInfo name="Pong" playerScore={score} highScore={highscore} />
       <canvas style={{ alignSelf: 'center' }} ref={canvas} />
     </div>
   )

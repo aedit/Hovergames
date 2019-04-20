@@ -3,7 +3,7 @@ import { createStore } from "redux";
 const reducer = (state = { ready: false, gesture: "" }, action) => {
   switch (action.type) {
     case "reset":
-      return { ...state, gesture: "", ...action.payload };
+      return { ...state, gesture: "" };
     case "up":
       return { ...state, gesture: "up", ...action.payload };
     case "down":
