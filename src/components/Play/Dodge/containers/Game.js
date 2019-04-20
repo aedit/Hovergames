@@ -3,7 +3,7 @@ import { GameInfo, Board, Player, Enemy, DebugState } from '../components'
 import { UP, DOWN, LEFT, RIGHT } from '../helpers/constants'
 import { pluck } from '../helpers/utils'
 import { connect } from 'react-redux'
-import { store } from '../../../../store'
+// import { store } from '../../../../store'
 import { startVideo, stop } from '../../../../tracker'
 
 const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {

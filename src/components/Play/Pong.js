@@ -13,21 +13,20 @@ const DIRECTION = {
 }
 
 let rounds = [5, 5, 3, 3, 2]
-let colors = ['#751e1a', '##b22222', '#c54f43', '#e49689', '#fff']
+let colors = ['#751e1a', '#b22222', '#c54f43', '#e49689', '#fff']
 
-let paddlespeed = 6
+let paddlespeed = 13
 let paddleheight = 150
-let ballspeed = 8
+let ballspeed = 14
 let paddlecolor = colors[0]
 
-let gamescore = 0
-
 class Game {
-  initialize = canvasRef => {
+  initialize = (canvasRef, returnTurn) => {
     this.canvas = canvasRef
     this.context = canvasRef.getContext('2d')
     this.canvas.width = 1400
     this.canvas.height = 1000
+    this._resetTurn = returnTurn
 
     this.canvas.style.width = this.canvas.width / 2 + 'px'
     this.canvas.style.height = this.canvas.height / 2 + 'px'
@@ -95,7 +94,7 @@ class Game {
 
     // Draw the 'press any key to begin' text
     this.context.fillText(
-      'Gesture Open to begin',
+      'Gesture Left to begin',
       this.canvas.width / 2,
       this.canvas.height / 2 + 15
     )
@@ -200,7 +199,7 @@ class Game {
         }, 1000)
       } else {
         // If there is another round, reset all the values and increment the round number.
-        paddlecolor = this._generateRoundColor()
+        paddlecolor = colors[this.round + 1]
         this.player.score = this.paddle.score = 0
         this.player.speed += 0.5
         this.paddle.speed += 1
@@ -320,19 +319,6 @@ class Game {
   }
 
   // Reset the ball location, the player turns and set a delay before the next round begins.
-  _resetTurn = (victor, loser) => {
-    this.ball = new Ball(this.canvas).new(this.ball.speed)
-    this.turn = loser
-    this.timer = new Date().getTime()
-
-    victor.score++
-    if (victor.x === 150) {
-      gamescore += this.round * 10
-    } else {
-      gamescore -= this.round * 5
-    }
-    // beep2.play()
-  }
 
   // Wait for a delay to have passed after each turn.
   _turnDelayIsOver = () => {
@@ -384,45 +370,49 @@ class Paddle {
   }
 }
 
-const Pong = ({ gesture, ready }) => {
+const Pong = ({ gesture, ready, x, y }) => {
   const canvas = React.useRef()
-
+  let [started, setStarted] = useState(false)
   let [score, setScore] = useState(0)
   let [highscore, sethighscore] = useState(0)
 
   const gestureListener = () => {
     // Handle the 'Press any key to begin'  and start the game.
-    if (gesture === 'open' && pong.running === false) {
-      pong.running = true
-      window.requestAnimationFrame(pong.loop)
+    if (started) {
+      if (gesture === 'left' && pong.running === false) {
+        pong.running = true
+        window.requestAnimationFrame(pong.loop)
+      }
+      if (gesture === 'close' && pong.running === true) console.log('close')
+      let newY = (y * 1000) / 480 - paddleheight / 2
+      pong.player.y = newY > -10 && newY < 1000 ? newY : pong.player.y
     }
-
-    // Handle up arrow and w key events
-    if (gesture === 'up') pong.player.move = DIRECTION.UP
-
-    // Handle down arrow and s key events
-    if (gesture === 'down') pong.player.move = DIRECTION.DOWN
-
-    // Stop the player from moving when there are no keys being pressed.
-    if (gesture === 'left' || gesture === 'right')
-      pong.player.move = DIRECTION.IDLE
   }
 
-  React.useEffect(gestureListener, [gesture])
+  const _resetTurn = (victor, loser) => {
+    pong.ball = new Ball(pong.canvas).new(pong.ball.speed)
+    pong.turn = loser
+    pong.timer = new Date().getTime()
+
+    victor.score++
+    if (victor.x === 150) {
+      let gamescore = score + pong.round * 10
+      setScore(gamescore)
+      sethighscore(highscore > score ? highscore : score)
+    }
+  }
 
   React.useEffect(() => {
     if (ready) {
       startVideo()
+      setStarted(true)
     }
-    pong.initialize(canvas.current, gestureListener)
+    pong.initialize(canvas.current, _resetTurn)
   }, [ready])
 
-  React.useEffect(() => () => void stop(), [])
+  React.useEffect(gestureListener, [started, y])
 
-  React.useEffect(() => {
-    setScore(gamescore)
-    sethighscore(highscore > score ? highscore : score)
-  }, [gamescore])
+  React.useEffect(() => () => void stop(), [])
 
   const isLoggedin =
     localStorage.hasOwnProperty('token') ||

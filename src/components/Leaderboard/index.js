@@ -1,6 +1,6 @@
 import React from 'react'
 import { Heading, Desc, UD } from '../../ui-components'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 
 export const useFromToPose = (timeOut, { from, to }) => {
   const [windowPose, setWindowPose] = React.useState(from)
