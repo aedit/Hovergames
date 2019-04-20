@@ -26,7 +26,7 @@ const Dashboard = ({ gesture, ready }) => {
         break
       case 'close':
         if (dashboardCenter) {
-          sessionStorage.clear()
+          localStorage.clear()
           break
         }
         break
@@ -81,8 +81,8 @@ const Dashboard = ({ gesture, ready }) => {
   }, [ready])
   React.useEffect(() => () => void stop(), [])
   const isLoggedin =
-    sessionStorage.hasOwnProperty('token') ||
-    sessionStorage.hasOwnProperty('guestid')
+    localStorage.hasOwnProperty('token') ||
+    localStorage.hasOwnProperty('guestid')
   return !isLoggedin ? (
     <Redirect to="/" />
   ) : redirect ? (

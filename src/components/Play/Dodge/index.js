@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 
 const Dodge = () => {
   const isLoggedin =
-    sessionStorage.hasOwnProperty('token') ||
-    sessionStorage.hasOwnProperty('guestid')
+    localStorage.hasOwnProperty('token') ||
+    localStorage.hasOwnProperty('guestid')
   return !isLoggedin ? (
     <Redirect to="/" />
   ) : (

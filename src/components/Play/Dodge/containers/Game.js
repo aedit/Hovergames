@@ -9,6 +9,7 @@ import { startVideo, stop } from '../../../../tracker'
 const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
   const half = Math.floor(boardSize / 2) * playerSize
   return {
+    count: 0,
     size: {
       board: boardSize,
       player: playerSize,
@@ -341,11 +342,7 @@ class Game extends Component {
         />
 
         <Board dimension={board * player}>
-          <Player
-            size={player}
-            position={playerPos}
-            handlePlayerMovement={this.handlePlayerMovement}
-          />
+          <Player size={player} position={playerPos} />
 
           {this.state.positions.enemies.map(enemy => (
             <Enemy
@@ -373,8 +370,14 @@ class Game extends Component {
   }
 
   componentDidUpdate = prevProp => {
-    if (prevProp.gesture === this.props.gesture)
-      store.dispatch({ type: 'reset' })
+    this.handlePlayerMovement()
+
+    if (this.state.count === 0 && this.props.ready) {
+      this.setState({ count: 1 })
+      startVideo()
+      this.startGame()
+      this.fetchGlobalHighScore()
+    }
   }
 
   componentDidMount() {

@@ -41,8 +41,8 @@ const Guide = () => {
     if (progressPose === 'full') setTimeout(() => setRedirect(true), 7000)
   }, [progressPose])
   const isLoggedin =
-    sessionStorage.hasOwnProperty('token') ||
-    sessionStorage.hasOwnProperty('guestid')
+    localStorage.hasOwnProperty('token') ||
+    localStorage.hasOwnProperty('guestid')
   return !isLoggedin ? (
     <Redirect to="/" />
   ) : redirect === true ? (

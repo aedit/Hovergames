@@ -16,7 +16,7 @@ const randomString = setGuestid => {
     .get('/users/guest')
     .then(res => {
       const guestid = res.data.guest_id.substr(0, 5)
-      sessionStorage.setItem('guestid', guestid)
+      localStorage.setItem('guestid', guestid)
       setGuestid(guestid)
     })
     .catch(() => {})

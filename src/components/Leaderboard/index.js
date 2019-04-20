@@ -14,12 +14,7 @@ export const useFromToPose = (timeOut, { from, to }) => {
 
 const Leaderboard = ({ informUp }) => {
   const [upDownPose, setUpDown] = useFromToPose(0.3, { from: 'up', to: 'down' })
-  const isLoggedin =
-    sessionStorage.hasOwnProperty('token') ||
-    sessionStorage.hasOwnProperty('guestid')
-  return !isLoggedin ? (
-    <Redirect to="/" />
-  ) : (
+  return (
     <UD
       onClick={() => {
         setUpDown('up')
