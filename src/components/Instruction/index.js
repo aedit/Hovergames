@@ -3,33 +3,38 @@ import { Window, Progress, useFromToPose, Heading } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
 
 const inst = {
-  snake: {
-    up: 'YO! ADD TEXT',
-    down: 'YO! ADD TEXT',
-    right: 'YO! ADD TEXT',
-    left: 'YO! ADD TEXT',
+  Snake: {
+    up: 'Moves the snake in up direction.',
+    down: 'Moves the snake in down direction.',
+    right: 'Moves the snake in left direction',
+    left: 'Moves the snake in right direction.',
+    close: 'Closes the game and redirects to the Dashboard.'
   },
-  pong: {
-    up: 'YO! ADD TEXT',
-    down: 'YO! ADD TEXT',
-    right: 'YO! ADD TEXT',
-    left: 'YO! ADD TEXT',
+  Pong: {
+    up: 'The player paddle moves with hand movement.',
+    down: 'The player paddle moves with hand movement.',
+    right: 'Not Available!',
+    left: 'Starts the game.',
+    close: 'Closes the game and redirects to the Dashboard.'
   },
-  breakout: {
-    up: 'YO! ADD TEXT',
-    down: 'YO! ADD TEXT',
-    right: 'YO! ADD TEXT',
-    left: 'YO! ADD TEXT',
+  Breakout: {
+    up: 'Starts the game.',
+    down: 'Not Available!',
+    right: 'The player paddle moves with hand movement.',
+    left: 'The player paddle moves with hand movement.',
+    close: 'Closes the game and redirects to the Dashboard.'
   },
-  dodge: {
-    up: 'YO! ADD TEXT',
-    down: 'YO! ADD TEXT',
-    right: 'YO! ADD TEXT',
-    left: 'YO! ADD TEXT',
-  },
+  Dodge: {
+    up: 'Moves the block in up direction.',
+    down: 'Moves the block in down direction.',
+    right: 'Moves the block in left direction',
+    left: 'Moves the block in right direction.',
+    close: 'Closes the game and redirects to the Dashboard.'
+  }
 }
 
 const Instructions = ({ game }) => {
+  const { [game]: g } = inst
   const progressPose = useFromToPose(1, { from: 'empty', to: 'full' })
   const [redirect, setRedirect] = React.useState(false)
   React.useEffect(() => {
@@ -45,13 +50,14 @@ const Instructions = ({ game }) => {
   ) : (
     <Window>
       <Heading>Gesture map:</Heading>
-      <ul>
-        <li>UP: {inst[game].up}</li>
-        <li>DOWN: {inst[game].down}</li>
-        <li>RIGHT: {inst[game].right}</li>
-        <li>LEFT: {inst[game].left}</li>
+      <ul style={{ gridArea: 'list', listStyle: 'none' }}>
+        <li>UP: {g.up}</li>
+        <li>DOWN: {g.down}</li>
+        <li>RIGHT: {g.right}</li>
+        <li>LEFT: {g.left}</li>
+        <li>CLOSE: {g.close}</li>
       </ul>
-      <Progress pose={progressPose}>
+      <Progress pose={progressPose} style={{ gridArea: 'footer' }}>
         <div />
       </Progress>
     </Window>
