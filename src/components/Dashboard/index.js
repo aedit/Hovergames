@@ -90,7 +90,7 @@ const Dashboard = ({ gesture, ready }) => {
   return !isLoggedin ? (
     <Redirect to="/" />
   ) : redirect ? (
-    <Redirect to={`/${games[selectedGame]}`} />
+    <Redirect to={`/instruction/${games[selectedGame]}`} />
   ) : (
     <React.Fragment>
       {isScaleDown === 'down' && <Leaderboard />}
@@ -103,9 +103,8 @@ const Dashboard = ({ gesture, ready }) => {
           style={{
             display: 'flex',
             justifyContent: 'space-evenly',
-            gridArea: 'list'
-          }}
-        >
+            gridArea: 'list',
+          }}>
           <Game
             key={1}
             name="Snake"
@@ -141,10 +140,10 @@ const Dashboard = ({ gesture, ready }) => {
 }
 
 const mapStateToProps = state => ({
-  ...state
+  ...state,
 })
 
 export default connect(
   mapStateToProps,
-  () => {}
+  () => {},
 )(Dashboard)
