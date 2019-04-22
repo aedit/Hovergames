@@ -1,6 +1,15 @@
 import React from 'react'
 import { Window, Progress, useFromToPose, Heading } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
+import styled from 'styled-components'
+
+const StyledUl = styled.ul`
+  text-transform: uppercase;
+  p {
+    text-transform: capitalize;
+    text-align: right;
+  }
+`
 
 const inst = {
   Snake: {
@@ -8,29 +17,29 @@ const inst = {
     down: 'Moves the snake in down direction.',
     right: 'Moves the snake in left direction',
     left: 'Moves the snake in right direction.',
-    close: 'Closes the game and redirects to the Dashboard.'
+    close: 'Closes the game and redirects to the Dashboard.',
   },
   Pong: {
     up: 'The player paddle moves with hand movement.',
     down: 'The player paddle moves with hand movement.',
     right: 'Not Available!',
     left: 'Starts the game.',
-    close: 'Closes the game and redirects to the Dashboard.'
+    close: 'Closes the game and redirects to the Dashboard.',
   },
   Breakout: {
     up: 'Starts the game.',
     down: 'Not Available!',
     right: 'The player paddle moves with hand movement.',
     left: 'The player paddle moves with hand movement.',
-    close: 'Closes the game and redirects to the Dashboard.'
+    close: 'Closes the game and redirects to the Dashboard.',
   },
   Dodge: {
     up: 'Moves the block in up direction.',
     down: 'Moves the block in down direction.',
     right: 'Moves the block in left direction',
     left: 'Moves the block in right direction.',
-    close: 'Closes the game and redirects to the Dashboard.'
-  }
+    close: 'Closes the game and redirects to the Dashboard.',
+  },
 }
 
 const Instructions = ({ game }) => {
@@ -50,13 +59,23 @@ const Instructions = ({ game }) => {
   ) : (
     <Window>
       <Heading>Gesture map:</Heading>
-      <ul style={{ gridArea: 'list', listStyle: 'none' }}>
-        <li>UP: {g.up}</li>
-        <li>DOWN: {g.down}</li>
-        <li>RIGHT: {g.right}</li>
-        <li>LEFT: {g.left}</li>
-        <li>CLOSE: {g.close}</li>
-      </ul>
+      <StyledUl style={{ gridArea: 'list', listStyle: 'none' }}>
+        <li>
+          <strong>UP:</strong> <p>{g.up}</p>
+        </li>
+        <li>
+          <strong>DOWN:</strong> <p>{g.down}</p>
+        </li>
+        <li>
+          <strong>RIGHT:</strong> <p>{g.right}</p>
+        </li>
+        <li>
+          <strong>LEFT:</strong> <p>{g.left}</p>
+        </li>
+        <li>
+          <strong>CLOSE:</strong> <p>{g.close}</p>
+        </li>
+      </StyledUl>
       <Progress pose={progressPose} style={{ gridArea: 'footer' }}>
         <div />
       </Progress>
