@@ -12,7 +12,7 @@ const divStyle = {
 const Profile = ({ name, dp, description }) => {
   return (
     <div style={divStyle}>
-      <img src={dp} width="100%" alt="" />
+      <img src={dp} height="60%" alt={name} />
       <Heading style={{ fontSize: '1.5rem' }}>
         <span className="code-block"> {name} </span>
         <Subtitle style={{ fontSize: '1rem' }}>{description}</Subtitle>

@@ -32,18 +32,18 @@ const About = ({ informUp }) => {
         provided with a new feature of experienceing the gaming world. HOVER
         Games is completely designed to respond based only on your hand
         gestures. At HOVER Games, you wouldnt need to use your keyboard or
-        mouse, for anything. With game playing, the whole platform responses to
-        player's gestures as well. It currently supports eight uniquley
-        identified hand moments viz.
-        <ol style={{ padding: '2em' }}>
+        mouse, for anything unless you are a registered user. With game playing,
+        the whole platform responses to player's gestures as well. It currently
+        supports eight uniquley identified hand moments viz.
+        <ol style={{ padding: '1.5em' }}>
           <li>Up Gesture</li>
           <li>Down Gesture</li>
           <li>Left Gesture</li>
           <li>Right Gesture</li>
           <li>Open Gesture</li>
           <li>Close Gesture</li>
-          <li>Horizontal Motion</li>
-          <li>Vertical Motion</li>
+          <li>Horizontal Concurrent Motion</li>
+          <li>Vertical Concurrent Motion</li>
         </ol>
         <h5>You have a whole new world in your palm.</h5>
         <strong style={{ textAlign: 'right', width: '100%' }}>

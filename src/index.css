@@ -104,3 +104,14 @@ code {
   color: #7afdd6;
   text-align: center;
 }
+
+/*
+left: <i class="fas fa-arrow-left"></i>
+vertical: <i class="fas fa-arrows-alt-v"></i>
+horizontal: <i class="fas fa-arrows-alt-h"></i>
+up: <i class="fas fa-arrow-up"></i>
+right: <i class="fas fa-arrow-right"></i>
+down: <i class="fas fa-arrow-down"></i>
+open: <i class="fas fa-arrow-left"></i><i class="fas fa-arrow-right"></i>
+close: <i class="fas fa-arrow-right"></i><i class="fas fa-arrow-left"></i>
+*/

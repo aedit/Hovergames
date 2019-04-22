@@ -39,9 +39,17 @@ const Authors = ({ informUp }) => {
           width: '90%'
         }}
       >
-        <Profile name={'Udit'} dp={udit} description={'hello'} />
-        <Profile name={'Vaibhav'} dp={vaibhav} description={'hello'} />
-        <Profile name={'Vinay'} dp={vinay} description={'hello'} />
+        <Profile name={'Udit'} dp={udit} description={'github.com/aedit'} />
+        <Profile
+          name={'Vaibhav'}
+          dp={vaibhav}
+          description={'github.com/vbhv98'}
+        />
+        <Profile
+          name={'Vinay'}
+          dp={vinay}
+          description={'github.com/imavinayyadav'}
+        />
       </div>
     </DU>
   )

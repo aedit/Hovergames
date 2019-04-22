@@ -4,8 +4,6 @@ import {
   Window,
   useFromToPose,
   Subtitle,
-  LR,
-  useFromToPoseInf,
   Progress
 } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
@@ -24,7 +22,7 @@ const randomString = setGuestid => {
 
 const GuestPane = React.memo(() => {
   const guestPose = useFromToPose(0.5, { from: 'hidden', to: 'visible' })
-  const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
+
   const [progressPose, setProgress] = React.useState('empty')
   const [guestid, setGuestid] = React.useState('')
   const [redirect, setRedirect] = React.useState(false)
@@ -50,10 +48,8 @@ const GuestPane = React.memo(() => {
         </Subtitle>
       </Heading>
       <div className="options" style={{ gridArea: 'contd' }}>
-        <LR pose={L2R}>
-          <i className="far fa-hand-paper" />
-        </LR>
-        <p>Hover to continue</p>
+        <p>Please wait while we generate your guestid</p>
+        <p>Back to Home</p>
       </div>
       <Progress pose={progressPose}>
         <div />
