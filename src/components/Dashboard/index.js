@@ -19,6 +19,13 @@ const Dashboard = ({ gesture, ready }) => {
   const [selectedGame, setSelectedGame] = React.useState(1)
   const [redirect, setRedirect] = React.useState(false)
   const [isScaleDown, setIsScaleDown] = React.useState('center')
+
+  React.useEffect(() => {
+    if (ready) startVideo()
+    store.dispatch({ type: 'reset' })
+  }, [ready])
+  React.useEffect(() => () => void stop(), [])
+
   React.useEffect(() => {
     switch (gesture) {
       case 'open':
@@ -79,11 +86,6 @@ const Dashboard = ({ gesture, ready }) => {
 
     return () => void store.dispatch({ type: 'reset' })
   }, [gesture])
-  React.useEffect(() => {
-    if (ready) startVideo()
-    store.dispatch({ type: 'reset' })
-  }, [ready])
-  React.useEffect(() => () => void stop(), [])
   const isLoggedin =
     localStorage.hasOwnProperty('token') ||
     localStorage.hasOwnProperty('guestid')
