@@ -11,9 +11,11 @@ const Spin = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
   span {
     width: 100px;
     height: 100px;
+    border-radius: 50%;
     border: 5px solid rgba(0, 0, 0, 0);
     border-top-color: #7afdd6;
     border-bottom-color: #7afdd6;
