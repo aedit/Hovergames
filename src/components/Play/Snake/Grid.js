@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { startVideo, stop } from '../../../tracker'
 import { store } from '../../../store'
 import { Redirect } from 'react-router-dom'
+import GameInfo from '../Dodge/components/GameInfo'
 
 const getDefState = (rows, cols) => {
   let grid = []
@@ -17,9 +18,13 @@ const getDefState = (rows, cols) => {
     grid.push(cells)
   }
   return {
+    highScore: 0,
+    score: 0,
+
     grid,
     closeDetected: false,
     gameState: 'stop',
+    timeElapsed: 0,
     apple: {
       x: Math.floor(Math.random() * (rows - 1)),
       y: Math.floor(Math.random() * (cols - 1)),
@@ -80,6 +85,16 @@ class Grid extends React.Component {
     return false
   }*/
 
+  updateScore = inc => {
+    this.setState(prevState => ({
+      score: prevState.score + inc,
+      highScore:
+        prevState.score + inc > prevState.highScore
+          ? prevState.score + inc
+          : prevState.highScore,
+    }))
+  }
+
   gameLoop = () => {
     const { apple, snake, grid } = this.state
     if (this.ateApple(apple, snake)) {
@@ -88,7 +103,7 @@ class Grid extends React.Component {
         const newTail = {
           ...snake.tails[snake.tails.length - 1],
         }
-        this.props.update(5)
+        this.update(5)
         return {
           ...prevState,
           apple: {
@@ -214,6 +229,10 @@ class Grid extends React.Component {
     window.requestAnimationFrame(this.snakeMove)
   }
 
+  timeInterval = () => {
+    this.setState(ps => ({ timeElapsed: ps.timeElapsed + 1 }))
+  }
+
   xyz = prevProp => {
     // console.log('xyz')
     if (!prevProp.ready && this.props.ready) {
@@ -225,11 +244,11 @@ class Grid extends React.Component {
         interval,
       })
       startVideo()
+      setInterval(this.timeInterval, 1000)
       this.setState({
         gameState: 'start',
       })
       this.snakeMove()
-      console.log(true)
     }
   }
 
@@ -245,6 +264,10 @@ class Grid extends React.Component {
     if (this.state.interval) {
       clearTimeout(this.state.interval)
     }
+    clearInterval(this.timeInterval)
+    this.setState({
+      timeElapsed: 0,
+    })
     stop()
     store.dispatch({ type: 'reset' })
     window.cancelAnimationFrame(this.snakeMove)
@@ -257,24 +280,45 @@ class Grid extends React.Component {
       <Redirect to="/Dashboard" />
     ) : (
       <div
-        className="grid"
         style={{
-          gridTemplateColumns: `repeat(${this.props.cols}, 1fr)`,
-          gridTemplateRows: `repeat(${this.props.rows}, 1fr)`,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          width: '95vw',
+          maxWidth: '1100px',
+          margin: '0 auto',
+          background: '#000',
+          padding: '1em',
+          borderRadius: '10px',
+          boxShadow: '0 0 100px black',
+          height: '90vh',
         }}>
-        {grid.map((cells, i) =>
-          cells.map((_, j) => {
-            let type = 'cell'
-            if (this.isSnakeHead(i, j, snake.head)) {
-              type += ' snake-head'
-            } else if (this.isSnakeTail(i, j, snake.tails)) {
-              type += ' snake-tail'
-            } else if (this.isApple(i, j, apple)) {
-              type += ' apple'
-            }
-            return <span key={i + j * j} className={type} />
-          }),
-        )}
+        <GameInfo
+          name="Snake"
+          timeElapsed={this.state.timeElapsed}
+          playerScore={this.state.score}
+          highScore={this.state.highScore}
+        />
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: `repeat(${this.props.cols}, 1fr)`,
+            gridTemplateRows: `repeat(${this.props.rows}, 1fr)`,
+          }}>
+          {grid.map((cells, i) =>
+            cells.map((_, j) => {
+              let type = 'cell'
+              if (this.isSnakeHead(i, j, snake.head)) {
+                type += ' snake-head'
+              } else if (this.isSnakeTail(i, j, snake.tails)) {
+                type += ' snake-tail'
+              } else if (this.isApple(i, j, apple)) {
+                type += ' apple'
+              }
+              return <span key={i + j * j} className={type} />
+            }),
+          )}
+        </div>
       </div>
     )
   }

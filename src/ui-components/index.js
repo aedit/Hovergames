@@ -280,3 +280,15 @@ export const useFromToPoseInf = ({ from, to }) => {
   })
   return val
 }
+
+export const useTime = condition => {
+  let [timeElapsed, setTimeElapsed] = React.useState(0)
+  const s = () => setTimeElapsed(t => t + 1)
+  React.useEffect(() => {
+    if (condition) {
+      setInterval(s, 1000)
+    }
+    return () => void clearInterval(s)
+  }, [condition])
+  return [timeElapsed, setTimeElapsed]
+}

@@ -172,12 +172,12 @@ class Game extends Component {
 
     if (timeElapsed > 0) {
       // increment enemy speed
-      if (timeElapsed % 3 === 0) {
+      if (timeElapsed % 5 === 0) {
         this.incrementEnemySpeed()
       }
 
       // increment max active enemies every 10 seconds
-      if (timeElapsed % 10 === 0) {
+      if (timeElapsed % 15 === 0) {
         this.incrementActiveEnemies()
       }
     }

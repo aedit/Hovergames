@@ -22,16 +22,23 @@ class Breakout extends React.Component {
       count: 0,
       score: 0,
       highscore: 0,
+      timeElapsed: 0,
       x: this.props.x,
       y: this.props.y,
       closeDetected: false,
     }
   }
+  timeInterval = () => {
+    this.setState(ps => ({ timeElapsed: ps.timeElapsed + 1 }))
+  }
   updateScore = newScore => {
     this.setState({ score: newScore })
   }
   componentDidMount = () => {
-    if (this.props.ready) startVideo(true)
+    if (this.props.ready) {
+      startVideo()
+      setInterval(this.timeInterval, 1000)
+    }
     this.update()
   }
   componentDidUpdate() {
@@ -42,6 +49,7 @@ class Breakout extends React.Component {
   }
   componentWillUnmount() {
     stop()
+    clearInterval(this.timeInterval)
   }
   update = () => {
     const Width = gameWidth,
@@ -162,7 +170,7 @@ class Breakout extends React.Component {
       }
     }
 
-    function newGame() {
+    const newGame = () => {
       bricks = []
       bonuses = []
       createBricks()
@@ -184,6 +192,7 @@ class Breakout extends React.Component {
         y: Height - 10,
         speed: paddlespeed,
       }
+      this.setState({ timeElapsed: 0 })
     }
 
     const draw = () => {
@@ -197,11 +206,7 @@ class Breakout extends React.Component {
       if (ballOn === false) {
         ctx.font = '14px Roboto Mono'
         ctx.textAlign = 'center'
-        ctx.fillText(
-          'Move your hands apart to start the game.',
-          Width / 2,
-          Height / 2 - 25,
-        )
+        ctx.fillText('use UP to start the game.', Width / 2, Height / 2 - 25)
         ctx.font = '12px Roboto Mono'
         ctx.fillText(
           'Move with left and right gestures.',
@@ -379,6 +384,7 @@ class Breakout extends React.Component {
         }}>
         <GameInfo
           name="Breakout"
+          timeElapsed={this.state.timeElapsed}
           playerScore={this.state.score}
           highScore={this.state.highscore}
         />

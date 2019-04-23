@@ -4,6 +4,7 @@ import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
 import { connect } from 'react-redux'
 import { store } from '../../store'
+import { useTime } from '../../ui-components'
 
 const DIRECTION = {
   IDLE: 0,
@@ -16,19 +17,19 @@ const DIRECTION = {
 let rounds = [5, 5, 3, 3, 2]
 let colors = ['#751e1a', '#b22222', '#c54f43', '#e49689', '#fff']
 
-let paddlespeed = 10
+let paddlespeed = 12
 let paddleheight = 150
 let ballspeed = 14
 let paddlecolor = colors[0]
 
 class Game {
-  initialize = (canvasRef, returnTurn) => {
+  initialize = (canvasRef, returnTurn, resetScore) => {
     this.canvas = canvasRef
     this.context = canvasRef.getContext('2d')
     this.canvas.width = 1400
     this.canvas.height = 1000
     this._resetTurn = returnTurn
-
+    this.resetScore = resetScore
     this.canvas.style.width = this.canvas.width / 2 + 'px'
     this.canvas.style.height = this.canvas.height / 2 + 'px'
 
@@ -184,8 +185,9 @@ class Game {
       }
     } else if (this.paddle.score === rounds[this.round]) {
       this.over = true
-      setTimeout(function() {
+      setTimeout(() => {
         pong.endGameMenu('Game Over!')
+        this.resetScore()
       }, 1000)
     }
   }
@@ -321,7 +323,7 @@ const Pong = ({ gesture, ready, x, y }) => {
   let [score, setScore] = useState(0)
   let [highscore, sethighscore] = useState(0)
   let [closeDetected, setCloseDetected] = useState(false)
-
+  let [timeElapsed, setTimeElapsed] = useTime(pong.running)
   const gestureListener = () => {
     if (started) {
       if (gesture === 'close') {
@@ -351,12 +353,16 @@ const Pong = ({ gesture, ready, x, y }) => {
     }
   }
 
+  const resetScore = () => {
+    setTimeElapsed(0)
+  }
+
   React.useEffect(() => {
     if (ready) {
       startVideo()
       setStarted(true)
     }
-    pong.initialize(canvas.current, _resetTurn)
+    pong.initialize(canvas.current, _resetTurn, resetScore)
   }, [ready])
 
   React.useEffect(gestureListener, [started, y])
@@ -386,7 +392,12 @@ const Pong = ({ gesture, ready, x, y }) => {
         boxShadow: '0 0 100px black',
         height: '90vh',
       }}>
-      <GameInfo name="Pong" playerScore={score} highScore={highscore} />
+      <GameInfo
+        name="Pong"
+        timeElapsed={timeElapsed}
+        playerScore={score}
+        highScore={highscore}
+      />
       <canvas
         style={{ alignSelf: 'center', border: '5px solid #252525' }}
         ref={canvas}
