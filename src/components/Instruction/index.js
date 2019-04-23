@@ -7,7 +7,7 @@ const StyledUl = styled.ul`
   text-transform: uppercase;
   p {
     text-transform: capitalize;
-    text-align: right;
+    text-align: justify;
   }
 `
 
