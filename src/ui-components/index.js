@@ -237,6 +237,26 @@ export const List = styled.ul`
   }
 `
 
+export const Grid = styled.div`
+  display: grid;
+  width: 210px;
+  height: 210px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  align-self:center
+  justify-self:center
+`
+
+export const Icon = styled.div`
+  background: transparent;
+  color: #7afdd6;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
 // --------------------------------------------------------
 //      Custom Hooks for Posed Components (DO EXPORT)
 // --------------------------------------------------------

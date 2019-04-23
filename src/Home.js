@@ -5,6 +5,8 @@ import {
   Heading,
   Subtitle,
   Footer,
+  Grid,
+  Icon,
 } from './ui-components'
 import GuestPane from './components/GuestPane'
 import LoginPane from './components/LoginPane'
@@ -15,24 +17,6 @@ import { connect } from 'react-redux'
 import About from './components/About'
 import { startVideo, stop } from './tracker'
 import { store } from './store'
-import styled from 'styled-components'
-
-const Grid = styled.div`
-  display: grid;
-  width: 210px;
-  height: 210px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-`
-const Icon = styled.div`
-  background: transparent;
-  color: #7afdd6;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
 
 const Home = ({ ready, gesture }) => {
   const [showSpinner, setShowSpinner] = React.useState(true)
@@ -104,8 +88,6 @@ const Home = ({ ready, gesture }) => {
         <Grid
           style={{
             gridArea: 'list',
-            alignSelf: 'center',
-            justifySelf: 'center',
           }}>
           <Icon style={{ gridColumn: '2', gridRow: '1' }}>
             <i class="fas fa-arrow-up" />

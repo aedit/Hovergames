@@ -6,6 +6,8 @@ import {
   Progress,
   useFromToPose,
   Desc,
+  Icon,
+  Grid,
 } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
 import { store } from '../../store'
@@ -21,15 +23,6 @@ const GuideWindow = styled(Window)`
   grid-template-rows: 1fr 1fr 50px 2fr 2fr 20px;
   justify-items: center;
   overflow: hidden;
-`
-const Instruction = styled.section`
-  grid-area: instruction;
-  display: flex;
-  flex-wrap: wrap;
-  & article {
-    flex-basis: 50%;
-    text-align: center;
-  }
 `
 
 const Guide = () => {
@@ -59,44 +52,47 @@ const Guide = () => {
         odit, ducimus velit optio inventore placeat eos, aliquid ut, modi
         provident laboriosam eveniet corporis.
       </Desc>
-      <Instruction>
-        <article>
-          <div className="options" style={{ gridArea: 'contd' }}>
-            <i className="far fa-hand-paper" />
-            XYZ
+      <Grid
+        style={{ gridArea: 'instruction', width: '420px', height: '420px' }}>
+        <Icon style={{ gridColumn: '2', gridRow: '1' }}>
+          <i class="fas fa-arrow-up" />
+          UP
+        </Icon>
+        <Icon style={{ gridColumn: '2', gridRow: '3' }}>
+          <i class="fas fa-arrow-down" />
+          DOWN
+        </Icon>
+        <Icon style={{ gridColumn: '1', gridRow: '2' }}>
+          <i class="fas fa-arrow-left" />
+          LEFT
+        </Icon>
+        <Icon style={{ gridColumn: '3', gridRow: '2' }}>
+          <i class="fas fa-arrow-right" />
+          RIGHT
+        </Icon>
+        <Icon style={{ gridColumn: '1', gridRow: '1' }}>
+          <i class="fas fa-arrows-alt-v" />
+          Verical
+        </Icon>
+        <Icon style={{ gridColumn: '3', gridRow: '1' }}>
+          <div style={{ display: 'flex' }}>
+            <i class="fas fa-arrow-left" />
+            <i class="fas fa-arrow-right" />
           </div>
-        </article>
-        <article>
-          <div className="options" style={{ gridArea: 'contd' }}>
-            <i className="far fa-hand-paper" />
-            XYZ
+          Open
+        </Icon>
+        <Icon style={{ gridColumn: '1', gridRow: '3' }}>
+          <div style={{ display: 'flex' }}>
+            <i class="fas fa-arrow-right" />
+            <i class="fas fa-arrow-left" />
           </div>
-        </article>
-        <article>
-          <div className="options" style={{ gridArea: 'contd' }}>
-            <i className="far fa-hand-paper" />
-            XYZ
-          </div>
-        </article>
-        <article>
-          <div className="options" style={{ gridArea: 'contd' }}>
-            <i className="far fa-hand-paper" />
-            XYZ
-          </div>
-        </article>
-        <article>
-          <div className="options" style={{ gridArea: 'contd' }}>
-            <i className="far fa-hand-paper" />
-            XYZ
-          </div>
-        </article>
-        <article>
-          <div className="options" style={{ gridArea: 'contd' }}>
-            <i className="far fa-hand-paper" />
-            XYZ
-          </div>
-        </article>
-      </Instruction>
+          Close
+        </Icon>
+        <Icon style={{ gridColumn: '3', gridRow: '3' }}>
+          <i class="fas fa-arrows-alt-h" />
+          Horizontal
+        </Icon>
+      </Grid>
       <Progress pose={progressPose}>
         <div />
       </Progress>
