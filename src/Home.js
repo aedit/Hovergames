@@ -24,7 +24,13 @@ const Grid = styled.div`
   grid-template-rows: repeat(3, 1fr);
 `
 const Icon = styled.div`
-  background: white;
+  background: transparent;
+  color: #7afdd6;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 const Home = ({ ready, gesture }) => {
@@ -90,20 +96,26 @@ const Home = ({ ready, gesture }) => {
             palm.
           </Subtitle>
         </Heading>
-        <Grid style={{ gridArea: 'list', alignSelf: 'center', justifySelf: 'center' }}>
-          <Icon style={{ grid: '1 / span 1 / 2 / span 1' }}>
+        <Grid
+          style={{
+            gridArea: 'list',
+            alignSelf: 'center',
+            justifySelf: 'center'
+          }}
+        >
+          <Icon style={{ gridColumn: '2', gridRow: '1' }}>
             <i class="fas fa-arrow-up" />
             UP
           </Icon>
-          <Icon style={{ grid: '3 / span 1 / 2 / span 1' }}>
+          <Icon style={{ gridColumn: '2', gridRow: '3' }}>
             <i class="fas fa-arrow-down" />
             DOWN
           </Icon>
-          <Icon style={{ grid: '2 / span 1 / 1 / span 1' }}>
+          <Icon style={{ gridColumn: '1', gridRow: '2' }}>
             <i class="fas fa-arrow-left" />
             LEFT
           </Icon>
-          <Icon style={{ grid: '2 / span 1 / 3 / span 1' }}>
+          <Icon style={{ gridColumn: '3', gridRow: '2' }}>
             <i class="fas fa-arrow-right" />
             RIGHT
           </Icon>
