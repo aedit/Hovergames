@@ -4,12 +4,13 @@ import {
   Window,
   Heading,
   Subtitle,
-  Footer
+  Footer,
 } from './ui-components'
 import GuestPane from './components/GuestPane'
 import LoginPane from './components/LoginPane'
 import { Redirect } from 'react-router-dom'
 import Authors from './components/Authors'
+import Spinner from './components/Spinner'
 import { connect } from 'react-redux'
 import About from './components/About'
 import { startVideo, stop } from './tracker'
@@ -28,7 +29,7 @@ const Icon = styled.div`
 `
 
 const Home = ({ ready, gesture }) => {
-  // if (gesture !== '') console.log(gesture)
+  const [showSpinner, setShowSpinner] = React.useState(true)
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
 
   const [isScaleDown, setIsScaleDown] = React.useState('center')
@@ -66,12 +67,17 @@ const Home = ({ ready, gesture }) => {
     }
   }, [gesture])
   React.useEffect(() => {
-    if (ready) startVideo()
+    if (ready) {
+      startVideo()
+      setShowSpinner(false)
+    }
   }, [ready])
   React.useEffect(() => () => void stop(), [])
   const isLoggedIn = sessionStorage.hasOwnProperty('token')
   return isLoggedIn ? (
     <Redirect to="/dashboard" />
+  ) : showSpinner ? (
+    <Spinner />
   ) : (
     <React.Fragment>
       {isScaleDown === 'right' && <GuestPane />}
@@ -79,10 +85,9 @@ const Home = ({ ready, gesture }) => {
       <Window
         style={{
           clipPath:
-            'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
+            'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)',
         }}
-        pose={isScaleDown === 'center' ? windowPose : isScaleDown}
-      >
+        pose={isScaleDown === 'center' ? windowPose : isScaleDown}>
         <Heading>
           Hover Games
           <Subtitle>
@@ -90,7 +95,12 @@ const Home = ({ ready, gesture }) => {
             palm.
           </Subtitle>
         </Heading>
-        <Grid style={{ gridArea: 'list', alignSelf: 'center', justifySelf: 'center' }}>
+        <Grid
+          style={{
+            gridArea: 'list',
+            alignSelf: 'center',
+            justifySelf: 'center',
+          }}>
           <Icon style={{ grid: '1 / span 1 / 2 / span 1' }}>
             <i class="fas fa-arrow-up" />
             UP
@@ -123,11 +133,11 @@ const Home = ({ ready, gesture }) => {
 
 const mapStateToProps = state => {
   return {
-    ...state
+    ...state,
   }
 }
 
 export default connect(
   mapStateToProps,
-  () => ({})
+  () => ({}),
 )(Home)
