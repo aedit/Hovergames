@@ -160,7 +160,7 @@ export const Window = styled(W)`
   border-radius: 10px;
   color: white;
   box-shadow: 0 0 100px black;
-  background-color: #0b132b;
+  background-color: #000;
   padding: 1em;
   display: grid;
   grid-template-rows: 2fr 20px 320px 50px;
@@ -213,29 +213,29 @@ export const Seperation = styled.h3`
   padding-bottom: 1rem;
 `
 
-export const List = styled.ul`
-  overflow-y: scroll;
-  grid-area: list;
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 10px;
-  li {
-    display: flex;
-    min-height: 150px;
-    justify-content: center;
-    align-items: center;
-    padding: 1em 1.5em;
-    border-radius: 5px;
-    background-color: #663dff;
-    background-image: linear-gradient(
-      319deg,
-      #663dff 0%,
-      #aa00ff 37%,
-      #cc4499 100%
-    );
-  }
-`
+// export const List = styled.ul`
+//   overflow-y: scroll;
+//   grid-area: list;
+//   list-style: none;
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+//   grid-gap: 10px;
+//   li {
+//     display: flex;
+//     min-height: 150px;
+//     justify-content: center;
+//     align-items: center;
+//     padding: 1em 1.5em;
+//     border-radius: 5px;
+//     background-color: #663dff;
+//     background-image: linear-gradient(
+//       319deg,
+//       #663dff 0%,
+//       #aa00ff 37%,
+//       #cc4499 100%
+//     );
+//   }
+// `
 
 export const Grid = styled.div`
   display: grid;
@@ -243,8 +243,8 @@ export const Grid = styled.div`
   height: 210px;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  align-self:center
-  justify-self:center
+  align-self: center;
+  justify-self: center;
 `
 
 export const Icon = styled.div`

@@ -44,6 +44,7 @@ const About = ({ informUp }) => {
           <li>Horizontal Concurrent Motion</li>
           <li>Vertical Concurrent Motion</li>
         </ol>
+        <hr />
         <h5>You have a whole new world in your palm.</h5>
         <strong style={{ textAlign: 'right', width: '100%' }}>
           More Updates Coming Soon

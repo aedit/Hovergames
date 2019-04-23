@@ -52,7 +52,7 @@ class Snake extends Component {
           width: '95vw',
           maxWidth: '1100px',
           margin: '0 auto',
-          background: '#0b132b',
+          background: '#000',
           padding: '1em',
           borderRadius: '10px',
           boxShadow: '0 0 100px black',
@@ -64,6 +64,7 @@ class Snake extends Component {
           highScore={this.state.highScore}
         />
         <Grid
+          style={{ border: '2px solid #252525' }}
           rows={30}
           cols={50}
           score={this.state.score}

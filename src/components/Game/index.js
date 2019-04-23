@@ -21,6 +21,7 @@ const Game = ({ name, selected, changeSelect, color, desc, background }) => {
         overflow: 'hidden',
         zIndex: selected ? '100' : '99',
         boxShadow: '0 0 10px rgba(0, 0, 0, 0.6)',
+        background: 'black',
       }}
       onClick={changeSelect}>
       <img

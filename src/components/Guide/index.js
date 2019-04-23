@@ -16,11 +16,10 @@ const GuideWindow = styled(Window)`
   grid-template-areas:
     'heading'
     'desc'
-    'empty'
     'instruction'
     'instruction'
     'progress';
-  grid-template-rows: 1fr 1fr 50px 2fr 2fr 20px;
+  grid-template-rows: 1fr 1fr 2fr 2fr 20px;
   justify-items: center;
   overflow: hidden;
 `
@@ -31,7 +30,7 @@ const Guide = () => {
   const [redirect, setRedirect] = React.useState(false)
   store.dispatch({ type: 'reset' })
   React.useEffect(() => {
-    if (progressPose === 'full') setTimeout(() => setRedirect(true), 7000)
+    if (progressPose === 'full') setTimeout(() => setRedirect(true), 15000)
   }, [progressPose])
   const isLoggedin =
     localStorage.hasOwnProperty('token') ||
@@ -43,17 +42,23 @@ const Guide = () => {
   ) : (
     <GuideWindow pose={windowPose}>
       {/* {store.dispatch({ type: 'reset' })} */}
-      <Heading>Guide</Heading>
-      <Desc>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-        quisquam corporis eius corrupti eligendi officiis esse iure provident
-        repellat tempore non fugit obcaecati voluptates ipsum facere nemo
-        possimus illo veritatis beatae, totam necessitatibus? Nemo iusto dolorum
-        odit, ducimus velit optio inventore placeat eos, aliquid ut, modi
-        provident laboriosam eveniet corporis.
+      <Heading style={{ fontSize: '3rem' }}>Guide</Heading>
+      <Desc style={{ textAlign: 'center' }}>
+        Wave your hand from the center to the respected direction in order to
+        initiate a gesture.
+        <br />
+        Open gesture works on holding both hands in the centre and moving them
+        horizontally apart.
+        <br />
+        Close gesture works on holding both hands apart and moving them
+        horizontally close towards centre.
+        <br />
+        Horizontal and Verical Concurrent Moments are synchronized with the
+        hover position.
       </Desc>
       <Grid
-        style={{ gridArea: 'instruction', width: '420px', height: '420px' }}>
+        className="gesture-grid"
+        style={{ gridArea: 'instruction', width: '350px', height: '350px' }}>
         <Icon style={{ gridColumn: '2', gridRow: '1' }}>
           <i class="fas fa-arrow-up" />
           UP
@@ -72,25 +77,36 @@ const Guide = () => {
         </Icon>
         <Icon style={{ gridColumn: '1', gridRow: '1' }}>
           <i class="fas fa-arrows-alt-v" />
-          Verical
+          VERTICAL
         </Icon>
         <Icon style={{ gridColumn: '3', gridRow: '1' }}>
           <div style={{ display: 'flex' }}>
             <i class="fas fa-arrow-left" />
             <i class="fas fa-arrow-right" />
           </div>
-          Open
+          OPEN
         </Icon>
         <Icon style={{ gridColumn: '1', gridRow: '3' }}>
           <div style={{ display: 'flex' }}>
             <i class="fas fa-arrow-right" />
             <i class="fas fa-arrow-left" />
           </div>
-          Close
+          CLOSE
         </Icon>
         <Icon style={{ gridColumn: '3', gridRow: '3' }}>
           <i class="fas fa-arrows-alt-h" />
-          Horizontal
+          HORIZONTAL
+        </Icon>
+        <Icon
+          style={{
+            gridColumn: '2',
+            gridRow: '2',
+            backgroundColor: '#252525',
+            color: 'white',
+            fontSize: '1.5em',
+          }}>
+          <i class="fas fa-hand-spock" />
+          GESTURES
         </Icon>
       </Grid>
       <Progress pose={progressPose}>
