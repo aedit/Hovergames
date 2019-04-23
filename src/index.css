@@ -51,6 +51,7 @@ code {
   align-content: flex-start !important;
   text-align: center !important;
   z-index: 2;
+  top: 5vh;
   left: 5%;
   width: 50% !important;
 }

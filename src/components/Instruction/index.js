@@ -5,6 +5,9 @@ import styled from 'styled-components'
 
 const StyledUl = styled.ul`
   text-transform: uppercase;
+  li {
+    display: flex;
+  }
   p {
     text-transform: capitalize;
   }
@@ -57,7 +60,7 @@ const Instructions = ({ game }) => {
     <Redirect to={`/${game}`} />
   ) : (
     <Window>
-      <Heading>Gesture map:</Heading>
+      <Heading style={{ fontSize: '3rem' }}>Gesture map</Heading>
       <StyledUl style={{ gridArea: 'list', listStyle: 'none' }}>
         <li>
           <strong>UP:</strong> <p>{g.up}</p>

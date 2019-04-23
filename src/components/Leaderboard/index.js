@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Desc, UD } from '../../ui-components'
+import { Heading, Subtitle, UD } from '../../ui-components'
 // import { Redirect } from 'react-router-dom'
 
 export const useFromToPose = (timeOut, { from, to }) => {
@@ -24,21 +24,9 @@ const Leaderboard = ({ informUp }) => {
       style={{
         width: '80vw',
       }}>
-      <Heading style={{ gridArea: 'heading' }}>Leaderboard</Heading>
-      <Desc>
-        <ul>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-          <li>Some random text</li>
-        </ul>
-      </Desc>
+      <Heading style={{ gridArea: 'heading' }}>Leaderboard
+          <Subtitle>Currently unavilable</Subtitle>
+      </Heading>
     </UD>
   )
 }

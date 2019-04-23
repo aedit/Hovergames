@@ -40,7 +40,7 @@ class Breakout extends React.Component {
     }
   }
   componentWillUnmount() {
-    if (this.props.gesture === 'close') stop()
+    stop()
   }
   update = () => {
     const Width = gameWidth,
