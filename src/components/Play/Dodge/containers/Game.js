@@ -15,14 +15,14 @@ const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
     size: {
       board: boardSize,
       player: playerSize,
-      maxDim: boardSize * playerSize
+      maxDim: boardSize * playerSize,
     },
     positions: {
       player: {
         top: half,
-        left: half
+        left: half,
       },
-      enemies: []
+      enemies: [],
     },
     playerScore: 0,
     highScore,
@@ -30,7 +30,7 @@ const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
     enemySpeed: 5,
     enemyIndex: 0,
     activeEnemies: 1,
-    baseScore: 10
+    baseScore: 10,
   }
 }
 
@@ -57,14 +57,14 @@ class Game extends Component {
     this.setState({
       positions: {
         ...this.state.positions,
-        enemies: [...this.state.positions.enemies].concat(newEnemy)
-      }
+        enemies: [...this.state.positions.enemies].concat(newEnemy),
+      },
     })
   }
 
   generateNewEnemy = (position, side) => {
     this.setState({
-      enemyIndex: this.state.enemyIndex + 1
+      enemyIndex: this.state.enemyIndex + 1,
     })
 
     const newEnemy = { key: this.state.enemyIndex, dir: side }
@@ -147,9 +147,9 @@ class Game extends Component {
         ...this.state.positions,
         player: {
           top: top + player * dirObj.top,
-          left: left + player * dirObj.left
-        }
-      }
+          left: left + player * dirObj.left,
+        },
+      },
     })
     window.requestAnimationFrame(this.handlePlayerMovement)
   }
@@ -186,7 +186,7 @@ class Game extends Component {
     const {
       enemySpeed,
       positions: { enemies },
-      size: { player, maxDim }
+      size: { player, maxDim },
     } = this.state
 
     this.setState({
@@ -224,8 +224,8 @@ class Game extends Component {
             }
 
             return enemy
-          })
-      }
+          }),
+      },
     })
   }
 
@@ -243,7 +243,7 @@ class Game extends Component {
 
     this.setState({
       timeElapsed: timeElapsed + 1,
-      playerScore: playerScore + baseScore
+      playerScore: playerScore + baseScore,
     })
   }
 
@@ -251,13 +251,13 @@ class Game extends Component {
     const { enemySpeed } = this.state
 
     this.setState({
-      enemySpeed: parseFloat((enemySpeed + 0.25).toFixed(2))
+      enemySpeed: parseFloat((enemySpeed + 0.25).toFixed(2)),
     })
   }
 
   incrementActiveEnemies = () => {
     this.setState({
-      activeEnemies: this.state.activeEnemies + 1
+      activeEnemies: this.state.activeEnemies + 1,
     })
   }
 
@@ -281,7 +281,7 @@ class Game extends Component {
       // persist debug state and high scores
       debug,
       highScore: playerScore > highScore ? playerScore : highScore,
-      globalHighScore
+      globalHighScore,
     })
     // restart game
     this.startGame()
@@ -289,7 +289,7 @@ class Game extends Component {
 
   handleDebugToggle = () => {
     this.setState({
-      debug: this.debug.checked
+      debug: this.debug.checked,
     })
   }
 
@@ -326,7 +326,7 @@ class Game extends Component {
       padding: '1em',
       borderRadius: '10px',
       boxShadow: '0 0 100px black',
-      height: '90vh'
+      height: '90vh',
     }
   }
 
@@ -337,7 +337,7 @@ class Game extends Component {
       playerScore,
       timeElapsed,
       highScore,
-      globalHighScore
+      globalHighScore,
     } = this.state
 
     return this.state.closeDetected ? (
@@ -412,11 +412,11 @@ class Game extends Component {
 const mapStateToProps = (state, props) => {
   return {
     ...state,
-    ...props
+    ...props,
   }
 }
 
 export default connect(
   mapStateToProps,
-  () => {}
+  () => {},
 )(Game)

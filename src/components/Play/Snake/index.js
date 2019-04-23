@@ -11,7 +11,7 @@ class Snake extends Component {
     super(props)
     this.state = {
       highScore: 0,
-      score: 0
+      score: 0,
     }
   }
   componentDidUpdate = prevProp => {
@@ -33,7 +33,7 @@ class Snake extends Component {
       highScore:
         prevState.score + inc > prevState.highScore
           ? prevState.score + inc
-          : prevState.highScore
+          : prevState.highScore,
     }))
   }
 
@@ -56,9 +56,8 @@ class Snake extends Component {
           padding: '1em',
           borderRadius: '10px',
           boxShadow: '0 0 100px black',
-          height: '90vh'
-        }}
-      >
+          height: '90vh',
+        }}>
         <GameInfo
           name="Snake"
           playerScore={this.state.score}

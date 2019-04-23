@@ -15,10 +15,10 @@ const Dodge = () => {
 }
 
 const mapStateToProps = state => ({
-  ...state
+  ...state,
 })
 
 export default connect(
   mapStateToProps,
-  () => {}
+  () => {},
 )(Dodge)

@@ -7,7 +7,7 @@ const Login = (userid, password, setRedirect) => {
   axios
     .post('/users/reglog', {
       userid,
-      password
+      password,
     })
     .then(res => {
       if (!res.data.error) {
@@ -40,8 +40,7 @@ const LoginPane = React.memo(() => {
         onSubmit={e => {
           e.preventDefault()
           Login(userid, password, setRedirect)
-        }}
-      >
+        }}>
         <input
           autoFocus
           type="text"

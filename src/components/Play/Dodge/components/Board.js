@@ -9,7 +9,7 @@ const style = dimension => {
     position: 'relative',
     margin: '25px auto',
     overflow: 'hidden',
-    background: '#000'
+    background: '#000',
   }
 }
 

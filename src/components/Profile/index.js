@@ -6,7 +6,7 @@ const divStyle = {
   width: '275px',
   gridArea: 'profile',
   borderRadius: '8px',
-  border: '4px dotted #6FFFE9'
+  border: '4px dotted #6FFFE9',
 }
 
 const Profile = ({ name, dp, description }) => {

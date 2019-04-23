@@ -11,89 +11,89 @@ const W = posed.div({
     x: '0%',
     y: '0',
     scale: 1,
-    opacity: 1
+    opacity: 1,
   },
   hidden: {
     x: '0%',
     y: '0',
     scale: 0,
-    opacity: 0
+    opacity: 0,
   },
   right: {
     x: '40%',
     y: '0',
     scale: 0.5,
-    opacity: 0.9
+    opacity: 0.9,
   },
   left: {
     x: '-40%',
     y: '0',
     scale: 0.5,
-    opacity: 0.9
+    opacity: 0.9,
   },
   up: {
     x: '0',
     y: '-100%',
     scale: 0.5,
-    opacity: 0.9
+    opacity: 0.9,
   },
   down: {
     y: '100%',
     scale: 0.5,
-    opacity: 0.9
-  }
+    opacity: 0.9,
+  },
 })
 
 const lr = posed.div({
   left: {
     x: '-100%',
-    opacity: 1
+    opacity: 1,
   },
   right: {
     x: '100%',
-    opacity: 0
-  }
+    opacity: 0,
+  },
 })
 const rl = posed.div({
   left: {
     x: '-100%',
-    opacity: 0
+    opacity: 0,
   },
   right: {
     x: '100%',
-    opacity: 1
-  }
+    opacity: 1,
+  },
 })
 
 const ud = posed.div({
   up: {
     y: '-100%',
-    opacity: 0
+    opacity: 0,
   },
   down: {
     y: '0%',
-    opacity: 1
-  }
+    opacity: 1,
+  },
 })
 const du = posed.div({
   up: {
     y: '-100%',
-    opacity: 1
+    opacity: 1,
   },
   down: {
     y: '100%',
-    opacity: 0
-  }
+    opacity: 0,
+  },
 })
 
 const prog = posed.div({
   empty: {
-    scaleX: 0
+    scaleX: 0,
   },
   full: {
     scaleX: 1,
-    transition: { duration: 5000 }
-  }
+    transition: { duration: 5000 },
+  },
 })
 
 // --------------------------------------------------------

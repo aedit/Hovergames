@@ -23,7 +23,7 @@ class Breakout extends React.Component {
       highscore: 0,
       x: this.props.x,
       y: this.props.y,
-      closeDetected: false
+      closeDetected: false,
     }
   }
   updateScore = newScore => {
@@ -52,14 +52,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 7,
         speedX: 0,
-        speedY: ballspeed
+        speedY: ballspeed,
       },
       paddle1 = {
         w: 120,
         h: 10,
         x: Width / 2 - 100 / 2,
         y: Height - 10,
-        speed: paddlespeed
+        speed: paddlespeed,
       },
       bricks = [],
       bonuses = [],
@@ -76,7 +76,7 @@ class Breakout extends React.Component {
             y: brick.y,
             w: 10,
             h: 10,
-            type: randomNum
+            type: randomNum,
           }
         bonuses.push(bonus)
       }
@@ -93,7 +93,7 @@ class Breakout extends React.Component {
           y: brickY,
           w: brickWidth,
           h: 10,
-          color: colors[j]
+          color: colors[j],
         }
         bricks.push(brick)
         brickX += brickWidth + 2
@@ -174,14 +174,14 @@ class Breakout extends React.Component {
         y: Height / 2 - 3,
         radius: 8,
         speedX: 0,
-        speedY: ballspeed
+        speedY: ballspeed,
       }
       paddle1 = {
         w: 104,
         h: 10,
         x: Width / 2 - 100 / 2,
         y: Height - 10,
-        speed: paddlespeed
+        speed: paddlespeed,
       }
     }
 
@@ -199,13 +199,13 @@ class Breakout extends React.Component {
         ctx.fillText(
           'Move your hands apart to start the game.',
           Width / 2,
-          Height / 2 - 25
+          Height / 2 - 25,
         )
         ctx.font = '12px Roboto Mono'
         ctx.fillText(
           'Move with left and right gestures.',
           Width / 2,
-          Height / 2 + 25
+          Height / 2 + 25,
         )
         if (gameOver === 1) {
           ctx.font = '52px Roboto Mono'
@@ -254,7 +254,7 @@ class Breakout extends React.Component {
             bonuses[i].x - bonuses[i].w / 2,
             bonuses[i].y,
             bonuses[i].w * 2,
-            bonuses[i].h
+            bonuses[i].h,
           )
         } else if (bonuses[i].type === 3) {
           color = '#2980b9'
@@ -371,9 +371,8 @@ class Breakout extends React.Component {
           padding: '1em',
           borderRadius: '10px',
           boxShadow: '0 0 100px black',
-          height: '90vh'
-        }}
-      >
+          height: '90vh',
+        }}>
         <GameInfo
           name="Breakout"
           playerScore={this.state.score}
@@ -393,11 +392,11 @@ class Breakout extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    ...state
+    ...state,
   }
 }
 
 export default connect(
   mapStateToProps,
-  dispatch => ({ dispatch })
+  dispatch => ({ dispatch }),
 )(Breakout)

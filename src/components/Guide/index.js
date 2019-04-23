@@ -5,7 +5,7 @@ import {
   Window,
   Progress,
   useFromToPose,
-  Desc
+  Desc,
 } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
 import { store } from '../../store'

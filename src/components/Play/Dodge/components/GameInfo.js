@@ -5,14 +5,14 @@ const style = () => {
     container: {
       textAlign: 'center',
       background: '#111',
-      color: 'white'
+      color: 'white',
     },
     info: {
       display: 'flex',
       flexFlow: 'row nowrap',
       justifyContent: 'space-around',
-      color: 'whitesmoke'
-    }
+      color: 'whitesmoke',
+    },
   }
 }
 
@@ -21,7 +21,7 @@ const GameInfo = ({
   timeElapsed,
   playerScore,
   highScore,
-  globalHighScore = 'Loading...'
+  globalHighScore = 'Loading...',
 }) => {
   const { container, info } = style()
   return (
@@ -30,9 +30,8 @@ const GameInfo = ({
         style={{
           color: 'white',
           padding: '0.1em',
-          textShadow: '0 0 10px #7afdd6'
-        }}
-      >
+          textShadow: '0 0 10px #7afdd6',
+        }}>
         {name}
       </h3>
       <div style={info}>

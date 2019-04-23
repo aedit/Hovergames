@@ -10,7 +10,7 @@ const modelParams = {
   imageScaleFactor: 0.7,
   maxNumBoxes: 3,
   iouThreshold: 0.6,
-  scoreThreshold: 0.87
+  scoreThreshold: 0.87,
 }
 
 let oldRegion = ''

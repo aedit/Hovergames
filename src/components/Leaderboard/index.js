@@ -22,9 +22,8 @@ const Leaderboard = ({ informUp }) => {
       }}
       pose={upDownPose}
       style={{
-        width: '80vw'
-      }}
-    >
+        width: '80vw',
+      }}>
       <Heading style={{ gridArea: 'heading' }}>Leaderboard</Heading>
       <Desc>
         <ul>

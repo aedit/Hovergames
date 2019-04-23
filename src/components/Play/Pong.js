@@ -9,7 +9,7 @@ const DIRECTION = {
   UP: 1,
   DOWN: 2,
   LEFT: 3,
-  RIGHT: 4
+  RIGHT: 4,
 }
 
 let rounds = [5, 5, 3, 3, 2]
@@ -52,7 +52,7 @@ class Game {
       pong.canvas.width / 2 - 350,
       pong.canvas.height / 2 - 48,
       700,
-      100
+      100,
     )
 
     pong.context.fillStyle = 'white'
@@ -60,7 +60,7 @@ class Game {
     pong.context.fillText(
       text,
       pong.canvas.width / 2,
-      pong.canvas.height / 2 + 15
+      pong.canvas.height / 2 + 15,
     )
 
     setTimeout(() => {
@@ -79,7 +79,7 @@ class Game {
       this.canvas.width / 2 - 350,
       this.canvas.height / 2 - 48,
       700,
-      100
+      100,
     )
 
     this.context.fillStyle = 'white'
@@ -87,7 +87,7 @@ class Game {
     this.context.fillText(
       'Gesture Left to begin',
       this.canvas.width / 2,
-      this.canvas.height / 2 + 15
+      this.canvas.height / 2 + 15,
     )
   }
 
@@ -202,14 +202,14 @@ class Game {
       this.player.x,
       this.player.y,
       this.player.width,
-      this.player.height
+      this.player.height,
     )
 
     this.context.fillRect(
       this.paddle.x,
       this.paddle.y,
       this.paddle.width,
-      this.paddle.height
+      this.paddle.height,
     )
 
     if (pong._turnDelayIsOver()) {
@@ -234,13 +234,13 @@ class Game {
     this.context.fillText(
       this.player.score.toString(),
       this.canvas.width / 2 - 300,
-      200
+      200,
     )
 
     this.context.fillText(
       this.paddle.score.toString(),
       this.canvas.width / 2 + 300,
-      200
+      200,
     )
 
     this.context.font = '30px Courier New'
@@ -248,7 +248,7 @@ class Game {
     this.context.fillText(
       'Round ' + (pong.round + 1),
       this.canvas.width / 2,
-      35
+      35,
     )
 
     this.context.font = '40px Courier'
@@ -256,7 +256,7 @@ class Game {
     this.context.fillText(
       rounds[pong.round] ? rounds[pong.round] : rounds[pong.round - 1],
       this.canvas.width / 2,
-      100
+      100,
     )
   }
 
@@ -292,7 +292,7 @@ class Ball {
       y: this.canvas.height / 2 - 9,
       moveX: DIRECTION.IDLE,
       moveY: DIRECTION.IDLE,
-      speed: incrementedSpeed || ballspeed
+      speed: incrementedSpeed || ballspeed,
     }
   }
 }
@@ -309,7 +309,7 @@ class Paddle {
       y: this.canvas.height / 2 - 35,
       score: 0,
       move: DIRECTION.IDLE,
-      speed: 10
+      speed: 10,
     }
   }
 }
@@ -380,9 +380,8 @@ const Pong = ({ gesture, ready, x, y }) => {
         padding: '1em',
         borderRadius: '10px',
         boxShadow: '0 0 100px black',
-        height: '90vh'
-      }}
-    >
+        height: '90vh',
+      }}>
       <GameInfo name="Pong" playerScore={score} highScore={highscore} />
       <canvas style={{ alignSelf: 'center' }} ref={canvas} />
     </div>
@@ -391,11 +390,11 @@ const Pong = ({ gesture, ready, x, y }) => {
 
 const mapStateToProps = state => {
   return {
-    ...state
+    ...state,
   }
 }
 
 export default connect(
   mapStateToProps,
-  () => {}
+  () => {},
 )(Pong)

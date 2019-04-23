@@ -11,7 +11,7 @@ const getDefState = (rows, cols) => {
     for (let j = 0; j < cols; j++) {
       cells.push({
         x: i,
-        y: j
+        y: j,
       })
     }
     grid.push(cells)
@@ -22,34 +22,34 @@ const getDefState = (rows, cols) => {
     gameState: 'stop',
     apple: {
       x: Math.floor(Math.random() * (rows - 1)),
-      y: Math.floor(Math.random() * (cols - 1))
+      y: Math.floor(Math.random() * (cols - 1)),
     },
     snake: {
       head: {
         x: 5,
-        y: 5
+        y: 5,
       },
       tails: [
         {
           x: 4,
-          y: 5
+          y: 5,
         },
         {
           x: 3,
-          y: 5
+          y: 5,
         },
         {
           x: 2,
-          y: 5
-        }
+          y: 5,
+        },
       ],
       move: {
         dir: 'right',
         x: 1,
-        y: 0
+        y: 0,
       },
-      velocity: 800
-    }
+      velocity: 800,
+    },
   }
 }
 
@@ -86,19 +86,19 @@ class Grid extends React.Component {
       this.setState(prevState => {
         const { snake } = prevState
         const newTail = {
-          ...snake.tails[snake.tails.length - 1]
+          ...snake.tails[snake.tails.length - 1],
         }
         this.props.update(5)
         return {
           ...prevState,
           apple: {
             x: Math.floor(Math.random() * (grid.length - 3)) + 2,
-            y: Math.floor(Math.random() * (grid[0].length - 3)) + 2
+            y: Math.floor(Math.random() * (grid[0].length - 3)) + 2,
           },
           snake: {
             ...snake,
-            tails: [...snake.tails, newTail]
-          }
+            tails: [...snake.tails, newTail],
+          },
         }
       })
     } else if (this.collideWithWall(snake, grid)) {
@@ -107,7 +107,7 @@ class Grid extends React.Component {
       // }
       this.setState({
         ...getDefState(this.props.rows, this.props.cols),
-        gameState: 'start'
+        gameState: 'start',
       })
       store.dispatch({ type: 'reset' })
     }
@@ -116,22 +116,22 @@ class Grid extends React.Component {
     for (let i = tails.length - 1; i > 0; i--) {
       newTails.push({
         x: tails[i - 1].x,
-        y: tails[i - 1].y
+        y: tails[i - 1].y,
       })
     }
     newTails.push({ ...head })
     newTails.reverse()
     let newHead = {
       x: head.x + move.x,
-      y: head.y + move.y
+      y: head.y + move.y,
     }
     this.setState(ps => ({
       ...ps,
       snake: {
         ...ps.snake,
         head: newHead,
-        tails: newTails
-      }
+        tails: newTails,
+      },
     }))
   }
 
@@ -164,7 +164,7 @@ class Grid extends React.Component {
         move = {
           dir: 'right',
           x: 0,
-          y: 1
+          y: 1,
         }
         break
       case 'left':
@@ -173,7 +173,7 @@ class Grid extends React.Component {
         move = {
           dir: 'left',
           x: 0,
-          y: -1
+          y: -1,
         }
         break
       case 'up':
@@ -182,7 +182,7 @@ class Grid extends React.Component {
         move = {
           dir: 'up',
           x: -1,
-          y: 0
+          y: 0,
         }
         break
       case 'down':
@@ -191,7 +191,7 @@ class Grid extends React.Component {
         move = {
           dir: 'down',
           x: 1,
-          y: 0
+          y: 0,
         }
         break
       case 'close':
@@ -205,8 +205,8 @@ class Grid extends React.Component {
       ...ps,
       snake: {
         ...ps.snake,
-        move
-      }
+        move,
+      },
     }))
     window.requestAnimationFrame(this.snakeMove)
   }
@@ -219,11 +219,11 @@ class Grid extends React.Component {
         this.gameLoop()
       }, snake.velocity / 2)
       this.setState({
-        interval
+        interval,
       })
       startVideo()
       this.setState({
-        gameState: 'start'
+        gameState: 'start',
       })
       this.snakeMove()
       console.log(true)
@@ -257,9 +257,8 @@ class Grid extends React.Component {
         className="grid"
         style={{
           gridTemplateColumns: `repeat(${this.props.cols}, 1fr)`,
-          gridTemplateRows: `repeat(${this.props.rows}, 1fr)`
-        }}
-      >
+          gridTemplateRows: `repeat(${this.props.rows}, 1fr)`,
+        }}>
         {grid.map((cells, i) =>
           cells.map((_, j) => {
             let type = 'cell'
@@ -271,7 +270,7 @@ class Grid extends React.Component {
               type += ' apple'
             }
             return <span key={i + j * j} className={type} />
-          })
+          }),
         )}
       </div>
     )
@@ -281,5 +280,5 @@ const mapStateToProps = (state, prop) => ({ ...state, ...prop })
 
 export default connect(
   mapStateToProps,
-  () => {}
+  () => {},
 )(Grid)

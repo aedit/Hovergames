@@ -27,18 +27,16 @@ const Authors = ({ informUp }) => {
       pose={upDownPose}
       style={{
         width: '80vw',
-        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%)'
-      }}
-    >
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%)',
+      }}>
       <Heading style={{ gridArea: 'heading' }}>Authors</Heading>
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-evenly',
           gridArea: 'desc',
-          width: '90%'
-        }}
-      >
+          width: '90%',
+        }}>
         <Profile name={'Udit'} dp={udit} description={'github.com/aedit'} />
         <Profile
           name={'Vaibhav'}

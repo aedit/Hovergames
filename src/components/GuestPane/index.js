@@ -4,7 +4,7 @@ import {
   Window,
   useFromToPose,
   Subtitle,
-  Progress
+  Progress,
 } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
