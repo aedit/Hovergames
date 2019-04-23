@@ -4,7 +4,7 @@ import {
   Window,
   Heading,
   Subtitle,
-  Footer
+  Footer,
 } from './ui-components'
 import GuestPane from './components/GuestPane'
 import LoginPane from './components/LoginPane'
@@ -91,10 +91,9 @@ const Home = ({ ready, gesture }) => {
       <Window
         style={{
           clipPath:
-            'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)'
+            'polygon(0% 0%, 50% 4%, 100% 0%, 96% 50%, 100% 100%, 50% 96%, 0% 100%, 4% 50%)',
         }}
-        pose={isScaleDown === 'center' ? windowPose : isScaleDown}
-      >
+        pose={isScaleDown === 'center' ? windowPose : isScaleDown}>
         <Heading>
           Hover Games
           <Subtitle>
@@ -106,9 +105,8 @@ const Home = ({ ready, gesture }) => {
           style={{
             gridArea: 'list',
             alignSelf: 'center',
-            justifySelf: 'center'
-          }}
-        >
+            justifySelf: 'center',
+          }}>
           <Icon style={{ gridColumn: '2', gridRow: '1' }}>
             <i class="fas fa-arrow-up" />
             UP
@@ -141,11 +139,11 @@ const Home = ({ ready, gesture }) => {
 
 const mapStateToProps = state => {
   return {
-    ...state
+    ...state,
   }
 }
 
 export default connect(
   mapStateToProps,
-  () => ({})
+  () => ({}),
 )(Home)
