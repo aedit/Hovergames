@@ -19,14 +19,17 @@ const Spin = styled.div`
     border: 5px solid rgba(0, 0, 0, 0);
     border-top-color: #7afdd6;
     border-bottom-color: #7afdd6;
-    animation: spin 300ms ease-in-out infinite;
+    animation: spin 1s linear infinite;
   }
   @keyframes spin {
     from {
-      transform: rotate(0deg);
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.2);
     }
     to {
-      transform: rotate(360deg);
+      transform: rotate(360deg) scale(1);
     }
   }
 `
