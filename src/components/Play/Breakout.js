@@ -367,7 +367,7 @@ class Breakout extends React.Component {
           width: '95vw',
           maxWidth: '1100px',
           margin: '0 auto',
-          background: '#0b132b',
+          background: '#000',
           padding: '1em',
           borderRadius: '10px',
           boxShadow: '0 0 100px black',
@@ -383,7 +383,11 @@ class Breakout extends React.Component {
           width={gameWidth}
           height={gameHeight}
           id="gameCanvas"
-          style={{ borderRadius: '8px', margin: '15px auto' }}
+          style={{
+            borderRadius: '8px',
+            margin: '15px auto',
+            border: '2px solid #252525',
+          }}
         />
       </div>
     )

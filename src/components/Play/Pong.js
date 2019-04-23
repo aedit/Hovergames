@@ -376,14 +376,17 @@ const Pong = ({ gesture, ready, x, y }) => {
         width: '95vw',
         maxWidth: '1100px',
         margin: '0 auto',
-        background: '#0b132b',
+        background: '#000',
         padding: '1em',
         borderRadius: '10px',
         boxShadow: '0 0 100px black',
         height: '90vh',
       }}>
       <GameInfo name="Pong" playerScore={score} highScore={highscore} />
-      <canvas style={{ alignSelf: 'center' }} ref={canvas} />
+      <canvas
+        style={{ alignSelf: 'center', border: '2px solid #252525' }}
+        ref={canvas}
+      />
     </div>
   )
 }

@@ -19,9 +19,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0f0c29;
-  background: -webkit-linear-gradient(to right, #302b63, #24243e, #302b63);
-  background: linear-gradient(to right, #302b63, #24243e, #302b63);
+  background-color: #252525;
 }
 
 #root {
@@ -104,7 +102,28 @@ code {
   color: #7afdd6;
   text-align: center;
 }
-
+.gesture-grid {
+  animation: spin 14s linear infinite;
+}
+.gesture-grid > * {
+  animation: spinr 14s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinr {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
 /*
 left: <i class="fas fa-arrow-left"></i>
 vertical: <i class="fas fa-arrows-alt-v"></i>
