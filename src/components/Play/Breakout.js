@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
 import { connect } from 'react-redux'
+import { store } from '../../store'
 
 var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
@@ -298,7 +299,10 @@ class Breakout extends React.Component {
         gameOver = 0
       }
 
-      if (this.props.gesture === 'close') this.setState({ closeDetected: true })
+      if (this.props.gesture === 'close') {
+        store.dispatch({ type: 'reset' })
+        this.setState({ closeDetected: true })
+      }
 
       if (ballOn) {
         let newX = (this.props.x * gameWidth) / 640 - paddle1.w / 2
@@ -386,7 +390,7 @@ class Breakout extends React.Component {
           style={{
             borderRadius: '8px',
             margin: '15px auto',
-            border: '2px solid #252525',
+            border: '5px solid #252525',
           }}
         />
       </div>

@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
 import { connect } from 'react-redux'
+import { store } from '../../store'
 
 const DIRECTION = {
   IDLE: 0,
@@ -323,7 +324,10 @@ const Pong = ({ gesture, ready, x, y }) => {
 
   const gestureListener = () => {
     if (started) {
-      if (gesture === 'close') setCloseDetected(true)
+      if (gesture === 'close') {
+        store.dispatch({ type: 'reset' })
+        setCloseDetected(true)
+      }
       let newY = (y * 1000) / 480 - paddleheight / 2
       pong.player.y = newY > -10 && newY < 1000 ? newY : pong.player.y
 
@@ -384,7 +388,7 @@ const Pong = ({ gesture, ready, x, y }) => {
       }}>
       <GameInfo name="Pong" playerScore={score} highScore={highscore} />
       <canvas
-        style={{ alignSelf: 'center', border: '2px solid #252525' }}
+        style={{ alignSelf: 'center', border: '5px solid #252525' }}
         ref={canvas}
       />
     </div>

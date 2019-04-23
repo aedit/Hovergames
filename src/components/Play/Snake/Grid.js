@@ -157,6 +157,7 @@ class Grid extends React.Component {
 
   snakeMove = () => {
     let move = this.state.snake.move
+    let newCloseDetected = false
     switch (this.props.gesture + move.dir) {
       case 'right':
       case 'rightup':
@@ -194,11 +195,12 @@ class Grid extends React.Component {
           y: 0,
         }
         break
-      case 'close':
-        this.setState({ closeDetected: true })
-        break
       default:
         break
+    }
+    if (this.props.gesture === 'close') {
+      store.dispatch({ type: 'reset' })
+      newCloseDetected = true
     }
     // console.log(this.props.gesture, move)
     this.setState(ps => ({
@@ -207,6 +209,7 @@ class Grid extends React.Component {
         ...ps.snake,
         move,
       },
+      closeDetected: newCloseDetected,
     }))
     window.requestAnimationFrame(this.snakeMove)
   }

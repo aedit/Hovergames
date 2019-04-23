@@ -12,9 +12,9 @@ import Snake from '../../designs/Snake.png'
 import Leaderboard from '../Leaderboard'
 
 const games = ['Snake', 'Pong', 'Breakout', 'Dodge']
-var dashboardCenter = true
 
 const Dashboard = ({ gesture, ready }) => {
+  let dashboardCenter = true
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
   const [selectedGame, setSelectedGame] = React.useState(1)
   const [redirect, setRedirect] = React.useState(false)

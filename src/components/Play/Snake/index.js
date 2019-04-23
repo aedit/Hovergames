@@ -64,7 +64,7 @@ class Snake extends Component {
           highScore={this.state.highScore}
         />
         <Grid
-          style={{ border: '2px solid #252525' }}
+          style={{ border: '5px solid #252525' }}
           rows={30}
           cols={50}
           score={this.state.score}

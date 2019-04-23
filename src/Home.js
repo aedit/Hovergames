@@ -57,6 +57,7 @@ const Home = ({ ready, gesture }) => {
     }
   }, [gesture])
   React.useEffect(() => {
+    console.log('HM')
     if (ready) {
       startVideo()
       setShowSpinner(false)

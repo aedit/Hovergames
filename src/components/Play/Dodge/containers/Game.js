@@ -112,6 +112,7 @@ class Game extends Component {
         break
       case 'close':
         dirObj = { top: 0, left: 0, dir: '' }
+        store.dispatch({ type: 'reset' })
         this.setState({ closeDetected: true })
         break
       default:
@@ -352,7 +353,9 @@ class Game extends Component {
           globalHighScore={globalHighScore}
         />
 
-        <Board style={{border: '2px solid #252525'}} dimension={board * player}>
+        <Board
+          style={{ border: '5px solid #252525' }}
+          dimension={board * player}>
           <Player size={player} position={playerPos} />
 
           {this.state.positions.enemies.map(enemy => (
