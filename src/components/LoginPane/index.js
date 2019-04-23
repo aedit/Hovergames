@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Heading,
-  Window,
-  useFromToPose,
-  Subtitle,
-  RL,
-  useFromToPoseInf
-} from '../../ui-components'
+import { Heading, Window, useFromToPose, Subtitle } from '../../ui-components'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
@@ -29,7 +22,7 @@ const LoginPane = React.memo(() => {
   const [userid, setUserid] = React.useState('')
   const [password, setPassword] = React.useState('')
   const guestPose = useFromToPose(0.5, { from: 'hidden', to: 'visible' })
-  const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
+
   const [redirect, setRedirect] = React.useState('no')
 
   return redirect !== 'no' ? (
@@ -67,10 +60,8 @@ const LoginPane = React.memo(() => {
         <input type="submit" value="login" />
       </form>
       <div className="options">
-        <RL pose={R2L}>
-          <i className="far fa-hand-paper" />
-        </RL>
-        <p>Hover to Login</p>
+        <p>Please login to continue!</p>
+        <p>Back to Home</p>
       </div>
     </Window>
   )

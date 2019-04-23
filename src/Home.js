@@ -1,13 +1,9 @@
 import React from 'react'
-import { Container, Row, Col, Card, CardBody, CardTitle } from 'reactstrap'
 import {
   useFromToPose,
-  useFromToPoseInf,
   Window,
   Heading,
   Subtitle,
-  LR,
-  RL,
   Footer
 } from './ui-components'
 import GuestPane from './components/GuestPane'
@@ -18,12 +14,23 @@ import { connect } from 'react-redux'
 import About from './components/About'
 import { startVideo, stop } from './tracker'
 import { store } from './store'
+import styled from 'styled-components'
+
+const Grid = styled.div`
+  display: grid;
+  width: 210px;
+  height: 210px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+`
+const Icon = styled.div`
+  background: white;
+`
 
 const Home = ({ ready, gesture }) => {
   // if (gesture !== '') console.log(gesture)
   const windowPose = useFromToPose(0.3, { from: 'hidden', to: 'visible' })
-  const L2R = useFromToPoseInf({ from: 'left', to: 'right' })
-  const R2L = useFromToPoseInf({ from: 'right', to: 'left' })
+
   const [isScaleDown, setIsScaleDown] = React.useState('center')
   React.useEffect(() => {
     let f = true
@@ -83,32 +90,24 @@ const Home = ({ ready, gesture }) => {
             palm.
           </Subtitle>
         </Heading>
-        <Container>
-          <Row style={{ alignItems: 'center', height: '100%' }}>
-            <Col />
-            <Col>
-              <Card className="options">
-                <LR pose={L2R}>
-                  <i className="far fa-hand-paper" />
-                </LR>
-                <CardBody>
-                  <CardTitle>Guest</CardTitle>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col>
-              <Card className="options">
-                <RL pose={R2L}>
-                  <i className="far fa-hand-paper" />
-                </RL>
-                <CardBody>
-                  <CardTitle>Log-in/Sign-up</CardTitle>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col />
-          </Row>
-        </Container>
+        <Grid style={{ gridArea: 'list', alignSelf: 'center', justifySelf: 'center' }}>
+          <Icon style={{ grid: '1 / span 1 / 2 / span 1' }}>
+            <i class="fas fa-arrow-up" />
+            UP
+          </Icon>
+          <Icon style={{ grid: '3 / span 1 / 2 / span 1' }}>
+            <i class="fas fa-arrow-down" />
+            DOWN
+          </Icon>
+          <Icon style={{ grid: '2 / span 1 / 1 / span 1' }}>
+            <i class="fas fa-arrow-left" />
+            LEFT
+          </Icon>
+          <Icon style={{ grid: '2 / span 1 / 3 / span 1' }}>
+            <i class="fas fa-arrow-right" />
+            RIGHT
+          </Icon>
+        </Grid>
         <Footer>
           <strong>Authors:</strong>{' '}
           <code>
