@@ -20,13 +20,8 @@ const Grid = styled.div`
   display: grid;
   width: 210px;
   height: 210px;
-  border-radius: 1em;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-template-areas:
-    'empty up empty'
-    'left empty right'
-    'empty down empty';
 `
 const Icon = styled.div`
   background: white;
@@ -95,11 +90,23 @@ const Home = ({ ready, gesture }) => {
             palm.
           </Subtitle>
         </Heading>
-        <Grid>
-          <Icon style={{ gridArea: 'up' }}>UP</Icon>
-          <Icon style={{ gridArea: 'down' }}>DOWN</Icon>
-          <Icon style={{ gridArea: 'left' }}>LEFT</Icon>
-          <Icon style={{ gridArea: 'right' }}>RIGHT</Icon>
+        <Grid style={{ gridArea: 'list', alignSelf: 'center', justifySelf: 'center' }}>
+          <Icon style={{ grid: '1 / span 1 / 2 / span 1' }}>
+            <i class="fas fa-arrow-up" />
+            UP
+          </Icon>
+          <Icon style={{ grid: '3 / span 1 / 2 / span 1' }}>
+            <i class="fas fa-arrow-down" />
+            DOWN
+          </Icon>
+          <Icon style={{ grid: '2 / span 1 / 1 / span 1' }}>
+            <i class="fas fa-arrow-left" />
+            LEFT
+          </Icon>
+          <Icon style={{ grid: '2 / span 1 / 3 / span 1' }}>
+            <i class="fas fa-arrow-right" />
+            RIGHT
+          </Icon>
         </Grid>
         <Footer>
           <strong>Authors:</strong>{' '}

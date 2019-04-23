@@ -11,10 +11,6 @@ import Home from './Home'
 import Instructions from './components/Instruction'
 
 const App = () => {
-  React.useEffect(() => {
-    document.requestFullscreen()
-    return () => void document.exitFullscreen()
-  }, [])
   return (
     <Provider store={store}>
       <BrowserRouter>
