@@ -23,9 +23,8 @@ const About = ({ informUp }) => {
       }}
       pose={upDownPose}
       style={{
-        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%)'
-      }}
-    >
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 50% 90%, 0% 100%)',
+      }}>
       <Heading style={{ gridArea: 'heading' }}>About Page</Heading>
       <Desc>
         HOVER Games is a Unique Game Playing platform where game enthusiasts are
