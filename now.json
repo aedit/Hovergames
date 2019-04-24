@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "hover-games",
+  "alias": "aedit.me/hovergames",
   "builds": [
     {
       "src": "package.json",
