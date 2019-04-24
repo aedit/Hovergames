@@ -17,13 +17,16 @@
     "react-webcam": "^1.1.1",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
+    "serve": "^11.0.0",
     "styled-components": "^4.1.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "start": "serve -s build",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build",
     "now-build": "react-scripts build"
   },
   "eslintConfig": {
