@@ -11,7 +11,7 @@ import axios from 'axios'
 
 const randomString = setGuestid => {
   axios
-    .get('/users/guest')
+    .get('https://hovergames.herokuapp.com/users/guest')
     .then(res => {
       const guestid = res.data.guest_id.substr(0, 5)
       localStorage.setItem('guestid', guestid)

@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const Login = (userid, password, setRedirect) => {
   axios
-    .post('/users/reglog', {
+    .post('https://hovergames.herokuapp.com/users/reglog', {
       userid,
       password,
     })
