@@ -347,7 +347,7 @@ class Game extends Component {
     } = this.state
 
     return this.state.toHome ? (
-      <Reditect to="/" />
+      <Redirect to="/" />
     ) : this.state.closeDetected ? (
       <Redirect to="/Dashboard" />
     ) : (
