@@ -287,7 +287,7 @@ class Grid extends React.Component {
     const { grid, apple, snake } = this.state
 
     return this.state.toHome ? (
-      <Reditect to="/" />
+      <Redirect to="/" />
     ) : this.state.closeDetected ? (
       <Redirect to="/Dashboard" />
     ) : (
