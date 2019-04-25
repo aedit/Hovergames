@@ -11,6 +11,7 @@ const getDefaultState = ({ boardSize, playerSize, highScore = 0 }) => {
   const half = Math.floor(boardSize / 2) * playerSize
   return {
     count: 0,
+    toHome: false,
     closeDetected: false,
     size: {
       board: boardSize,
@@ -157,6 +158,10 @@ class Game extends Component {
 
   handlePlayerCollision = () => {
     this.resetGame()
+    if (this.props.guest) {
+      store.dispatch({ type: 'guest', payload: { guest: true } })
+      this.setState({ toHome: true })
+    }
   }
 
   startGame = () => {
@@ -341,7 +346,9 @@ class Game extends Component {
       globalHighScore,
     } = this.state
 
-    return this.state.closeDetected ? (
+    return this.state.toHome ? (
+      <Reditect to="/" />
+    ) : this.state.closeDetected ? (
       <Redirect to="/Dashboard" />
     ) : (
       <div style={this.style()}>

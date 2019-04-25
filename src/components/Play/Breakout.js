@@ -26,6 +26,7 @@ class Breakout extends React.Component {
       x: this.props.x,
       y: this.props.y,
       closeDetected: false,
+      toHome: false,
     }
   }
   timeInterval = () => {
@@ -193,6 +194,11 @@ class Breakout extends React.Component {
         speed: paddlespeed,
       }
       this.setState({ timeElapsed: 0 })
+
+      if (this.props.guest) {
+        store.dispatch({ type: 'guest', payload: { guest: true } })
+        this.setState({ toHome: true })
+      }
     }
 
     const draw = () => {
@@ -363,7 +369,7 @@ class Breakout extends React.Component {
     const isLoggedin =
       localStorage.hasOwnProperty('token') ||
       localStorage.hasOwnProperty('guestid')
-    return !isLoggedin ? (
+    return this.state.toHome || !isLoggedin ? (
       <Redirect to="/" />
     ) : this.state.closeDetected ? (
       <Redirect to="/Dashboard" />

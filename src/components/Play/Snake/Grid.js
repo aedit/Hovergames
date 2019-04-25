@@ -20,7 +20,7 @@ const getDefState = (rows, cols) => {
   return {
     highScore: 0,
     score: 0,
-
+    toHome: false,
     grid,
     closeDetected: false,
     gameState: 'stop',
@@ -125,6 +125,16 @@ class Grid extends React.Component {
         gameState: 'start',
       })
       store.dispatch({ type: 'reset' })
+
+      if (this.props.guest) {
+        store.dispatch({
+          type: 'guest',
+          payload: {
+            guest: false,
+          },
+        })
+        this.setState({ toHome: true })
+      }
     }
     let { head, tails, move } = this.state.snake
     let newTails = []
@@ -276,7 +286,9 @@ class Grid extends React.Component {
   render = () => {
     const { grid, apple, snake } = this.state
 
-    return this.state.closeDetected ? (
+    return this.state.toHome ? (
+      <Reditect to="/" />
+    ) : this.state.closeDetected ? (
       <Redirect to="/Dashboard" />
     ) : (
       <div
