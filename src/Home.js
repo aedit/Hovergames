@@ -57,12 +57,18 @@ const Home = ({ ready, gesture }) => {
     }
   }, [gesture])
   React.useEffect(() => {
-    console.log('HM')
     if (ready) {
       startVideo()
       setShowSpinner(false)
     }
   }, [ready])
+  React.useEffect(() => {
+    if (isScaleDown === 'right') {
+      store.dispatch({ type: 'guest', payload: { guest: true } })
+    } else {
+      store.dispatch({ type: 'guest', payload: { guest: false } })
+    }
+  }, [isScaleDown])
   React.useEffect(() => () => void stop(), [])
   const isLoggedIn = sessionStorage.hasOwnProperty('token')
   return isLoggedIn ? (

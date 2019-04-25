@@ -4,7 +4,7 @@ import GameInfo from './Dodge/components/GameInfo'
 import { startVideo, stop } from '../../tracker'
 import { connect } from 'react-redux'
 import { store } from '../../store'
-import { useTime } from '../../ui-components'
+import { useTime, useGuestEffect } from '../../ui-components'
 
 const DIRECTION = {
   IDLE: 0,
@@ -324,6 +324,7 @@ const Pong = ({ gesture, ready, x, y }) => {
   let [highscore, sethighscore] = useState(0)
   let [closeDetected, setCloseDetected] = useState(false)
   let [timeElapsed, setTimeElapsed] = useTime(pong.running)
+  let [count, toHome, setCount] = useGuestEffect()
   const gestureListener = () => {
     if (started) {
       if (gesture === 'close') {
@@ -354,6 +355,7 @@ const Pong = ({ gesture, ready, x, y }) => {
   }
 
   const resetScore = () => {
+    setCount(1)
     setTimeElapsed(0)
   }
 
@@ -372,7 +374,7 @@ const Pong = ({ gesture, ready, x, y }) => {
   const isLoggedin =
     localStorage.hasOwnProperty('token') ||
     localStorage.hasOwnProperty('guestid')
-  return !isLoggedin ? (
+  return toHome || !isLoggedin ? (
     <Redirect to="/" />
   ) : closeDetected ? (
     <Redirect to="/Dashboard" />

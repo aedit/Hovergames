@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import posed from 'react-pose'
+import { store } from '../store'
 
 // --------------------------------------------------------
 //      Posed Components (DO NOT EXPORT)
@@ -291,4 +292,16 @@ export const useTime = condition => {
     return () => void clearInterval(s)
   }, [condition])
   return [timeElapsed, setTimeElapsed]
+}
+
+export const useGuestEffect = () => {
+  const [count, setCount] = React.useState(0)
+  const [toHome, setToHome] = React.useState(false)
+  React.useEffect(() => {
+    if (count === 1) {
+      setToHome(true)
+      store.dispatch({ type: 'guest', payload: { guest: false } })
+    }
+  }, [count])
+  return [count, toHome, setCount]
 }

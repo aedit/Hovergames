@@ -1,6 +1,9 @@
 import { createStore } from 'redux'
 
-const reducer = (state = { ready: false, gesture: '' }, action) => {
+const reducer = (
+  state = { ready: false, gesture: '', guest: false },
+  action,
+) => {
   switch (action.type) {
     case 'reset':
       return { ...state, gesture: '' }
@@ -20,6 +23,8 @@ const reducer = (state = { ready: false, gesture: '' }, action) => {
       return { ...state, gesture: 'open' }
     case 'close':
       return { ...state, gesture: 'close' }
+    case 'guest':
+      return { ...state, ...action.payload }
     default:
       return state
   }
